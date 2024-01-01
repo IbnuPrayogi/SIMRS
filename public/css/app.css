@@ -1,0 +1,173 @@
+/* CSS untuk sidebar */
+.sidebar {
+    background-color: #0051B9;
+    color: #fff;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+
+
+/* CSS untuk kotak menu */
+.menu-box {
+    background-color: #0D72F2;
+    padding: 20px;
+    width: 200px; /* Sesuaikan lebar kotak menu */
+    border-radius: 15px; /* Membuat sudut kotak menjadi melengkung */
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    padding: 10px;
+    margin: 10px 0;
+    /* display: flex; */
+    align-items: center; /* Mengatur ikon dan teks secara vertikal */
+}
+
+.menu li a {
+    text-decoration: none;
+    color: #fff;
+    display: block; /* Membuat tautan menjadi blok agar dapat menutupi seluruh area kotak */
+    margin-left: 10px; /* Menambahkan jarak antara ikon dan teks */
+    
+}
+
+/* Hover efek ketika kursor diarahkan ke menu */
+.menu li:hover {
+    background-color: #0051B9;
+}
+
+
+/* Atur tampilan konten utama */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+/* Atur warna teks pada navbar */
+.navbar {
+    color: #333;
+}
+/* ... CSS untuk sidebar dan kotak menu seperti yang telah dijelaskan sebelumnya ... */
+
+/* CSS untuk footer */
+.footer {
+    margin-top: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+.logo {
+    height: 71px;
+    width: 66;
+}
+
+.btn-primary,
+.btn-warning,
+.btn-info,
+.btn-secondary,
+.btn-danger,
+.btn-success
+ {
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+    position: relative;
+}
+
+.btn-primary:hover::before,
+.btn-warning:hover::before,
+.btn-danger:hover::before,
+.btn-success:hover::before,
+.btn-info:hover::before,
+.btn-secondary:hover::before  {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -30px; /* Sesuaikan posisi tooltip sesuai kebutuhan */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Menambahkan style untuk tooltip pada hover */
+.btn-primary:hover::before {
+    content: "Status Surat"; /* Teks keterangan yang akan ditampilkan */
+    position: absolute;
+    background-color: #ffffff; /* Warna latar tooltip sesuai dengan tombol */
+    color: #000000; /* Warna teks tooltip */
+    padding: 5px; /* Padding di sekitar teks */
+    border: 1px solid #cccccc; /* Border tooltip */
+    border-radius: 5px; /* Radius sudut tooltip */
+}
+.btn-secondary:hover::before {
+    content: "Teruskan"; /* Teks keterangan yang akan ditampilkan */
+    position: absolute;
+    background-color: #ffffff; /* Warna latar tooltip sesuai dengan tombol */
+    color: #000000; /* Warna teks tooltip */
+    padding: 5px; /* Padding di sekitar teks */
+    border: 1px solid #cccccc; /* Border tooltip */
+    border-radius: 5px; /* Radius sudut tooltip */
+}
+.btn-info:hover::before {
+    content: "Lihat"; /* Teks keterangan yang akan ditampilkan */
+    position: absolute;
+    background-color: #ffffff; /* Warna latar tooltip sesuai dengan tombol */
+    color: #000000; /* Warna teks tooltip */
+    padding: 5px; /* Padding di sekitar teks */
+    border: 1px solid #cccccc; /* Border tooltip */
+    border-radius: 5px; /* Radius sudut tooltip */
+}
+.btn-warning:hover::before {
+    content: "Edit"; /* Teks keterangan yang akan ditampilkan */
+    position: absolute;
+    background-color: #ffffff; /* Warna latar tooltip sesuai dengan tombol */
+    color: #000000; /* Warna teks tooltip */
+    padding: 5px; /* Padding di sekitar teks */
+    border: 1px solid #cccccc; /* Border tooltip */
+    border-radius: 5px; /* Radius sudut tooltip */
+}
+
+.btn-danger:hover::before {
+    content: "Hapus"; /* Teks keterangan yang akan ditampilkan */
+    position: absolute;
+    background-color: #fbfbfb; /* Warna latar tooltip sesuai dengan tombol */
+    color: #000000; /* Warna teks tooltip */
+    padding: 5px; /* Padding di sekitar teks */
+    border: 1px solid #cccccc; /* Border tooltip */
+    border-radius: 5px; /* Radius sudut tooltip */
+}
+
+.btn-success:hover::before {
+    content: "Download"; /* Teks keterangan yang akan ditampilkan */
+    position: absolute;
+    background-color: #fefefe; /* Warna latar tooltip sesuai dengan tombol */
+    color: #000000; /* Warna teks tooltip */
+    padding: 5px; /* Padding di sekitar teks */
+    border: 1px solid #cccccc; /* Border tooltip */
+    border-radius: 5px; /* Radius sudut tooltip */
+}
+
+
+.btn-primary:hover::before,
+.btn-warning:hover::before,
+.btn-danger:hover::before,
+.btn-success:hover::before,
+.btn-info:hover::before,
+.btn-secondary:hover::before {
+    opacity: 1;
+}

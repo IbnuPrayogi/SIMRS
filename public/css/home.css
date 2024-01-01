@@ -1,0 +1,53 @@
+/* Gaya umum untuk small-box */
+.small-box {
+    border: 1px solid #d2d6de;
+    border-radius: 10px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    background: #EBF2FA;
+    display: block;
+    margin-bottom: 20px;
+    position: relative;
+    padding: 10px;
+}
+
+.small-box .inner {
+    padding: 10px;
+}
+
+.small-box h3 {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.small-box p {
+    margin: 0;
+}
+
+.small-box .icon {
+    display: block;
+    font-size: 40px;
+    padding: 15px 0;
+    color: #fff;
+    text-align: right;
+}
+
+
+/* Gaya untuk footer dan link */
+.small-box-footer {
+    background: #3D92FF;
+    display: block;
+    padding: 3px 0;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    color: #ffffff;
+    transition: background 0.3s;
+    border-radius: 10px;
+}
+
+.small-box-footer:hover {
+    background: rgba(0, 0, 0, 0.2);
+}

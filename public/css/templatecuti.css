@@ -1,0 +1,79 @@
+  .teks_header {
+    text-align: center;
+    margin-left: 20px;
+  }
+  .teks_header h1 {
+    display: block;
+    color: #02BA62;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .teks_header p {
+    color: #02BA62;
+    margin-bottom: 28px;
+  }
+  .code {
+    color: #02BA62;
+    position: absolute;
+    height: fit-content;
+    font-size: 11px;
+    margin-top: -11px;
+    margin-left: 2px;
+  }
+  .code p {
+    margin: 0;
+    padding: 0;
+  }
+  .menkes {
+    color: #02BA62;
+    position: absolute;
+    height: fit-content;
+    font-size: 11px;
+    margin-top: -11px;
+    margin-left: 74%;
+  }
+  .menkes p {
+    margin: 0;
+    padding: 0;
+  }
+  .line {
+    background: #02BA62;
+    width: 100%;
+    height: 2px;
+    margin: 2px;
+  }
+  .isi {
+    color: #02BA62;
+    margin-top: 3px;
+    margin-left: 45px;
+  }
+  .kepada {
+    margin-top: 45px;
+  }
+  .tempat {
+    margin-top: -17px;
+    margin-left: 44px;
+  }
+  .salam p {
+    margin-block-start: 1em;
+    margin-block-end: -1.2em;
+  }
+  .box_pengaju {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 1.5rem;
+  }
+  .box_pengaju p {
+    margin-block-end: -1.2em;
+  }
+  .box_pengaju table {
+    text-align: left;
+  }
+  .demikian {
+    margin-top: 20px;
+  }
+  .ttd_pemohon {
+    position: absolute;
+    margin-top: -234px;
+    margin-left: 70%;
+  }

@@ -1,0 +1,228 @@
+.container_izin {
+    margin: 0 9rem;
+}
+.container_cuti {
+    margin: 0 9rem;
+}
+.container_tukarjaga {
+    margin: 0 3rem;
+    font-size: 13px;
+}
+.teks_header {
+    text-align: center;
+    margin-left: 20px;
+  }
+  .teks_header h1 {
+    display: block;
+    color: #02BA62;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .teks_header p {
+    color: #02BA62;
+    margin-bottom: 28px;
+  }
+  .code {
+    position: absolute;
+    height: fit-content;
+    font-size: 11px;
+    margin-top: -11px;
+    margin-left: 2px;
+  }
+  .code p {
+    color: #02BA62;
+    margin: -.2rem 1rem;
+    padding: 0;
+  }
+  .menkes {
+    position: absolute;
+    height: fit-content;
+    font-size: 11px;
+    margin-top: -11px;
+    margin-left: 46%;
+  }
+  .menkes p {
+    color: #02BA62;
+    margin: -.2rem;
+    padding: 0;
+  }
+  .line {
+    background: #02BA62;
+    width: 100%;
+    height: 2px;
+    margin: 2px;
+  }
+  .isi {
+    color: #02BA62;
+    margin-top: 3px;
+    margin-left: 45px;
+  }
+  .isi p {
+    color: #02BA62;
+  }
+  .kepada {
+    margin-top: 45px;
+  }
+  .tempat {
+    margin-top: -17px;
+    margin-left: 44px;
+  }
+  .salam p {
+    color: #02BA62;
+    margin-block-start: 1em;
+    margin-block-end: -0.2em;
+  }
+  .box_pengaju {
+    display: grid;
+    margin-top: 20px;
+    margin-left: 2rem;
+  }
+  .box_pengaju table {
+    text-align: left;
+  }
+  .box_pengaju p {
+    color: #02BA62;
+    margin-block-end: -0.2em;
+  }
+  .demikian {
+    margin-top: 20px;
+  }
+  .ttd_cuti {
+    display: flex;
+    justify-content: space-between;
+  }
+  .tanda_tangan {
+    display: flex;
+    justify-content: space-between;
+  }
+  .blangko {
+    display: flex;
+    height: 1.4rem;
+    font-weight: bold;
+    width: 47%;
+  }
+  .blangko p {
+    color: #02BA62;
+  }
+  .isi_tabel {
+    color: #02BA62;
+    display: flex;
+  }
+  table {
+    width: 35%;
+    text-align: center;
+  }
+  .atur_blanko {
+    display: grid;
+    font-weight: bold;
+    margin-top: -1.4rem;
+    margin-left: 1rem;
+  }
+  .atur_blanko p{
+    color: #02BA62;
+  }
+  .tgl_blangko {
+    border: 3px solid #02BA62;
+    width: 225px;
+    height: 60px;
+    text-align: center;
+    margin-top: -.8rem;
+  }
+  .pihak_memohon {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .pihak_memohon p {
+    color: #02BA62;
+  }
+  .pihak_termohon {
+    display: flex;
+    justify-content: space-between;
+  }
+  .ttd_A {
+    margin-right: 5.3rem;
+  }
+  .ttd_kar {
+    margin-right: 1.3rem;
+  }
+  .ttd_A p {
+    color: #02BA62;
+  }
+  .ttd_kar p {
+    color: #02BA62;
+  }
+  
+  /* CSS untuk sidebar */
+.sidebar {
+  background-color: #0051B9;
+  color: #fff;
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+
+
+/* CSS untuk kotak menu */
+.menu-box {
+  background-color: #0D72F2;
+  padding: 20px;
+  width: 200px; /* Sesuaikan lebar kotak menu */
+  border-radius: 15px; /* Membuat sudut kotak menjadi melengkung */
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  padding: 10px;
+  margin: 10px 0;
+  /* display: flex; */
+  align-items: center; /* Mengatur ikon dan teks secara vertikal */
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #fff;
+  display: block; /* Membuat tautan menjadi blok agar dapat menutupi seluruh area kotak */
+  margin-left: 10px; /* Menambahkan jarak antara ikon dan teks */
+  
+}
+
+/* Hover efek ketika kursor diarahkan ke menu */
+.menu li:hover {
+  background-color: #555;
+}
+
+
+/* Atur tampilan konten utama */
+.content {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+/* Atur warna teks pada navbar */
+.navbar {
+  color: #333;
+}
+/* ... CSS untuk sidebar dan kotak menu seperti yang telah dijelaskan sebelumnya ... */
+
+/* CSS untuk footer */
+.footer {
+  margin-top: 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+}
+.logo {
+  height: 71px;
+  width: 66;
+}

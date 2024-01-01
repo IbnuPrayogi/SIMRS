@@ -1,0 +1,27 @@
+body {
+    min-height: 100vh;
+    background-color: CFE1F8;
+  }
+  table thead {
+    background-color: blue;
+    color: white;
+}
+/* Reduce the button size in the "Aksi" column */
+.btn-primary {
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+}
+.btn-warning{
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+}
+.btn-danger{
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+}
+.btn-success{
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+}
+/* Menentukan lebar tabel */
+

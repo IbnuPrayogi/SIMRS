@@ -1,0 +1,201 @@
+@media screen and (max-width:  575.98px) {
+    .container {
+        margin: 5%;
+    }
+    .card {
+        background: rgba(230, 239, 250, 0.80);
+        border-radius: 10px 10px 0px 0px;
+        width: 90%;
+        height: 50px;
+    }
+    .card h1 {
+        color: #0253BA;
+        font-size: 16px;
+        font-style: normal;
+        line-height: normal;
+        padding: 4.7%;
+    }
+    .card-body {
+        background: rgba(230, 239, 250, 0.65);
+        border-radius: 0px 0px 10px 10px;
+        width: 90%;
+        height: 580px;
+    }
+    .box {
+        background: #E2ECF9;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 90%;
+        height: 77px;
+        border-radius: 10px;
+        margin-top: 9%;
+        margin-left: 5%;
+    }
+    .info h1 {
+        color: #0253BA;
+        font-size: 13px;
+        font-style: normal;
+        line-height: normal;
+        margin: 0;
+    }
+    .icons {
+        width: 25px;
+        height: 25px;
+        margin-left: 5%;
+    }
+    .info {
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 5%;
+    }
+    .info p {
+        color: #0253BA;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin: 0;
+    }
+    .list {
+        position: absolute;
+        width: 8px;
+        height: 32px;
+        right: 15px;
+        bottom: 20px;
+    }
+    .pencarian {
+        background: #E2ECF9;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 90%;
+        height: 9%;
+        border-radius: 15px;
+        margin-left: 5%;
+    }
+    .gabung_box {
+        height: 86%;
+    }
+    .search {
+        width: 25px;
+        height: 24px;
+        color: #0253BA;
+        margin-left: 5%;
+    }
+    .pencarian_user {
+        background: none;
+        border: none;
+        border-radius: 15px;
+        width: 100%;
+        height: 100%;
+    }
+    input::placeholder {
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 12px;
+        font-style: normal;
+        line-height: normal;
+        align-items: center;
+    }
+    input:focus {
+    outline: none; /* Menghilangkan outline/fokus border */
+    border: none; /* Menghilangkan border */
+    }
+    .hidden {
+        display: none;
+    }
+    .popup_batal {
+        background: #E2ECF9;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        width: 133px;
+        height: 38px;
+        border-radius: 10px;
+        margin-top: 20px;
+        margin-left: -108px;
+        display: none;
+        position: absolute;
+        z-index: 10;
+    }
+    .popup_batal h1 {
+        color: #0253BA;
+        font-size: 14px;
+        font-style: normal;
+        line-height: normal;
+        padding: 9px;
+        margin-left: 5px;
+    }
+    .popup_unduh {
+        background: #E2ECF9;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        width: 133px;
+        height: 38px;
+        border-radius: 10px;
+        margin-top: 20px;
+        margin-left: -108px;
+        display: none;
+        position: absolute;
+        z-index: 10;
+    }
+    .popup_unduh h1 {
+        color: #0253BA;
+        font-size: 14px;
+        font-style: normal;
+        line-height: normal;
+        padding: 9px;
+        margin-left: 5px;
+    }
+    .popup-options {
+        background: #E2ECF9;
+        width: 379px;
+        height: 171px;
+        border-radius: 15px;
+        margin-left: -198px;
+        margin-top: -67px;
+    }
+    .popup-options h1 {
+        color: #0253BA;
+        text-align: center;
+        font-size: 24px;
+        font-style: normal;
+        line-height: normal;
+        z-index: 3;
+    }
+    .button_ya {
+        background: #E2ECF9;
+        color: #0253BA;
+        border: 1px solid #0253BA;
+        width: 100px;
+        height: 40px;
+        border-radius: 10px;
+        margin-left: 55px;
+        margin-top: 19px;
+        z-index: 3;
+    }
+    .button_tidak {
+        background: #0253BA;
+        color: #E2ECF9;
+        width: 100px;
+        height: 40px;
+        border-radius: 10px;
+        margin-left: 69px;
+        z-index: 3;
+    }
+    .overlay_daftar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Latar belakang semi-transparan */
+        z-index: 1; /* Atur z-index untuk menutupi elemen-elemen latar belakang */
+      }
+      .menu-popup {
+        background: #E2ECF9;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        position: relative;
+        z-index: 5;
+      }
+}

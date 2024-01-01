@@ -1,0 +1,483 @@
+* {
+    font-family:'sans-serif';
+}
+
+:root {
+    --heading-color: #E6EFFACC;
+    --text-color: #0253BA;
+}
+
+@media (max-width: 616px) {
+    .container {
+        margin-top: 2rem;
+        margin-left: 2rem;
+    }
+    .card-header {
+        background: var(--heading-color);
+        display: flex;
+        align-items: center;
+        width: 95%;
+        height: 3rem;
+        margin-top: 2rem;
+        border-radius: 10px 10px 0px 0px;
+    }
+    .icon-back i {
+        color: var(--text-color);
+        font-size: 1.6rem;
+        margin-left: .4rem;
+      }
+    .card-header h1 {
+        color: var(--text-color);
+        font-size: 19px;
+        margin-left: -.3rem;
+        padding: .8rem;
+    }
+    .card-body {
+        background: rgba(230, 239, 250, 0.65);
+        display: grid;
+        width: 95%;
+        height: 30rem;
+        border-radius: 0px 0px 10px 10px;
+    }
+    .gabung_box {
+        overflow: scroll;
+        height: 26rem;
+    }
+    .content-box {
+        position: relative;
+        background: var(--heading-color);
+        border-radius: 5px;
+        display: flex;
+        width: 88%;
+        height: 5rem;
+        margin: 1rem 1.6rem;
+    }
+    .icon-time {
+        width: 8rem;
+        margin: 0.7rem 0.7rem;
+    }
+    .icon-time i {
+        color: #FFB649;
+        font-size: 3.5rem;
+    }
+    .icon-check {
+        width: 8rem;
+        margin: 0.7rem 0.7rem;
+    }
+    .icon-check i {
+        color: #02BA62;
+        font-size: 4.6rem;
+        margin: -0.6rem -0.4rem;
+    }
+    .icon-x {
+        width: 8rem;
+        margin: 0.7rem 0.7rem;
+    }
+    .icon-x i {
+        color: #F62222;
+        font-size: 3.5rem;
+        margin: -0.5rem -0.5rem;
+    }
+    .info {
+        display: grid;
+        align-items: center;
+        width: 22.7rem;
+        margin: 0.4rem;
+        margin-left: -4rem;
+    }
+    .content-box h1 {
+        color: var(--text-color);
+        font-size: 19px;
+    }
+    .content-box p {
+        color: var(--text-color);
+    }
+    .content-box-x h1 {
+        color: var(--text-color);
+        font-size: 19px;
+    }
+    .content-box-x p {
+        color: var(--text-color);
+    }
+    .dots {
+        color: var(--text-color);
+        font-size: 3.5rem;
+        margin: 0.8rem -0.8rem;
+    }
+    .pencarian {
+        background: #E2ECF9;
+        display: flex;
+        border-radius: 15px;
+        width: 80%;
+        height: 2.7rem;
+        margin: 0 2.4rem 0;
+    }
+    .search {
+        color: var(--text-color);
+        margin: 0.6rem 1rem;
+        font-size: 1.4rem;
+    }
+    .pencarian_user {
+        background: transparent;
+        width: 100%;
+        margin-left: -.5rem;
+        font-size: 17px;
+    }
+    .hidden {
+        display: none;
+    }
+    .click_batal {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #E2ECF9;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        margin-left: -5rem;
+        z-index: 4;
+        width: 7.3rem;
+        height: 2.6rem;
+    }
+    .unduh {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #E2ECF9;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        margin-top: -.1rem;
+        margin-left: -7.2rem;
+        z-index: 5;
+        width: 7.3rem;
+        height: 2.6rem;
+    }
+    .unduh-permintaan {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #E2ECF9;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        margin-top: 2.7rem;
+        margin-left: -5rem;
+        z-index: 5;
+        width: 7.3rem;
+        height: 2.6rem;
+    }
+    .click_ttd {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #E2ECF9;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        margin-top: 5.4rem;
+        margin-left: -5rem;
+        z-index: 5;
+        width: 7.3rem;
+        height: 2.6rem;
+    }
+    .click_ttd h1 {
+        font-size: 18px;
+    }
+    button[type="submit"] {
+        font-size: 18px; /* Atur ukuran font */
+        color: var(--text-color);
+        background: transparent;
+        border: none; /* Hapus border */
+        font-weight: bold; /* Atur ukuran font */
+    }
+    .popup-options {
+        position: absolute;
+        border-radius: 15px;
+        background: #E2ECF9;
+        width: 379px;
+        height: 171px;
+        top: 20%;
+        left: 2%;
+        /* transform: translate(-50%, -50%); */
+    }
+    .popup-options h1 {
+        color: #0253BA;
+        text-align: center;
+        font-size: 24px;
+        font-style: normal;
+        line-height: normal;
+        padding: 0.8rem;
+    }
+    .button_ya {
+        background: #E2ECF9;
+        color: #0253BA;
+        border: 1px solid #0253BA;
+        width: 100px;
+        height: 40px;
+        border-radius: 10px;
+        margin-left: 55px;
+        margin-top: 32px;
+    }
+    .button_tidak {
+        background: #0253BA;
+        color: #E2ECF9;
+        width: 100px;
+        height: 40px;
+        border-radius: 10px;
+        margin-left: 69px;
+    }
+    .overlay_daftar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Latar belakang semi-transparan */
+        z-index: 10; /* Atur z-index untuk menutupi elemen-elemen latar belakang */
+    }
+    .menu-popup {
+        background: #E2ECF9;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        position: relative;
+        z-index: 15;
+    }
+}
+
+@media (max-width: 594px) {
+    .card-header h1 {
+        font-family: sans-serif;
+    }
+    .icon-time {
+        width: 7rem;
+        margin: 1.2rem 0.3rem;
+    }
+    .icon-time i {
+        font-size: 2.5rem;
+    }
+    .content-box h1 {
+        font-size: 17px;
+    }
+    .dots {
+        font-size: 3rem;
+        margin: 1rem 0;
+    }
+
+    .icon-check {
+        width: 7rem;
+        margin: 1.2rem 0.3rem;
+    }
+    .icon-check i {
+        font-size: 3rem;
+        margin: -0.4rem -0.2rem;
+    }
+
+    .icon-x {
+        width: 7rem;
+        margin: 1.2rem 0.3rem;
+    }
+    .icon-x i {
+        font-size: 3.2rem;
+        margin: -.3rem -0.4rem;
+    }
+    .click_batal {
+        margin-left: -4.2rem;
+    }
+    .popup-options {
+        left: -1%;
+    }
+    .unduh-permintaan {
+        margin-left: -4.2rem;
+    }
+    .click_ttd {
+        margin-left: -4.2rem;
+    }
+    button[type="submit"] {
+        font-size: 17px; /* Atur ukuran font */
+    }
+}
+
+@media (max-width: 581px)  {
+    .card-header h1 {
+        margin-left: 0;
+        font-size: 16px;
+    }
+    .content-box {
+        margin: 1rem 0.6rem;
+    }
+    .content-box h1 {
+        font-size: 14px;
+    }
+    .content-box p {
+        font-size: 13px;
+    }
+    .icon-time {
+        width: 8rem;
+    }
+    .icon-time i {
+        font-size: 2rem;
+        margin: 0.4rem 0;
+    }
+    .dots {
+        font-size: 2.6rem;
+        margin: 1.3rem 0;
+    }
+    .icon-check {
+        width: 8rem;
+    }
+    .icon-check i {
+        font-size: 2.5rem;
+        margin: 0.1rem -0.4rem;
+    }
+    button[type="submit"] {
+        font-size: 14px; /* Atur ukuran font */
+    }
+}
+
+@media (max-width: 543px) {
+    .popup-options {
+        width: 328px;
+        height: 140px;
+    }
+    .button_ya {
+        margin-left: 25px;
+    }
+}
+
+@media (max-width: 466px) {
+    .card-header h1 {
+        font-size: 17px;
+    }
+    .icon-time {
+        width: 6.5rem;
+        margin: 1.5rem 0.3rem;
+    }
+    .icon-time i {
+        font-size: 1.5rem;
+    }
+    .content-box h1 {
+        font-size: 15px;
+    }
+    .content-box p {
+        font-size: 13px;
+    }
+    .dots {
+        font-size: 2.5rem;
+        margin: 1.3rem -2rem;
+    }
+    .icon-check {
+        width: 6.5rem;
+        margin: 1.5rem 0.3rem;
+    }
+    .icon-check i {
+        font-size: 1.7rem;
+    }
+    .icon-x {
+        width: 6.5rem;
+        margin: 1.5rem 0.3rem;
+    }
+    .icon-x i {
+        font-size: 1.7rem;
+    }
+    .click_batal {
+        margin-left: -7.2rem;
+    }
+    .unduh-permintaan {
+        margin-left: -7.2rem;
+    }
+    .click_ttd {
+        margin-left: -7.2rem;
+    }
+    .popup-options {
+        width: 282px;
+    }
+    .button_ya {
+        width: 84px;
+        height: 35px;
+    }
+    .button_tidak {
+        width: 84px;
+        height: 35px;
+        margin-left: 42px;
+    }
+    button[type="submit"] {
+        font-size: 15px; /* Atur ukuran font */
+    }
+}
+
+@media (max-width: 424px) {
+    .card-header h1 {
+        margin-left: -.4rem;
+        font-size: 14px;
+    }
+    .content-box {
+        margin: 1rem .7rem;
+    }
+    .icon-time {
+        width: 7.2rem;
+    }
+    .icon-check {
+        width: 7.2rem;
+    }
+    .icon-x {
+        width: 7.2rem;
+    }
+    .pencarian {
+        margin: 0 1.8rem;
+    }
+}
+
+@media (max-width: 412px) {
+    .popup-options {
+        width: 256px;
+    }
+}
+
+@media (max-width: 386px) {
+    .icon-time {
+        width: 10.2rem;
+    }
+    .icon-time i {
+        font-size: 2rem;
+        margin: -0.1rem 0;
+    }
+    .icon-check {
+        width: 10.2rem;
+    }
+    .icon-check i {
+        margin: -0.4rem -0.4rem;
+    }
+    .icon-x {
+        width: 10.2rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .popup-options {
+        width: 228px;
+    }
+    .button_ya {
+        margin-left: 13px;
+    }
+    .button_tidak {
+        margin-left: 26px;
+    }
+}
+
+@media (max-width: 324px) {
+    .popup-options {
+        width: 180px;
+    }
+    .button_ya {
+        width: 68px;
+        height: 28px;    
+        margin-top: 17px;
+    }
+    .button_tidak {
+        width: 68px;
+        height: 28px;    
+        margin-left: 8px;
+    }
+}

@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Linefont:wght@100&display=swap');
+
+@media screen and (min-width: 617px) {
+    body {
+        display: none;
+        overflow: hidden;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    text-decoration: none;
+    font-family: 'Abhaya+Libre', 'sans-serif';
+}
+
+@media (max-width: 617px) {
+    body {
+        height: 100vh;
+    }
+    .upbar {
+        background: #0253BA;
+        width: 100%;
+        height: 70px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+    .logo_aplikasi {
+        width:8%;
+        height:70%;
+        margin-left: 22px;
+    }
+    .upbar p {
+        color: white;
+        font-size: 18px;
+    }
+    .atur_jarak {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 75%;
+        height: 100%;
+        margin-left: 10px;
+    }
+    .icon-belt i {
+        color: #FFF;
+        font-size: 1.5rem;
+        margin-top: .5rem;
+        margin-left: -4rem;
+    }
+    .elips {
+        width: 11%;
+        height: 60%;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+    .elips img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+    }
+    .menu {
+        color: white;
+        width: 20px;
+        height: 14px;
+    }
+    .menu i {
+        font-size: 13px;
+        margin-right: 9px;
+    }
+    .dropdown-content {
+        background: #DFEAF7;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+        width: 198px;
+        height: 94px;
+        margin-top: 19px;
+        margin-left: -180px;
+        display: none;
+        position: absolute;
+        z-index: 1;
+    }
+    .notif_text {
+        padding: 5%;
+        text-align: left;
+    }
+    .notif_text h1 {
+        color: #0253BA;
+        font-size: 12px;
+    }
+    .line {
+        height: 1px;
+        width: 100%;
+        background: black;
+    }
+    .submit {
+        background: none;
+    }
+    .icon-exit {
+        display: flex;
+    }
+    .icon-exit i {
+        color: #0253BA;
+        margin-top: 0.6rem;
+        margin-left: 0.7rem;
+        font-size: 1.5rem;
+    }
+    .icon-exit h1 {
+        color: #0253BA;
+        position: absolute;
+        font-size: 19px;
+        margin-top: -1.4rem;
+        margin-left: 2.6rem;
+    }
+    .navbar-content {
+        margin-left: 31px;
+        position: absolute;
+        width: 22.9rem;
+        bottom: 0.5rem;
+    }
+    .navbar {
+        background: #0253BA;
+        margin-top: 12px;
+        padding: 0rem 6%;
+        width: 95.5%;
+        border-radius: 25px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .navbar a {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: transparent; 
+        font-size: 2rem;
+        color: white;
+        margin: 0.8rem 0 0.8rem 0rem;
+        transition: .5s ease;
+    }
+    .navbar a:hover, .navbar a.active {
+        background: white;
+        color: #0253BA;
+        box-shadow: 0 0 1rem skyblue;
+    }
+    .active {
+        display: block;
+    }
+}
+
+@media (max-width: 507px) {
+    .logo_aplikasi {
+        width: 10%;
+        height: 56%;
+    }
+}
+
+@media (max-width: 381px) {
+    .logo_aplikasi {
+        width: 9%;
+        height: 47%;
+    }
+}

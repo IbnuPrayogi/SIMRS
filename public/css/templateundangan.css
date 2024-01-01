@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 900px;
+    margin: 20px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .header {
+    display: flex;
+    flex-direction: row;
+    width: 627px;
+  }
+  .header_icon {
+    width: 95px;
+    height: 80%;
+    margin-top: 17px;
+    margin-left: 12px;
+  }
+  .teks_header {
+    color: #02BA62;
+    width: 83%;
+    text-align: center;
+  }
+  .teks_header h3 {
+    margin: 0;
+  }
+  .teks_header h2 {
+    margin: -12px;
+  }
+  .teks_header p {
+    margin: 11px;
+  }
+  .line {
+    background: black;
+    width: 100%;
+    height: 2px;
+  }
+  .awal {
+    margin-left: 23px;
+  }
+  .kedua {
+    margin-left: 68px;
+  }
+  .ketiga {
+    margin-left: 60px;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  ul li {
+    margin-bottom: 5px;
+    display: flex;
+  }

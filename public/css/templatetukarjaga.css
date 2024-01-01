@@ -1,0 +1,44 @@
+  .blangko {
+    color: #02BA62;
+    display: flex;
+    height: fit-content;
+  }
+  .isi {
+    color: #02BA62;
+    display: flex;
+    margin-top: -17px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 3px solid #02BA62;
+    text-align: left;
+    padding: 8px;
+  }
+  .tgl_blangko {
+    border: 3px solid #02BA62;
+    width: 225px;
+    height: 60px;
+    text-align: center;
+    margin-top: -13px;
+  }
+  .line {
+    background: black;
+    width: 126px;
+    height: 2px;
+  }
+  .ttd_B {
+    position: absolute;
+    margin-top: -216px;
+    margin-left: 65%;
+  }
+  .ttd_kar {
+    margin-top: 35px;
+  }
+  .ttd_kab {
+    position: absolute;
+    margin-top: -220px;
+    margin-left: 65%;
+  }

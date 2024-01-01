@@ -1,0 +1,52 @@
+body {
+    min-height: 100vh;
+    background-color: CFE1F8;
+  }
+  table thead {
+    background-color: blue;
+    color: white;
+  }
+  .card-body button {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%; /* Ukuran tombol mengikuti lebar card-body */
+    border-radius: 10px; /* Border radius */
+  }
+  
+  .card-body button:hover {
+    background-color: #E0E0E0; /* Warna abu-abu saat dihover */
+    color: black; /* Warna teks tetap hitam saat dihover */
+  }
+  
+  .button-container {
+    display: flex;
+    margin-bottom: 50px;
+    justify-content: center;
+  }
+  
+  .button {
+    width: 150px;
+    text-align: center;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #777; /* Mengganti warna font menjadi abu-abu */
+    border-radius: 20px; /* Untuk membuat tombol lebih lonjong */
+    justify-content: center;
+      }
+  
+  .active-button {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  .separator {
+    width: 1px;
+    background-color: #ccc;
+  }

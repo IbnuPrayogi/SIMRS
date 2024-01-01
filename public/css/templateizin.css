@@ -1,0 +1,15 @@
+.keterangan {
+    display: flex;
+    text-align: justify;
+    width: 619px;
+    margin-top: -7px;
+}
+.tanda_tangan {
+    display: flex;
+    justify-content: space-between;
+}
+.ttd_nama {
+    position: absolute;
+    margin-top: -233px;
+    margin-left: 70%;
+}

@@ -1,0 +1,54 @@
+body {
+    min-height: 100vh;
+    background-color: CFE1F8;
+  }
+  table thead {
+    background-color: blue;
+    color: white;
+}
+/* Reduce the button size in the "Aksi" column */
+.btn-primary {
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+}
+.btn-warning{
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+}
+.btn-danger{
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+}
+.btn-success{
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+}
+/* Menentukan lebar tabel */
+table {
+    width: 100%;
+}
+.button-container {
+    display: flex;
+  }
+
+  .button {
+    width: 150px;
+    text-align: center;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #777; /* Mengganti warna font menjadi abu-abu */
+    border-radius: 20px; /* Untuk membuat tombol lebih lonjong */
+    justify-content: center;
+      }
+
+  .active-button {
+    background-color: #3498db;
+    color: #fff;
+  }
+
+  .separator {
+    width: 1px;
+    background-color: #ccc;
+  }
