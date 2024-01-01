@@ -1,27 +1,28 @@
 <?php
 
-use App\Http\Controllers\Karyawan\ProfileKaryawanController;
-use App\Http\Controllers\Karyawan\StatusSuratController;
-use App\Http\Controllers\ListRequestLetterController;
+use App\Models\ListRequestLetter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ArsipController;
-use App\Http\Controllers\Admin\TemplateSKController;
 use App\Http\Controllers\Admin\DisposisiController;
 use App\Http\Controllers\Admin\SuratMasukController;
+use App\Http\Controllers\Admin\TemplateSKController;
 use App\Http\Controllers\Admin\SuratKeluarController;
-use App\Http\Controllers\KepalaBagian\KBDisposisiController;
-use App\Http\Controllers\KepalaBagian\KBSuratMasukController;
-use App\Http\Controllers\KepalaBagian\KBSuratKeluarController;
-use App\Http\Controllers\KepalaBagian\KBTemplateSKController;
+use App\Http\Controllers\ListRequestLetterController;
 use App\Http\Controllers\Admin\ProfileAdminController;
-use App\Http\Controllers\KepalaBagian\KBProfileController;
 use App\Http\Controllers\Karyawan\SuratCutiController;
 use App\Http\Controllers\Karyawan\SuratIzinController;
+use App\Http\Controllers\Karyawan\StatusSuratController;
+use App\Http\Controllers\KepalaBagian\KBProfileController;
 use App\Http\Controllers\Karyawan\SuratTukarJagaController;
-use App\Models\ListRequestLetter;
+use App\Http\Controllers\Karyawan\ProfileKaryawanController;
+use App\Http\Controllers\KepalaBagian\KBDisposisiController;
+use App\Http\Controllers\KepalaBagian\KBSuratMasukController;
+use App\Http\Controllers\KepalaBagian\KBTemplateSKController;
+use App\Http\Controllers\KepalaBagian\KBSuratKeluarController;
 
 
 Auth::routes();
@@ -40,6 +41,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     });
     Route::resource('arsip', ArsipController::class);
     Route::get('/arsip/{id}/{file}', [ArsipController::class, 'downloadarsip'])->name('arsipdownload');
+
+    Route::resource('shift', ShiftController::class);
 
     Route::resource('suratmasuk', SuratMasukController::class);
     Route::get('/suratmasuk/download/{id}/{file}', [SuratMasukController::class, 'downloadsuratmasuk'])->name('suratmasukdownload');
