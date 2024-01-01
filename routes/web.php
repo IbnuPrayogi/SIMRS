@@ -35,6 +35,9 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/dashboardadmin', function () {
         return view('admin.index');
     });
+    Route::get('/welcome', function () {
+        return view('welcome');
+    });
     Route::resource('arsip', ArsipController::class);
     Route::get('/arsip/{id}/{file}', [ArsipController::class, 'downloadarsip'])->name('arsipdownload');
 
