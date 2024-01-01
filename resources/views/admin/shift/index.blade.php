@@ -30,9 +30,9 @@
                             </div>
                             <div>
                                 
-                                <a href="{{ route('arsip.create') }}"><button class="button" id="openPopupButton"
+                                <a href="{{ route('shift.create') }}"><button class="button" id="openPopupButton"
                                         style="font-size: 15px; border-radius: 20px;">
-                                        Tambah Arsip Baru</button></a>
+                                        Tambah Shift Baru</button></a>
                             </div>
                         </div>
 
@@ -48,14 +48,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Nama Arsip</th>
-                                                    <th>Kode Arsip</th>
-                                                    <th>Perihal</th>
-                                                    <th>Kategori</th>
-                                                    <th>Tanggal Terbit</th>
-                                                    <th>Tanggal Selesai</th>
-                                                    <th>Lokasi Arsip</th>
-                                                    <th>File</th>
+                                                    <th>Nama Shift</th>
+                                                    <th>Kode Shift</th>
+                                                    <th>Bagian</th>
+                                                    <th>Jam Masuk</th>
+                                                    <th>Jam Pulang</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
@@ -63,32 +60,26 @@
                                                 @php
                                                     $no = 1;
                                                 @endphp
-                                                @foreach ($arsips as $arsip)
+                                                @foreach ($shifts as $shift)
                                                     <tr>
                                                         <td>{{ $no++ }}</td>
-                                                        <td>{{ $arsip->nama_arsip }}</td>
-                                                        <td>{{ $arsip->kode_arsip }}</td>
-                                                        <td>{{ $arsip->perihal }}</td>
-                                                        <td>{{ $arsip->kategori }}</td>
-                                                        <td>{{ $arsip->created_at->format('Y-m-d') }}</td>
-                                                        <td>{{ $arsip->tanggal_selesai }}</td>
-                                                        <td>{{ $arsip->lokasi_arsip }}</td>
-                                                        <td>{{ $arsip->file }}</td>
+                                                        <td>{{ $shift->nama_shift }}</td>
+                                                        <td>{{ $shift->kode_shift }}</td>
+                                                        <td>{{ $shift->bagian }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($shift->jam_masuk)->format('H:i') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($shift->jam_pulang)->format('H:i') }}</td>
+                                                
 
                                                         <td>
-                                                            <a href="{{ route('arsip.edit', $arsip->id) }}"><button
+                                                            <a href="{{ route('shift.edit', $shift->id) }}"><button
                                                                     class="btn btn-warning">
                                                                     <i class="fas fa-edit"></i></button></a>
-                                                            <a role="button"  class="delete-button" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm{{$arsip->id}}"><button
+                                                            <a role="button"  class="delete-button" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm{{$shift->id}}"><button
                                                                 class="btn btn-danger" data-toggle="modal" data-target="#hapusModal">
                                                                     <i class="fas fa-trash"></i></button></a>
-                                                                @if ($arsip->file)
-                                                                <a href="{{ route('arsipdownload', ['id' => $arsip->id, 'file' => $arsip->file]) }}" class="btn btn-success" target="_blank"><i class="fas fa-download"></i></a>
-                                                            @endif
+                                                
 
-
-
-                                                            <div class="modal fade bd-example-modal-sm{{$arsip->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                            <div class="modal fade bd-example-modal-sm{{$shift->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
@@ -98,7 +89,7 @@
                                                                         </div>
                                                                         <div class="modal-body">Apakah anda yakin ingin menghapus data?</div>
                                                                         <div class="modal-footer" style="left:0px; height: 80px;">
-                                                                            <form action="{{route('arsip.destroy', $arsip->id)}}" method="POST">
+                                                                            <form action="{{route('shift.destroy', $shift->id)}}" method="POST">
                                                                             @method('DELETE')
                                                                             @csrf
                                                                             <div style="display: flex; justify-content: space-between;">
