@@ -6,8 +6,8 @@ use App\Http\Controllers\ListRequestLetterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ArsipController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ArsipController;
 use App\Http\Controllers\Admin\TemplateSKController;
 use App\Http\Controllers\Admin\DisposisiController;
 use App\Http\Controllers\Admin\SuratMasukController;
@@ -18,9 +18,9 @@ use App\Http\Controllers\KepalaBagian\KBSuratKeluarController;
 use App\Http\Controllers\KepalaBagian\KBTemplateSKController;
 use App\Http\Controllers\Admin\ProfileAdminController;
 use App\Http\Controllers\KepalaBagian\KBProfileController;
-use App\Http\Controllers\SuratCutiController;
-use App\Http\Controllers\SuratIzinController;
-use App\Http\Controllers\SuratTukarJagaController;
+use App\Http\Controllers\Karyawan\SuratCutiController;
+use App\Http\Controllers\Karyawan\SuratIzinController;
+use App\Http\Controllers\Karyawan\SuratTukarJagaController;
 use App\Models\ListRequestLetter;
 
 

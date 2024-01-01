@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Karyawan;
 
 use Illuminate\Http\Request;
 use App\Models\SuratCuti;
@@ -8,6 +8,7 @@ use App\Models\Disposisi;
 use App\Http\Requests\StoreSuratCutiRequest;
 use App\Http\Requests\UpdateSuratCutiRequest;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\File;
 
