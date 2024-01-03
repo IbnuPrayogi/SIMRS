@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Knp\Snappy\Image;
+use App\Models\User;
+use App\Models\Shift;
 use App\Models\Jadwal;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Response;
 use App\Http\Requests\StoreJadwalRequest;
 use App\Http\Requests\UpdateJadwalRequest;
 
@@ -15,7 +20,12 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        $shifts = Shift::all();
+        $jadwal = Jadwal::where('bulan', now()->month)->get();
+
+        return View::make('admin.jadwal.index', compact('users', 'shifts','jadwal'));
+    
     }
 
     /**
@@ -51,6 +61,25 @@ class JadwalController extends Controller
         // Tambahkan logika lainnya jika diperlukan
     
         return redirect()->back()->with('success', 'Jadwal berhasil disimpan.');
+    }
+
+    public function download()
+    {
+        $users = User::all();
+        $shifts = Shift::all();
+        $jadwal = Jadwal::where('bulan', now()->month)->get();
+
+        $html = view('admin.jadwal.download', compact('users', 'jadwal','shifts'))->render();
+
+        $image = new Image();
+        $image->setOptions(['encoding' => 'utf-8']);
+
+        $imageContent = $image->getOutputFromHtml($html);
+
+        return response($imageContent)
+            ->header('Content-Type', 'image/png')
+            ->header('Content-Disposition', 'attachment; filename=jadwal_karyawan.png');
+    
     }
 
     /**

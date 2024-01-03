@@ -45,6 +45,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
     Route::resource('shift', ShiftController::class);
     Route::resource('jadwal', JadwalController::class);
+    Route::get('/jadwal/download/file', [JadwalController::class, 'download'])->name('jadwal.download');
 
 
     Route::resource('suratmasuk', SuratMasukController::class);
