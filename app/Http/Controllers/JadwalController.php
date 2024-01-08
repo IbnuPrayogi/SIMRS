@@ -36,32 +36,56 @@ class JadwalController extends Controller
         //
     }
 
+   
+
+// ...
+
+public function store(Request $request)
+{
+    $jadwalData = $request->input('jadwal');
+    $bulan = $request->input('bulan');
+
+    foreach ($jadwalData as $userId => $shifts) {
+        $totalMinutes = 0;
+
+        foreach ($shifts as $day => $shiftId) {
+            $shift = Shift::find($shiftId);
+
+            if ($shift) {
+                list($hours, $minutes,$second) = explode(':', $shift->lama_waktu);
+                $totalMinutes += $hours * 60 + $minutes;
+            }
+            
+        
+
+        // Update or add Jadwal
+        $jadwal=Jadwal::updateOrCreate(
+            [
+                'user_id' => $userId,
+                'bulan' => $bulan,
+          
+            ],
+            [
+                "tanggal_$day" => $shiftId,
+            ],
+        );
+
+        $jadwal->jumlah_jam_kerja=$totalMinutes;
+        $jadwal->save();
+    }
+
+    }
+
+    // Additional logic if needed
+
+    return redirect()->back()->with('success', 'Jadwal berhasil disimpan.');
+}
+
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $jadwalData = $request->input('jadwal');
-        $bulan = $request->input('bulan');
-    
-        foreach ($jadwalData as $userId => $shifts) {
-            foreach ($shifts as $day => $shiftId) {
-                Jadwal::updateOrCreate(
-                    [
-                        'user_id' => $userId,
-                        'bulan' => $bulan,
-                    ],
-                    [
-                        "tanggal_$day" => $shiftId,
-                    ]
-                );
-            }
-        }
-    
-        // Tambahkan logika lainnya jika diperlukan
-    
-        return redirect()->back()->with('success', 'Jadwal berhasil disimpan.');
-    }
+ 
 
     public function download()
     {
@@ -93,9 +117,9 @@ class JadwalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Jadwal $jadwal)
+    public function editjadwal($bulan)
     {
-        //
+        return view('admin.jadwal.edit',compact('bulan'));
     }
 
     /**

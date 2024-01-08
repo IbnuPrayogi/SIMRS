@@ -13,6 +13,7 @@ class Jadwal extends Model
     protected $fillable = [
         'user_id',
         'bulan',
+        'jumlah_jam_kerja',
         'tanggal_1',
         'tanggal_2',
         'tanggal_3',

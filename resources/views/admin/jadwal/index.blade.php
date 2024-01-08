@@ -78,6 +78,8 @@
 </table>
 
 <a href="javascript:void(0);" onclick="downloadImage()" class="btn btn-primary">Download Image</a>
+<a href="{{ route('jadwal.editjadwal', ['bulan' => $selectedMonth]) }}" class="btn btn-primary">Edit Schedule</a>
+
 
 </body>
 <script>

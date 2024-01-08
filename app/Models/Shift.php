@@ -14,5 +14,6 @@ class Shift extends Model
         'bagian',
         'jam_masuk',
         'jam_pulang',
+        'lama_waktu'
     ];
 }
