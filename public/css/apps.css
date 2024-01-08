@@ -1,12 +1,24 @@
-.dropdown-menu{
-    background-color: #0D72F2; 
+/* CSS untuk sidebar */
+.sidebar {
+    background-color: #0051B9;
+    color: #fff;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
 }
+
+
 /* CSS untuk kotak menu */
 .menu-box {
     background-color: #0D72F2;
-    
+    padding: 20px;
     width: 200px; /* Sesuaikan lebar kotak menu */
     border-radius: 15px; /* Membuat sudut kotak menjadi melengkung */
+    margin-left: 20px;
+    margin-top: 5px;
 }
 
 .menu {
@@ -38,8 +50,8 @@
 
 /* Atur tampilan konten utama */
 .content {
-    margin-left: 0px;
-    
+    margin-left: 250px;
+    padding: 20px;
 }
 
 /* Atur warna teks pada navbar */

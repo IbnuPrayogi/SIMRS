@@ -6,9 +6,9 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-12">
                 <div class="small-box">
-                    <div class="inner">
+                    <div class="inner" style="text-align: center">
                         <h3>{{ $countUsers }}</h3>
                         <p>Pengguna</p>
                     </div>
@@ -18,23 +18,10 @@
                     <a href="{{ route('KBprofile.user') }}" class="small-box-footer">Jumlah Pengguna <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-{{--
-            <div class="col-lg-3 col-6">
+    
+            <div class="col-lg-3 col-12">
                 <div class="small-box">
-                    <div class="inner">
-                        <h3>{{ $countArsips }}</h3>
-                        <p>Arsip</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">Jumlah Arsip <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div> --}}
-
-            <div class="col-lg-3 col-6">
-                <div class="small-box">
-                    <div class="inner">
+                    <div class="inner" style="text-align: center">
                         <h3>{{ $countSuratMasuk }}</h3>
                         <p>Surat Masuk</p>
                     </div>
@@ -44,10 +31,10 @@
                     <a href="{{ route('kbsuratmasuk.index') }}" class="small-box-footer">Jumlah Surat Masuk <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
-            <div class="col-lg-3 col-6">
+    
+            <div class="col-lg-3 col-12">
                 <div class="small-box">
-                    <div class="inner">
+                    <div class="inner" style="text-align: center">
                         <h3>{{ $countSuratKeluar }}</h3>
                         <p>Surat Keluar</p>
                     </div>
@@ -58,37 +45,8 @@
                 </div>
             </div>
         </div>
-
-        {{-- <div class="container">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-header border-0">
-                            <h3 class="card-title" style="text-align: center;color:#0051B9;">Statistik Surat Masuk-Keluar</h3>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="barChart" height="400"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header" style="background-color: #0051B9;color:white">
-                            <h4 class="card-title">Aktivitas Terbaru</h4>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Nur Keqing telah menandatangi surat <ID_SURAT></li>
-                                <li>Nur Keqing membuat permohonan tukar jaga.</li>
-                                <li>Nur Keqing menerima permohonan tukar jaga</li>
-                                <li>Nur Keqing menandatangi permohonan tukar jaga <ID_Permohonan></li>
-                                <li>Nur Keqing menambah template surat</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
+    </div>
+    
 
         <!-- Sisipkan script untuk Chart.js (jika belum ada) -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
