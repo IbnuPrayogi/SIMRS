@@ -50,6 +50,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::resource('jadwal', JadwalController::class);
     Route::get('/jadwal/download/file', [JadwalController::class, 'download'])->name('jadwal.download');
     Route::get('/jadwal/edit/{bulan}', [JadwalController::class, 'editjadwal'])->name('jadwal.editjadwal');
+    Route::post('/jadwal/import/import-sql-table', [JadwalController::class, 'importTable'])->name('jadwal.importsql');
 
 
     Route::resource('suratmasuk', SuratMasukController::class);
