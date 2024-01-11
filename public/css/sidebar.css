@@ -1,0 +1,77 @@
+
+/* Style untuk sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidebar img {
+    width: 40%;
+    margin-left: 50px;
+}
+
+.menu-box {
+    padding: 20px;
+}
+
+.menu-box .footer {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    color: white;
+}
+
+/* Style untuk konten */
+.content {
+    transition: margin-left 0.5s;
+    padding: 16px;
+}
+
+@media (max-width: 768px) {
+    /* Style untuk tampilan mobile */
+    .sidebar {
+        display: none;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+
+    .dropdown-menu {
+        background-color: rgb(0, 60, 255);
+        /* Tambahkan style yang diperlukan untuk tampilan mobile */
+        position: fixed;
+        width: 100%;
+        top: 60px; /* Adjust top position as needed */
+        left: 0;
+        padding: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        display: block !important; /* Important to override Bootstrap styles */
+    }
+
+    .dropdown-menu .menu-box {
+        padding: 0;
+    }
+
+    .dropdown-menu ul.menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .dropdown-menu ul.menu li {
+        padding: 10px 0;
+    }
+
+    .dropdown-menu a {
+        color: white;
+        text-decoration: none;
+    }
+}
