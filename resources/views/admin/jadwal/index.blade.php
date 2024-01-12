@@ -1,4 +1,6 @@
-<!-- resources/views/schedule/index.blade.php -->
+@extends('layouts.appdashboardkabag')
+
+@section('content')
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +33,27 @@
         .calendar-cell {
             text-align: center;
         }
-        /* Updated Styles */
+        @media only screen and (max-width: 600px) {
+        #scheduleTable {
+            font-size: 12px;
+        }
+
+        th, td {
+            min-width: 30px;
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .employee-name {
+            font-weight: bold;
+        }
+
+        .calendar-cell {
+            padding: 5px;
+        }
+    }
     </style>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
@@ -41,15 +63,15 @@
     $selectedMonth = request('selectedMonth', now()->format('m'));
 @endphp
 
-<h2>Jadwal Karyawan Bulan 
-    <select id="selectMonth" onchange="updateTable()" value="{{ $selectedMonth }}">
+<h4>Jadwal Karyawan Bulan 
+    <select id="selectMonth" onchange="updateTable()" value="{{ $selectedMonth }}" style="font-size: 20px">
         @for ($i = 1; $i <= 12; $i++)
             <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
                 {{ date('F', mktime(0, 0, 0, $i, 1)) }}
             </option>
         @endfor
     </select>
-</h2>
+</h4>
 
 <table id="scheduleTable">
     <tr>
@@ -98,3 +120,4 @@
     }
 </script>
 </html>
+@endsection
