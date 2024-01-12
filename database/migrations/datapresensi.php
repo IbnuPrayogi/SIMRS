@@ -11,8 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('presensis', function (Blueprint $table) {
+        Schema::create('presensi', function (Blueprint $table) {
             $table->id();
+            $table->string('badgenumber');
+            $table->string('username');
+            $table->string('deptname');
+            $table->string('sDate');
+            $table->string('stime');
+            $table->string('eDate');
+            // Tambahkan atribut lain sesuai kebutuhan
             $table->timestamps();
         });
     }
@@ -22,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('presensis');
+        Schema::dropIfExists('inoutdata');
     }
 };

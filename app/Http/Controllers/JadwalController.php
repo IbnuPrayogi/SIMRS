@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Shift;
 use Knp\Snappy\Image;
 use App\Models\Jadwal;
+use App\Models\Presensi;
+use App\Models\DataPresensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -115,44 +118,56 @@ public function store(Request $request)
 
         try {
             $sqlContent = file_get_contents($sqlFile->getRealPath());
-
-            $tableName= 'inoutdata';
-            $columnName = 'stime';
-            
-
             // Eksekusi pernyataan SQL
             DB::unprepared($sqlContent);
 
-            DB::unprepared("
-            UPDATE $tableName
-            SET $columnName = (
-                SELECT GROUP_CONCAT(DISTINCT TRIM(value) ORDER BY TRIM(value) SEPARATOR ' ')
-                FROM (
-                    SELECT value
-                    FROM (
-                        SELECT TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(stime, ' ', n), ' ', -1)) AS value
-                        FROM $tableName
-                        CROSS JOIN (
-                            SELECT a.N + b.N * 10 + 1 AS n
-                            FROM (
-                                SELECT 0 AS N
-                                UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
-                                UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
-                                UNION ALL SELECT 9
-                            ) AS a
-                            CROSS JOIN (
-                                SELECT 0 AS N
-                                UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
-                                UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
-                                UNION ALL SELECT 9
-                            ) AS b
-                        ) AS numbers
-                        WHERE LENGTH(TRIM(stime)) - LENGTH(REPLACE(TRIM(stime), ' ', '')) >= n - 1
-                    ) AS subquery
-                    WHERE TRIM(value) <> ''
-                ) AS distinct_values
-            )
-        ");
+            $inoutdataRecords = DataPresensi::all();
+
+            // Iterasi setiap record dan masukkan ke dalam tabel presensi
+            foreach ($inoutdataRecords as $inoutdataRecord) {
+          
+                $stimeArray = explode(' ', $inoutdataRecord->stime);
+
+                $uniqueStimeArray = array_values(array_unique($stimeArray));
+                dd(count($uniqueStimeArray));
+            
+                if(count($uniqueStimeArray)>2){
+                    $cout1=$uniqueStimeArray[1];
+                    $cin2 = $uniqueStimeArray[1];
+                    $cout2= $uniqueStimeArray[2];
+                }
+                elseif(count($uniqueStimeArray)==1){
+                    $cout1=null;
+                    $cin2 = null;
+                    $cout2= null;
+                }
+                elseif(count($uniqueStimeArray)==0){
+                    $cin1=null;
+                    $cout1=null;
+                    $cin2 = null;
+                    $cout2= null;
+                }
+                else {
+                    $cin2 = NULL;
+                    $cout2= NULL;
+                }
+                
+                Presensi::create([
+                    'id_karyawan' => $inoutdataRecord->badgenumber,
+                    'nama_karyawan' => $inoutdataRecord->username,
+                    'nama_bagian' => $inoutdataRecord->deptname,
+                    'tanggal' => Carbon::createFromFormat('d/m/Y', $inoutdataRecord->eDate)->format('Y-m-d'),
+                    'cin1' => Carbon::parse($uniqueStimeArray[0])->format('H:i:s'),
+                    'cout1' => Carbon::parse($cout1)->format('H:i:s'),
+                    'cin2' => Carbon::parse($cin2)->format('H:i:s'),
+                    'cout2' => Carbon::parse($cout2)->format('H:i:s'),
+          
+                    // Tambahkan atribut lain sesuai kebutuhan
+                ]);
+                array_splice($uniqueStimeArray, 0);
+            }
+
+         
             
 
             return redirect('/import-sql-table')->with('success', 'Table imported successfully');
