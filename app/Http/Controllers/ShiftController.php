@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Arsip;
+use Carbon\Carbon;
 
+use App\Models\Arsip;
 use App\Models\Shift;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -42,21 +43,34 @@ class ShiftController extends Controller
             'jam_masuk' => 'required|date_format:H:i',
             'jam_pulang' => 'required|date_format:H:i',
         ]);
-
-
-
+        
         // Adjust the file handling logic based on your requirements
         // ...
+        
+        $jamMasuk = Carbon::createFromFormat('H:i', $request->jam_masuk);
+        $jamPulang = Carbon::createFromFormat('H:i', $request->jam_pulang);
+        
+        // Check if both $jamMasuk and $jamPulang are valid Carbon instances
+        if ($jamMasuk instanceof Carbon && $jamPulang instanceof Carbon) {
+            // Calculate the time difference in hours and minutes
+            $lamaWaktu = $jamPulang->diff($jamMasuk);
+        
+            Shift::create([
+                'nama_shift' => $request->nama_shift,
+                'kode_shift' => $request->kode_shift,
+                'bagian' => $request->bagian,
+                'jam_masuk' => $jamMasuk->format('H:i'), // Format as string
+                'jam_pulang' => $jamPulang->format('H:i'), // Format as string
+                'lama_waktu' => $lamaWaktu->format('%H:%I'), // Format time difference as string
+            ]);
+        
+            return redirect()->route('shift.index')->with('success', 'Arsip created successfully');
+        } else {
+            // Handle the case where $jamMasuk or $jamPulang is not a valid time
+            return redirect()->back()->with('error', 'Invalid time format');
+        }
+        
 
-        Shift::create([
-            'nama_shift' => $request->nama_shift,
-            'kode_shift' => $request->kode_shift,
-            'bagian' => $request->bagian,
-            'jam_masuk' => $request->jam_masuk,
-            'jam_pulang' => $request->jam_pulang,
-        ]);
-
-        return redirect()->route('shift.index')->with('success', 'Arsip created successfully');
     }
 
     /**

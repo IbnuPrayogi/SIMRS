@@ -40,12 +40,17 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/welcome', function () {
         return view('welcome');
     });
+    Route::get('/welcome2', function () {
+        return view('test');
+    });
     Route::resource('arsip', ArsipController::class);
     Route::get('/arsip/{id}/{file}', [ArsipController::class, 'downloadarsip'])->name('arsipdownload');
 
     Route::resource('shift', ShiftController::class);
     Route::resource('jadwal', JadwalController::class);
     Route::get('/jadwal/download/file', [JadwalController::class, 'download'])->name('jadwal.download');
+    Route::get('/jadwal/edit/{bulan}', [JadwalController::class, 'editjadwal'])->name('jadwal.editjadwal');
+    Route::post('/jadwal/import/import-sql-table', [JadwalController::class, 'importTable'])->name('jadwal.importsql');
 
 
     Route::resource('suratmasuk', SuratMasukController::class);
