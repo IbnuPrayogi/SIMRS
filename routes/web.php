@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ArsipController;
 use App\Http\Controllers\Admin\DisposisiController;
@@ -47,6 +48,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/arsip/{id}/{file}', [ArsipController::class, 'downloadarsip'])->name('arsipdownload');
 
     Route::resource('shift', ShiftController::class);
+    Route::resource('presensi', PresensiController::class);
     Route::resource('jadwal', JadwalController::class);
     Route::get('/jadwal/download/file', [JadwalController::class, 'download'])->name('jadwal.download');
     Route::get('/jadwal/edit/{bulan}', [JadwalController::class, 'editjadwal'])->name('jadwal.editjadwal');

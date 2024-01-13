@@ -51,33 +51,32 @@ public function store(Request $request)
     $bulan = $request->input('bulan');
 
     foreach ($jadwalData as $userId => $shifts) {
+        // Inisialisasi $totalMinutes di sini untuk setiap user
         $totalMinutes = 0;
 
         foreach ($shifts as $day => $shiftId) {
-            $shift = Shift::find($shiftId);
+            // Pastikan $day memiliki nilai yang valid sebelum digunakan
+                $shift = Shift::find($shiftId);
 
-            if ($shift) {
-                list($hours, $minutes,$second) = explode(':', $shift->lama_waktu);
-                $totalMinutes += $hours * 60 + $minutes;
-            }
-            
-        
+                if ($shift) {
+                    list($hours, $minutes, $second) = explode(':', $shift->lama_waktu);
+                    $totalMinutes += $hours * 60 + $minutes;
+                }
 
-        // Update or add Jadwal
-        $jadwal=Jadwal::updateOrCreate(
-            [
-                'user_id' => $userId,
-                'bulan' => $bulan,
-          
-            ],
-            [
-                $day=> $shiftId,
-            ],
-        );
+                // Update or add Jadwal
+                $jadwal = Jadwal::updateOrCreate(
+                    [
+                        'user_id' => $userId,
+                        'bulan' => $bulan,
+                    ],
+                    [
+                        "tanggal_$day" => $shiftId,
+                    ],
+                );
+                $jadwal->jumlah_jam_kerja =  $totalMinutes;
+                $jadwal->save();        
 
-        $jadwal->jumlah_jam_kerja=$totalMinutes;
-        $jadwal->save();
-    }
+        }
 
     }
 
@@ -85,6 +84,7 @@ public function store(Request $request)
 
     return redirect()->back()->with('success', 'Jadwal berhasil disimpan.');
 }
+
 
 
     /**
@@ -126,34 +126,7 @@ public function store(Request $request)
         }
     }
 
-    public function rekapPresensi(){
-        // Ambil data jadwal
-        $jadwalData = Jadwal::all();
 
-        // Perulangan untuk setiap tanggal di jadwal
-        foreach ($jadwalData as $jadwal) {
-            $userId = $jadwal->user_id;
-            $tanggalField = 'tanggal_' . $jadwal->tanggal;
-
-            // Ambil data presensi sesuai tanggal dan user_id
-            $presensiData = DataPresensi::where('badgenumber', $userId)
-                ->whereDate('sDate', $jadwal->$tanggalField)
-                ->first();
-
-            // Lakukan perbandingan atau operasi lain sesuai kebutuhan
-            if ($presensiData) {
-                // Data presensi ditemukan
-                // Lakukan operasi atau pembandingan lain jika diperlukan
-                // Misalnya, $presensiData->cin1 dan $jadwal->jumlah_jam_kerja
-            } else {
-                // Data presensi tidak ditemukan
-                // Lakukan operasi atau pembandingan lain jika diperlukan
-            }
-        }
-
-        // Operasi selanjutnya atau respons
-        // ...
-    }
 
     /**
      * Display the specified resource.

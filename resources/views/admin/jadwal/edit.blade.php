@@ -63,23 +63,23 @@
             @endfor
             <th>Jam Kerja</th>
         </tr>
-    
+
         @foreach ($users as $user)
             @php
                 $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $bulan)->first();
             @endphp
-    
+
             <tr>
                 <td class="employee-name">{{ $user->nama_karyawan }}</td>
-    
+
                 @for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $bulan, now()->format('Y')); $day++)
                     @php
-                        $userShift = $userSchedule ? $shifts->where('id', $userSchedule->$day)->first() : null;
-                        $shiftId = $userShift ? $userShift->kode_shift : 'P';
+                        $userShift = $userSchedule ? $shifts->where('id', $userSchedule->{"tanggal_$day"})->first() : null;
+                        $shiftId = $userShift ? $userShift->kode_shift : '-';
                     @endphp
                     <td class="calendar-cell">
                         <div class="shift-dropdown">
-                            <select class="shift" name="jadwal[{{ $day }}][{{ $user->id }}]">
+                            <select class="shift" name="jadwal[{{ $user->id }}][{{ $day }}]">
                                 @foreach ($shifts as $shiftOption)
                                     <option value="{{ $shiftOption->id }}" {{ $shiftId == $shiftOption->kode_shift ? 'selected' : '' }}>
                                         {{ $shiftOption->kode_shift }}
@@ -89,16 +89,17 @@
                         </div>
                     </td>
                 @endfor
-    
+
                 @php
-                    if($userSchedule){
-                        $hours = floor($userSchedule->jumlah_jam_kerja / 60);
-                        $minutes = $userSchedule->jumlah_jam_kerja % 60;
-                    }
-                    else{
-                        $hours= '0';
-                        $minutes='0';
-                    }
+                if($userSchedule){
+                    $hours = floor($userSchedule->jumlah_jam_kerja / 60);
+                    $minutes = $userSchedule->jumlah_jam_kerja % 60;
+                }
+                else{
+                    $hours = '0';
+                    $minutes = '0';
+                }
+                    
                 @endphp
                 <td>{{ $hours.' jam' }}</td>
             </tr>
@@ -108,6 +109,11 @@
     <input type="hidden" name="bulan" value="{{ $bulan }}">
 
     <button type="submit">Simpan Jadwal</button>
+</form>
+<form method="post" action="{{ route('presensi.store') }}" enctype="multipart/form-data">
+    @csrf
+    <label for="">Rekap Presensi</label><br>
+    <button type="submit">Rekap Data Presensi</button>
 </form>
 
 <script>

@@ -14,9 +14,9 @@ return new class extends Migration
 
             // Add columns for each day of the month (tanggal_1, tanggal_2, ..., tanggal_31)
             for ($day = 1; $day <= 31; $day++) {
-                $table->unsignedBigInteger($day)->nullable();
+                $table->unsignedBigInteger("tanggal_$day")->nullable();
             }
-            $table->time('jumlah_jam_kerja');
+            $table->integer('jumlah_jam_kerja');
 
             $table->string('bulan'); // Assuming 'bulan' is a string, adjust if it's supposed to be an integer
             $table->timestamps();

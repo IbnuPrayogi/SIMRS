@@ -19,5 +19,7 @@
         <input type="file" name="sql_file"><br><br>
         <button type="submit">Import SQL Table</button>
     </form>
+
+
 </body>
 </html>
