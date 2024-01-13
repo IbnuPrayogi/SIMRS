@@ -13,8 +13,10 @@ return new class extends Migration
             $table->string('nama_shift');
             $table->string('kode_shift');
             $table->string('bagian');
-            $table->time('jam_masuk');
-            $table->time('jam_pulang');
+            $table->time('cin1');
+            $table->time('cout1');
+            $table->time('cin2')->nullable();
+            $table->time('cout2')->nullable();
             $table->time('lama_waktu');
             $table->timestamps();
         });

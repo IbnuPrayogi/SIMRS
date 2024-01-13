@@ -71,7 +71,7 @@ public function store(Request $request)
           
             ],
             [
-                "tanggal_$day" => $shiftId,
+                $day=> $shiftId,
             ],
         );
 
@@ -120,60 +120,39 @@ public function store(Request $request)
             $sqlContent = file_get_contents($sqlFile->getRealPath());
             // Eksekusi pernyataan SQL
             DB::unprepared($sqlContent);
-
-            $inoutdataRecords = DataPresensi::all();
-
-            // Iterasi setiap record dan masukkan ke dalam tabel presensi
-            foreach ($inoutdataRecords as $inoutdataRecord) {
-          
-                $stimeArray = explode(' ', $inoutdataRecord->stime);
-
-                $uniqueStimeArray = array_values(array_unique($stimeArray));
-                dd(count($uniqueStimeArray));
-            
-                if(count($uniqueStimeArray)>2){
-                    $cout1=$uniqueStimeArray[1];
-                    $cin2 = $uniqueStimeArray[1];
-                    $cout2= $uniqueStimeArray[2];
-                }
-                elseif(count($uniqueStimeArray)==1){
-                    $cout1=null;
-                    $cin2 = null;
-                    $cout2= null;
-                }
-                elseif(count($uniqueStimeArray)==0){
-                    $cin1=null;
-                    $cout1=null;
-                    $cin2 = null;
-                    $cout2= null;
-                }
-                else {
-                    $cin2 = NULL;
-                    $cout2= NULL;
-                }
-                
-                Presensi::create([
-                    'id_karyawan' => $inoutdataRecord->badgenumber,
-                    'nama_karyawan' => $inoutdataRecord->username,
-                    'nama_bagian' => $inoutdataRecord->deptname,
-                    'tanggal' => Carbon::createFromFormat('d/m/Y', $inoutdataRecord->eDate)->format('Y-m-d'),
-                    'cin1' => Carbon::parse($uniqueStimeArray[0])->format('H:i:s'),
-                    'cout1' => Carbon::parse($cout1)->format('H:i:s'),
-                    'cin2' => Carbon::parse($cin2)->format('H:i:s'),
-                    'cout2' => Carbon::parse($cout2)->format('H:i:s'),
-          
-                    // Tambahkan atribut lain sesuai kebutuhan
-                ]);
-                array_splice($uniqueStimeArray, 0);
-            }
-
-         
-            
-
             return redirect('/import-sql-table')->with('success', 'Table imported successfully');
         } catch (\Exception $e) {
             return redirect('/import-sql-table')->with('error', 'Error importing table: ' . $e->getMessage());
         }
+    }
+
+    public function rekapPresensi(){
+        // Ambil data jadwal
+        $jadwalData = Jadwal::all();
+
+        // Perulangan untuk setiap tanggal di jadwal
+        foreach ($jadwalData as $jadwal) {
+            $userId = $jadwal->user_id;
+            $tanggalField = 'tanggal_' . $jadwal->tanggal;
+
+            // Ambil data presensi sesuai tanggal dan user_id
+            $presensiData = DataPresensi::where('badgenumber', $userId)
+                ->whereDate('sDate', $jadwal->$tanggalField)
+                ->first();
+
+            // Lakukan perbandingan atau operasi lain sesuai kebutuhan
+            if ($presensiData) {
+                // Data presensi ditemukan
+                // Lakukan operasi atau pembandingan lain jika diperlukan
+                // Misalnya, $presensiData->cin1 dan $jadwal->jumlah_jam_kerja
+            } else {
+                // Data presensi tidak ditemukan
+                // Lakukan operasi atau pembandingan lain jika diperlukan
+            }
+        }
+
+        // Operasi selanjutnya atau respons
+        // ...
     }
 
     /**

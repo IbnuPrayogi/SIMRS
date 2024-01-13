@@ -63,23 +63,23 @@
             @endfor
             <th>Jam Kerja</th>
         </tr>
-
+    
         @foreach ($users as $user)
             @php
                 $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $bulan)->first();
             @endphp
-
+    
             <tr>
                 <td class="employee-name">{{ $user->nama_karyawan }}</td>
-
+    
                 @for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $bulan, now()->format('Y')); $day++)
                     @php
-                        $userShift = $userSchedule ? $shifts->where('id', $userSchedule->{"tanggal_$day"})->first() : null;
-                        $shiftId = $userShift ? $userShift->kode_shift : '-';
+                        $userShift = $userSchedule ? $shifts->where('id', $userSchedule->$day)->first() : null;
+                        $shiftId = $userShift ? $userShift->kode_shift : 'P';
                     @endphp
                     <td class="calendar-cell">
                         <div class="shift-dropdown">
-                            <select class="shift" name="jadwal[{{ $user->id }}][{{ $day }}]">
+                            <select class="shift" name="jadwal[{{ $day }}][{{ $user->id }}]">
                                 @foreach ($shifts as $shiftOption)
                                     <option value="{{ $shiftOption->id }}" {{ $shiftId == $shiftOption->kode_shift ? 'selected' : '' }}>
                                         {{ $shiftOption->kode_shift }}
@@ -89,10 +89,16 @@
                         </div>
                     </td>
                 @endfor
-
+    
                 @php
-                    $hours = floor($userSchedule->jumlah_jam_kerja / 60);
-                    $minutes = $userSchedule->jumlah_jam_kerja % 60;
+                    if($userSchedule){
+                        $hours = floor($userSchedule->jumlah_jam_kerja / 60);
+                        $minutes = $userSchedule->jumlah_jam_kerja % 60;
+                    }
+                    else{
+                        $hours= '0';
+                        $minutes='0';
+                    }
                 @endphp
                 <td>{{ $hours.' jam' }}</td>
             </tr>
