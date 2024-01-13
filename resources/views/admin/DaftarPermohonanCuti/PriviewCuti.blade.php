@@ -8,6 +8,19 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Template Surat Cuti</title>
+        <style>
+            /* Tambahkan gaya CSS responsif di sini */
+            body {
+                font-size: 14px; /* Sesuaikan ukuran font sesuai kebutuhan */
+            }
+
+            @media (max-width: 768px) {
+                .container_cuti {
+                    /* Sesuaikan gaya untuk layar kecil di sini */
+                    margin: 10px;
+                }
+            }
+        </style>
     </head>
 
     <body>
