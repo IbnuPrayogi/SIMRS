@@ -59,9 +59,76 @@ class PresensiController extends Controller
                 $presensi = DataPresensi::where('badgenumber', $jadwal->user_id)
                     ->where('eDate', $tanggal)
                     ->first();
-                dd($presensi);
+             
 
+                $shiftDay=Shift::where('id',$dayValue)->first();
+              
+
+    
+
+             // String berisi 4 data terpisah dengan spasi
+                $stringData = '12:30:00 12:30:00 16:00:00 17:00:00';
+
+                // Pecah string menjadi array
+                $arrayData = explode(' ', $stringData);
+                // Hapus elemen yang duplikat dari array
+                $uniqueArray = array_unique($arrayData);
+                // Gabungkan kembali array menjadi string
+                $arrayData = implode(' ', $uniqueArray);
+
+                $arrayData = explode(' ', $arrayData);
+                dd(count($arrayData));
+
+                
+            
+                
+                if ($shiftDay->cin2 != null) {
+                    $columns = ['cin1', 'cout1', 'cin2', 'cout2'];
+                } else {
+                    $columns = ['cin1', 'cout1'];
+                }
+                
+                // Konversi nilai dalam kolom waktu menjadi objek DateTime
+                foreach ($columns as $col) {
+                    $shiftDay->$col = new \DateTime($shiftDay->$col);
+                }
+                
+                $cin1 = $cout1 = $cin2 = $cout2 = null;
+                $closestIndex = null; // Inisialisasi $closestIndex di luar loop
+                
+                // Iterasi melalui kolom-kolom waktu
+                foreach ($columns as $col) {
+                    // Hitung selisih waktu dan ambil indeks dengan selisih waktu terkecil
+                    $closestIndex = array_search(
+                        min(array_map(
+                            function ($time) use ($shiftDay, $col) {
+                                // Konversi nilai string menjadi objek DateTime
+                                $time = new \DateTime($time);
+                                return abs(($shiftDay->$col)->getTimestamp() - $time->getTimestamp());
+                            },
+                            $arrayData
+                        )),
+                        array_map(
+                            function ($time) use ($shiftDay, $col) {
+                                // Konversi nilai string menjadi objek DateTime
+                                $time = new \DateTime($time);
+                                return abs(($shiftDay->$col)->getTimestamp() - $time->getTimestamp());
+                            },
+                            $arrayData
+                        )
+                    );
+                
+                    // Pastikan bahwa variabel adalah objek DateTime sebelum menggunakan getTimestamp()
+                  
+                        ${$col} = $arrayData[$closestIndex];
+                
+                    
+                 }
             }
+        
+    
+
+
 
             if ($dataPresensi) {
                 // Ambil shift dari jadwal

@@ -26,7 +26,7 @@ class JadwalController extends Controller
     {
         $users = User::all();
         $shifts = Shift::all();
-        $jadwal = Jadwal::where('bulan', now()->month)->get();
+        $jadwal = Jadwal::all();
 
         return View::make('admin.jadwal.index', compact('users', 'shifts','jadwal'));
     
