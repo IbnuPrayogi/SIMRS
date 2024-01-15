@@ -33,6 +33,21 @@ class PresensiController extends Controller
      */
     public function store()
     {
+        $conn = odbc_connect("Driver={Microsoft Access Driver (*.mdb)};Dbq=/path/to/your/database.mdb", "", "");
+
+        if ($conn) {
+            // Query your Access database
+            $result = odbc_exec($conn, "SELECT * FROM your_table");
+
+            while ($row = odbc_fetch_array($result)) {
+                print_r($row);
+            }
+
+            // Close the connection
+            odbc_close($conn);
+        } else {
+            echo "Failed to connect to the Access database.";
+        }
         // Ambil semua data jadwal
         $jadwals = Jadwal::all();
 
@@ -62,22 +77,24 @@ class PresensiController extends Controller
              
 
                 $shiftDay=Shift::where('id',$dayValue)->first();
+
+
               
 
     
 
              // String berisi 4 data terpisah dengan spasi
-                $stringData = '12:30:00 12:30:00 16:00:00 17:00:00';
+                $stringData = '12:30:00 12:30:00 16:00:00 17:15:00';
 
                 // Pecah string menjadi array
-                $arrayData = explode(' ', $stringData);
+                $arrayData = explode(' ', $presensi->stime);
                 // Hapus elemen yang duplikat dari array
                 $uniqueArray = array_unique($arrayData);
                 // Gabungkan kembali array menjadi string
                 $arrayData = implode(' ', $uniqueArray);
 
                 $arrayData = explode(' ', $arrayData);
-                dd(count($arrayData));
+         
 
                 
             
@@ -120,10 +137,38 @@ class PresensiController extends Controller
                 
                     // Pastikan bahwa variabel adalah objek DateTime sebelum menggunakan getTimestamp()
                   
-                        ${$col} = $arrayData[$closestIndex];
-                
-                    
+                        ${$col} = $arrayData[$closestIndex];  
+                       
+                        
                  }
+                 if($shiftDay->cin2==null){
+                    if($cin1!=null){
+                        
+              
+                        $cin1 = new \DateTime($cin1);
+
+                        dd($shiftDay->cin1->getTimestamp()-$cin1->getTimestamp());
+                        
+                        if(($shiftDay->cin1->getTimestamp()-$cin1->getTimestamp())>300){
+                            $selisihWaktu = $shiftDay->cin1->diff($cin1);
+                            // Menghitung selisih waktu dalam menit
+                            $selisihJam = ($selisihWaktu->h) + (round($selisihWaktu->i/30)*0.5);
+                        }
+
+                  
+               
+                        
+                     
+                
+                        // Pembulatan ke kelipatan 30 menit dengan pembulatan ke atas
+                 
+
+                    }
+                 }
+                 
+                 
+
+                
             }
         
     
