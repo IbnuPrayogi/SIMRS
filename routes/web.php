@@ -199,6 +199,9 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::get('/pengajuan', function () {
         return view('karyawan.buatpengajuan');
     });
+    Route::get('/presensi', function () {
+        return view('karyawan.presensi');
+    });
 });
 
 // route::resource('suratkeluar', SuratKeluarController::class);
