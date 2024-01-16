@@ -19,7 +19,8 @@ class Presensi extends Model
         'cin2',
         'cout2',
         'tanggal',
-        'nama_bagian'
+        'nama_bagian',
+        'status'
     ];
 
     // Relationships or additional methods can be added here
