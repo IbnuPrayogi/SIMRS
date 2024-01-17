@@ -202,6 +202,11 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::get('/presensi', function () {
         return view('karyawan.presensi');
     });
+
+    Route::get('/detailpresensi', function () {
+        return view('karyawan.detailpresensi');
+    });
+    
 });
 
 // route::resource('suratkeluar', SuratKeluarController::class);
