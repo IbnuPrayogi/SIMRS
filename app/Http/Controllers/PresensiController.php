@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Potongan;
+use App\Models\User;
 use App\Models\Shift;
 use App\Models\Jadwal;
+use App\Models\Potongan;
 use App\Models\Presensi;
+use App\Models\Terlambat;
 use App\Models\DataPresensi;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use App\Http\Requests\StorePresensiRequest;
 use App\Http\Requests\UpdatePresensiRequest;
-use App\Models\Terlambat;
 
 class PresensiController extends Controller
 {
@@ -19,6 +22,12 @@ class PresensiController extends Controller
      */
     public function index()
     {
+        $users = User::all();
+        $shifts = Shift::all();
+        $jadwal = Jadwal::all();
+        $presensi = Presensi::all();
+
+        return View::make('admin.presensi.index', compact('users', 'shifts','jadwal','presensi'));
         //
     }
 
@@ -33,13 +42,14 @@ class PresensiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(Request $request)
     { 
         // Ambil semua data jadwal
-        $jadwals = Jadwal::all();
-
-   
-
+        $bulan=intval($request->input('bulan'));
+        $tahun=intval($request->input('tahun'));
+        $jadwals = Jadwal::where('bulan',$bulan)->get();
+        
+    
         // Loop melalui setiap jadwal
         foreach ($jadwals as $jadwal) {
         
@@ -49,26 +59,27 @@ class PresensiController extends Controller
             
             ])->get();
             for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, 1, now()->format('Y')); $day++) {
-                $data = Jadwal::where("tanggal_$day", '!=', null)->pluck("tanggal_$day")->toArray();
+                $data = Jadwal::where("tanggal_$day", '!=', null)->where('bulan',$bulan)->pluck("tanggal_$day")->toArray();
                 // Jika data ditemukan, ambil nilai pertama dari array
                 $dayValue = !empty($data) ? $data[0] : null;
             
                 // Menyimpan nilai ke dalam array $dayValues
                 $dayValues["tanggal_$day"] = $dayValue;
             
-
-               
-
-                $tanggal="$day"."/12/2023";
-                $presensi = DataPresensi::where('badgenumber', $jadwal->user_id)
+                $tanggal="$day"."/".$bulan."/".$tahun;
+                $user= User::where('id',$jadwal->user_id)->first();
+                $presensi = DataPresensi::where('username', $user->nama_karyawan)
                     ->where('eDate', $tanggal)
                     ->first();
 
+                $shiftDay=Shift::where('id',$dayValue)->first();
+             
+
            
 
-                if($presensi!=null){
+                if($presensi!=null && $shiftDay->kode_shift !="L"){
                     $status='tepat waktu';
-                    $shiftDay=Shift::where('id',$dayValue)->first();
+                  
                     // String berisi 4 data terpisah dengan spasi
                        $arrayData = explode(' ', $presensi->stime);
                        // Hapus elemen yang duplikat dari array
@@ -109,10 +120,8 @@ class PresensiController extends Controller
                        // Join the array back into a string
                        $arrayData = implode(' ', $selectedTime);
                        $arrayData= explode(' ',$arrayData);
-                     
-                       
-                
-       
+
+                    
                        if ($shiftDay->cin2!=null) {
                            $columns = ['cin1', 'cout1', 'cin2', 'cout2'];
                        } 
@@ -158,27 +167,21 @@ class PresensiController extends Controller
                            }
 
                       
-                           // Hitung selisih waktu dan ambil indeks dengan selisih waktu terkecil
-                            
-                               
-                              
-                               
+                           // Hitung selisih waktu           
                         }
-                        
+                 
 
                   
                        if($shiftDay->cin1 !=null && $shiftDay->cout1!= null){
-                           if($cin1!=null && $cout1!=null && $cin1!= $cout1){
+                           if($cin1!=null){
 
-                              
-                            
                                $cin1 = new \DateTime($cin1);
                                if(($cin1->getTimestamp()-$shiftDay->cin1->getTimestamp())>300){
                                    $selisihWaktu = $shiftDay->cin1->diff($cin1);
                                    // Menghitung selisih waktu dalam menit
                                    $waktuTelat = ($selisihWaktu->h) + (round($selisihWaktu->i/30)*0.5);
 
-                                   Terlambat::create([
+                                   Terlambat::updateorcreate([
                                     'user_id'=>$presensi->badgenumber,
                                     'shift_id'=>$shiftDay->id,
                                     'tanggal'=>$presensi->eDate,
@@ -187,41 +190,136 @@ class PresensiController extends Controller
                                    $status='terlambat';
                                }
 
-                               $cout1 = new \DateTime($cout1);
-                             
-                               if(($shiftDay->cout1->getTimestamp()-$cout1->getTimestamp())>300){
-                           
-                                   $timeDifferent = $shiftDay->cout1->getTimestamp()-$cout1->getTimestamp();
-                                   
-                                   // Menghitung selisih waktu dalam menit
-                                   $waktuPulangCepat = round($timeDifferent/1800)*0.5;
+                               if($shiftDay->kode_shift== 'M'){
+                                    $day2=$day+1;
+                                    $tanggal3=$day2."/".$bulan."/".$tahun;
+                                    $cout1 = DataPresensi::where('username', $user->nama_karyawan)
+                                        ->where('eDate', $tanggal3)
+                                        ->first();
 
-                                   Potongan::create([
-                                    'user_id'=>$presensi->badgenumber,
-                                    'shift_id'=>$shiftDay->id,
-                                    'tanggal'=>$presensi->eDate,
-                                    'waktu_potongan'=>$waktuPulangCepat
-                                   ]);
+                                    $arrayData = explode(' ', $cout1->stime);
+                                    // Hapus elemen yang duplikat dari array
+                                    $uniqueArray = array_unique($arrayData);
+                                    // Gabungkan kembali array menjadi string
+                                    $arrayData = implode(' ', $uniqueArray);
+                    
+                                    $arrayData = explode(' ', $arrayData);
+                                    $cout1=$arrayData[0];
 
-                                   if($status!='terlambat'){
-                                    $status='potongan';
-                                   }
-                                   else{
-                                    $status='terlambat dan terpotong';
-                                   }
                                }
-
+                               if($cout1!=null){
+                                $cout1 = new \DateTime($cout1);
+                             
+                                if(($shiftDay->cout1->getTimestamp()-$cout1->getTimestamp())>300){
                             
-                  
+                                    $timeDifferent = $shiftDay->cout1->getTimestamp()-$cout1->getTimestamp();
+                                    
+                                    // Menghitung selisih waktu dalam menit
+                                    $waktuPulangCepat = round($timeDifferent/1800)*0.5;
+ 
+                                    Potongan::updateorcreate([
+                                     'user_id'=>$presensi->badgenumber,
+                                     'shift_id'=>$shiftDay->id,
+                                     'tanggal'=>$presensi->eDate,
+                                     'waktu_potongan'=>$waktuPulangCepat
+                                    ]);
+ 
+                                    if($status!='terlambat'){
+                                     $status='potongan';
+                                    }
+                                    else{
+                                     $status='terlambat dan terpotong';
+                                    }
+                                }
+
+                               }
+                               else{
+                                $status='alfa';
+                               }
+                              
                            }
                            else{
                             $status='alfa';
                             
                             }
                        
-                       }
+                       } 
+                       if($shiftDay->cin2 !=null && $shiftDay->cout2!= null){
+                        if($cin2!=null ){
+
                      
-                       Presensi::create([
+                         
+                            $cin2 = new \DateTime($cin2);
+                            if(($cin2->getTimestamp()-$shiftDay->cin2->getTimestamp())>300){
+                                $selisihWaktu = $shiftDay->cin2->diff($cin2);
+                                // Menghitung selisih waktu dalam menit
+                                $waktuTelat = ($selisihWaktu->h) + (round($selisihWaktu->i/30)*0.5);
+
+                                Terlambat::create([
+                                 'user_id'=>$presensi->badgenumber,
+                                 'shift_id'=>$shiftDay->id,
+                                 'tanggal'=>$presensi->eDate,
+                                 'waktu_terlambat'=>$waktuTelat
+                                ]);
+                                $status='terlambat';
+                            }
+                            
+
+
+                            $hari=$day+1;
+                            $tanggal2=$hari."/".$bulan."/".$tahun;
+                            $cout2 = DataPresensi::where('username', $user->nama_karyawan)
+                                ->where('eDate', $tanggal2)
+                                ->first();
+
+                            $arrayData = explode(' ', $cout2->stime);
+                            // Hapus elemen yang duplikat dari array
+                            $uniqueArray = array_unique($arrayData);
+                            // Gabungkan kembali array menjadi string
+                            $arrayData = implode(' ', $uniqueArray);
+            
+                            $arrayData = explode(' ', $arrayData);
+                            $cout2=$arrayData[0];
+
+                            if($cout2!=null){
+                                $cout2 = new \DateTime($cout2);
+                          
+                                if(($shiftDay->cout2->getTimestamp()-$cout2->getTimestamp())>300){
+                            
+                                    $timeDifferent = $shiftDay->cout2->getTimestamp()-$cout2->getTimestamp();
+                                    
+                                    // Menghitung selisih waktu dalam menit
+                                    $waktuPulangCepat = round($timeDifferent/1800)*0.5;
+    
+                                    Potongan::updateorcreate([
+                                     'user_id'=>$presensi->badgenumber,
+                                     'shift_id'=>$shiftDay->id,
+                                     'tanggal'=>$presensi->eDate,
+                                     'waktu_potongan'=>$waktuPulangCepat
+                                    ]);
+    
+                                    if($status!='terlambat'){
+                                     $status='potongan';
+                                    }
+                                    else{
+                                     $status='terlambat dan terpotong';
+                                    }
+                                }
+                            }
+                            else{
+                                $status='alfa';
+                            }
+
+                        }
+                        else{
+                         $status='alfa';
+                         
+                         }
+                    
+                    } 
+                       
+                     
+                       Presensi::updateorcreate([
                         'id_karyawan'=>$jadwal->user_id,
                         'nama_karyawan'=>$presensi->username,
                         'nama_bagian'=>$presensi->deptname,
@@ -233,17 +331,25 @@ class PresensiController extends Controller
                         'tanggal'=>$presensi->eDate
                        ]);
 
-                    //    Terlambat::updateOrCreate(
-                    //     [
-                    //         'user_id' => $request->input('user_id'),
-                    //         'tanggal' => $request->input('tanggal'),
-                    //     ],
-                    //     [
-                    //         'jumlah_terlambat' => $request->input('jumlah_terlambat'),
-                    //     ]
-                    //      );
+                }
+                elseif($presensi==null && $shiftDay->kode_shift!="L"){
+                    $status="alfa";
+                    $user=User::where('id',$jadwal->user_id)->first();
+                    Presensi::updateorcreate([
+                        'id_karyawan'=>$jadwal->user_id,
+                        'nama_karyawan'=>$user->nama_karyawan,
+                        'nama_bagian'=>$user->nama_bagian,
+                        'cin1'=>null,
+                        'cout1'=>null,
+                        'cin2'=>null,
+                        'cout2'=>null,
+                        'status'=>$status,
+                        'tanggal'=>$tanggal
+                       ]);
+
 
                 }
+     
                
             }
         

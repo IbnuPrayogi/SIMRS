@@ -12,8 +12,10 @@ class Shift extends Model
         'nama_shift',
         'kode_shift',
         'bagian',
-        'jam_masuk',
-        'jam_pulang',
+        'cin1',
+        'cout1',
+        'cin2',
+        'cout2',
         'lama_waktu'
     ];
 }

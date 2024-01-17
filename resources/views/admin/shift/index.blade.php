@@ -66,8 +66,8 @@
                                                         <td>{{ $shift->nama_shift }}</td>
                                                         <td>{{ $shift->kode_shift }}</td>
                                                         <td>{{ $shift->bagian }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($shift->jam_masuk)->format('H:i') }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($shift->jam_pulang)->format('H:i') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($shift->cin1)->format('H:i') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($shift->cout1)->format('H:i') }}</td>
                                                 
 
                                                         <td>

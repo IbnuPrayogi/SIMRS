@@ -40,27 +40,42 @@ class ShiftController extends Controller
             'nama_shift' => 'required|string',
             'bagian' => 'required|string',
             'kode_shift' => 'required|string',
-            'jam_masuk' => 'required|date_format:H:i',
-            'jam_pulang' => 'required|date_format:H:i',
+            'cin1' => 'required|date_format:H:i',
+            'cout1' => 'required|date_format:H:i',
         ]);
         
         // Adjust the file handling logic based on your requirements
         // ...
         
-        $jamMasuk = Carbon::createFromFormat('H:i', $request->jam_masuk);
-        $jamPulang = Carbon::createFromFormat('H:i', $request->jam_pulang);
+        $jamMasuk1 = Carbon::createFromFormat('H:i', $request->cin1);
+        $jamPulang1 = Carbon::createFromFormat('H:i', $request->cout1);
+        $lamaWaktu = $jamPulang1->diff($jamMasuk1);
+        if($request->cin2!=null){
+            $jamMasuk2 = Carbon::createFromFormat('H:i', $request->cin2);
+            $jamPulang2 = Carbon::createFromFormat('H:i', $request->cout2);
+            $lamaWaktu2 = $jamPulang2->diff($jamMasuk2);
+
+            $lamaWaktu=$lamaWaktu->add($lamaWaktu2);
+
+        }
+        else{
+            $jamMasuk2=$jamPulang2=null;
+        }
         
         // Check if both $jamMasuk and $jamPulang are valid Carbon instances
-        if ($jamMasuk instanceof Carbon && $jamPulang instanceof Carbon) {
+        if ($jamMasuk1 instanceof Carbon && $jamPulang1 instanceof Carbon) {
             // Calculate the time difference in hours and minutes
-            $lamaWaktu = $jamPulang->diff($jamMasuk);
+            
+
         
             Shift::create([
                 'nama_shift' => $request->nama_shift,
                 'kode_shift' => $request->kode_shift,
                 'bagian' => $request->bagian,
-                'jam_masuk' => $jamMasuk->format('H:i'), // Format as string
-                'jam_pulang' => $jamPulang->format('H:i'), // Format as string
+                'cin1' => $jamMasuk1->format('H:i'), // Format as string
+                'cout1' => $jamPulang1->format('H:i'),
+                'cin2' => $jamMasuk1->format('H:i'), // Format as string
+                'cout2' => $jamPulang1->format('H:i'), // Format as string
                 'lama_waktu' => $lamaWaktu->format('%H:%I'), // Format time difference as string
             ]);
         
