@@ -28,7 +28,7 @@
 </head>
 
 <body
-    style="background-image: url('{{ asset('img/bg-mobile.png') }}');
+    style="background-image: url('{{ asset('img/bg.jpeg') }}');
              background-size: cover;
              background-position: center;
              background-repeat: no-repeat;">
@@ -38,7 +38,7 @@
                 <img src="../img/logo.png" alt="logo" style="width:100%; height:100%;" />
             </div>
             <div class="atur_jarak">
-                <p>Perizinan</p>
+                <p>RS Islam Asy-syifa</p>
             </div>
             <div class="icon-belt">
                 <a href="/permintaantukarjaga"><i class='bx bxs-bell'></i></a>

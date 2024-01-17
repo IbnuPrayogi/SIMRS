@@ -10,16 +10,25 @@
     </div>
     <div class="card-body">
         <div class="card-content">
-            <h2>Tukar Jaga</h2>
-            <a href="{{ route('surattukarjaga.create') }}"><i class='bx bx-right-arrow-circle row1' ></i></a>
+            <div style="display:flex;flex-direction:column">
+                <h2>Tukar Jaga</h2>
+                <h3 style="margin-left: 15px;color:#0253BA;">Kuota : 50</h3>
+            </div>
+            <a href="{{ route('surattukarjaga.create') }}"><i class="fas fa-plus"></i> </i></a>
         </div>
         <div class="card-content">
-            <h2>Permohonan Cuti</h2>
-            <a href="{{ route('suratcuti.create') }}"><i class='bx bx-right-arrow-circle row2' ></i></a>
+            <div style="display:flex;flex-direction:column">
+                <h2>Permohonan Cuti</h2>
+                <h3 style="margin-left: 15px;color:#0253BA;">Kuota : 50</h3>
+            </div>
+            <a href="{{ route('suratcuti.create') }}"><i class="fas fa-plus"></i> </a>
         </div>
-        <div class="card-content">
+        <div class="card-content">            
+        <div style="display:flex;flex-direction:column">
             <h2>Permohonan Izin</h2>
-            <a href="{{ route('suratizin.create') }}"><i class='bx bx-right-arrow-circle row2' ></i></a>
+            <h3 style="margin-left: 15px;color:#0253BA;">Kuota : 50</h3>
+        </div>
+            <a href="{{ route('suratizin.create') }}"><i class="fas fa-plus"></i> </a>
         </div>
     </div>
 </div>

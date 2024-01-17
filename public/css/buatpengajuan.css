@@ -9,8 +9,8 @@
 
 @media (max-width: 616px) {
     .container {
-        margin-top: 2rem;
-        margin-left: 2rem;
+        margin-top: 7rem;
+        margin-left: 1.5rem;
     }
     .card-header {
         background: var(--heading-color);
@@ -45,8 +45,9 @@
     }
     .card-content h2 {
         color: var(--text-color);
-        font-size: 17px;
-        margin: 1rem;
+        font-size: 22px;
+        margin: 0.25rem;
+        margin-left: 15px;
     }
     .card-content a {
         color: var(--text-color);
