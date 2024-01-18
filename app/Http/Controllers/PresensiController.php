@@ -282,7 +282,7 @@ class PresensiController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Data presensi berhasil dimasukkan.']);
+        return route('presensi.index');
     }
 
 
