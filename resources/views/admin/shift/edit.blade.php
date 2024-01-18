@@ -55,17 +55,33 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="jamMasuk" class="col-md-4 col-form-label">Jam Masuk</label>
+                                            <label for="jamMasuk" class="col-md-4 col-form-label">Check in 1</label>
                                             <div class="col-md-8">
-                                                <input type="time" class="form-control" id="jamMasuk" style="background-color: #E0E0E0;" name="jam_masuk" value="{{ $shift->jam_masuk }}">
+                                                <input type="time" class="form-control" id="cin1" style="background-color: #E0E0E0;" name="cin1" value="{{ $shift->cin1 }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="jamPulang" class="col-md-4 col-form-label">Jam Pulang</label>
+                                            <label for="jamPulang" class="col-md-4 col-form-label">Check out 1</label>
                                             <div class="col-md-8">
-                                                <input type="time" class="form-control" id="jamPulang" style="background-color: #E0E0E0;" name="jam_pulang" value="{{ $shift->jam_pulang }}">
+                                                <input type="time" class="form-control" id="cout1" style="background-color: #E0E0E0;" name="cout1" value="{{ $shift->cout1 }}">
                                             </div>
                                         </div>
+                                        @if ($shift->cin2!=null)
+                                        <div class="form-group row">
+                                            <label for="jamMasuk" class="col-md-4 col-form-label">Check in 2</label>
+                                            <div class="col-md-8">
+                                                <input type="time" class="form-control" id="jamMasuk" style="background-color: #E0E0E0;" name="cin2" value="{{ $shift->cin2 }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="jamPulang" class="col-md-4 col-form-label">Check out 2</label>
+                                            <div class="col-md-8">
+                                                <input type="time" class="form-control" id="jamPulang" style="background-color: #E0E0E0;" name="cout2" value="{{ $shift->cout2 }}">
+                                            </div>
+                                        </div>
+                                            
+                                        @endif
+
                                         <button type="submit" class="btn btn-default" style="background-color: blue;color:white">Update</button>
                                     </form>
                                 </div>

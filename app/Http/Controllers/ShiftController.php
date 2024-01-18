@@ -36,6 +36,7 @@ class ShiftController extends Controller
 
     public function store(Request $request)
     {
+        
         $request->validate([
             'nama_shift' => 'required|string',
             'bagian' => 'required|string',
@@ -49,17 +50,55 @@ class ShiftController extends Controller
         
         $jamMasuk1 = Carbon::createFromFormat('H:i', $request->cin1);
         $jamPulang1 = Carbon::createFromFormat('H:i', $request->cout1);
-        $lamaWaktu = $jamPulang1->diff($jamMasuk1);
-        if($request->cin2!=null){
+        
+
+        // Hitung selisih waktu tanpa memperhatikan melewati pukul 24
+        $lamaWaktu = $jamPulang1->diffInHours($jamMasuk1) * 3600 ;
+        if($jamPulang1->hour<$jamMasuk1->hour){
+            $lamaWaktu= 86400-$lamaWaktu;
+        }
+  
+        if ($request->cin2 != null) {
             $jamMasuk2 = Carbon::createFromFormat('H:i', $request->cin2);
             $jamPulang2 = Carbon::createFromFormat('H:i', $request->cout2);
-            $lamaWaktu2 = $jamPulang2->diff($jamMasuk2);
 
-            $lamaWaktu=$lamaWaktu->add($lamaWaktu2);
+            // Hitung selisih waktu tanpa memperhatikan melewati pukul 24
+            $lamaWaktu2 = $jamPulang2->diffInHours($jamMasuk2) * 3600 ;
+            if($jamPulang2->hour<$jamMasuk2->hour){
+                $lamaWaktu2= 86400-$lamaWaktu2;
+            }
 
+            // Jumlahkan durasi waktu
+            $lamaWaktu = $lamaWaktu + $lamaWaktu2;
+
+            // Buat objek waktu dari total detik
+            $lamaWaktu = Carbon::createFromTimestamp($lamaWaktu);
+
+            Shift::create([
+                'nama_shift' => $request->nama_shift,
+                'kode_shift' => $request->kode_shift,
+                'bagian' => $request->bagian,
+                'cin1' => $jamMasuk1->format('H:i'), // Format as string
+                'cout1' => $jamPulang1->format('H:i'),
+                'cin2' => $jamMasuk2->format('H:i'), // Format as string
+                'cout2' => $jamPulang2->format('H:i'), // Format as string
+                'lama_waktu' => $lamaWaktu->format('H:i'), // Format time difference as string
+            ]);
         }
         else{
+            $lamaWaktu = Carbon::createFromTimestamp($lamaWaktu);
             $jamMasuk2=$jamPulang2=null;
+
+            Shift::create([
+                'nama_shift' => $request->nama_shift,
+                'kode_shift' => $request->kode_shift,
+                'bagian' => $request->bagian,
+                'cin1' => $jamMasuk1->format('H:i'), // Format as string
+                'cout1' => $jamPulang1->format('H:i'),
+                'cin2' => null, // Format as string
+                'cout2' => null, // Format as string
+                'lama_waktu' => $lamaWaktu->format('H:i'), // Format time difference as string
+            ]);
         }
         
         // Check if both $jamMasuk and $jamPulang are valid Carbon instances
@@ -68,16 +107,7 @@ class ShiftController extends Controller
             
 
         
-            Shift::create([
-                'nama_shift' => $request->nama_shift,
-                'kode_shift' => $request->kode_shift,
-                'bagian' => $request->bagian,
-                'cin1' => $jamMasuk1->format('H:i'), // Format as string
-                'cout1' => $jamPulang1->format('H:i'),
-                'cin2' => $jamMasuk1->format('H:i'), // Format as string
-                'cout2' => $jamPulang1->format('H:i'), // Format as string
-                'lama_waktu' => $lamaWaktu->format('%H:%I'), // Format time difference as string
-            ]);
+           
         
             return redirect()->route('shift.index')->with('success', 'Arsip created successfully');
         } else {
@@ -112,23 +142,54 @@ class ShiftController extends Controller
      */
     public function update(Request $request, $id)
     {
-      
         $request->validate([
             'nama_shift' => 'required',
             'kode_shift' => 'required',
             'bagian' => 'required',
-            'jam_masuk' => 'required',
-            'jam_pulang' => 'required'
+            'cin1' => 'required',
+            'cout1' => 'required'
         ]);
+
+        $shift = Shift::findOrFail($id);
+
+        $jamMasuk1 = Carbon::parse($request->cin1);
+        $jamPulang1 = Carbon::parse($request->cout1);
         
 
 
-        $shift = Shift::findOrFail($id);
-     
+        // Hitung selisih waktu tanpa memperhatikan melewati pukul 24
+        $lamaWaktu = $jamPulang1->diffInHours($jamMasuk1) * 3600 ;
+
+        if($jamPulang1->hour<$jamMasuk1->hour){
+            $lamaWaktu= 86400-$lamaWaktu;
+        }
+    
+        if ($request->cin2 != null && $request->cout2 != null) {
+            $jamMasuk2 = Carbon::parse($request->cin2);
+            $jamPulang2 = Carbon::parse($request->cout2);
+            
+
+            // Hitung selisih waktu tanpa memperhatikan melewati pukul 24
+            $lamaWaktu2 = $jamPulang2->diffInHours($jamMasuk2) * 3600;
+            if($jamPulang2->hour<$jamMasuk2->hour){
+                $lamaWaktu2= 86400-$lamaWaktu2;
+            }
+
+            // Jumlahkan durasi waktu
+            $lamaWaktu += $lamaWaktu2;
+
+        }
+        
+        // Buat objek waktu dari total detik
+        $lamaWaktu = Carbon::createFromTimestamp($lamaWaktu);
+
         $shift->update($request->all());
+        $shift->lama_waktu = $lamaWaktu;
+        $shift->save();
 
         return redirect()->route('shift.index')->with('success', 'Data shift berhasil diupdate');
     }
+
 
     /**
      * Remove the specified resource from storage.
