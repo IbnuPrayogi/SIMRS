@@ -97,13 +97,14 @@
                 </div>
                 <div class="ttd_cuti">
                     <div class="ttd_koor">
-                        <p>Mengetahui<br>
-                            Ka./Koor.Bagian:</p>
-                            @if ($suratCuti->kepala_bagian)
+                        <p>Menyetujui<br>
+                            Direktur RS Islam Asy-Syifaa</p>
+                            @if ($suratCuti->tanda_tangan_direktur)
                             <img style="height: 120px ; width:120px;"
                             src="{{ asset('assets/ttd/'.$suratCuti->kepala_bagian) }}"
                             alt="Tanda Tangan">
                             @else
+                            @if (auth()->user()->jabatan=="Direktur")
                             <form method="POST" action="{{ route('PermohonanCuti.Sign', ['id' => $suratCuti->id]) }}">
                                 @csrf
                                 @method('put')
@@ -114,6 +115,8 @@
                                 @method('put')
                                 <button type="submit">Tolak</button>
                             </form>
+                                
+                            @endif
                             @endif
 
                         <br><br>

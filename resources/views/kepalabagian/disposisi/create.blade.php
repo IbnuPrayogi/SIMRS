@@ -30,11 +30,6 @@
                                                 <span
                                                     class="badge bg-secondary">{{ $surat->nama_surat }}</span>
                                             </div>
-                                             
-                                               
-                                    
-                
-
                                             <form method="POST" action="{{route('kbdisposisi.tambahdisposisi' , ['id'=>$surat->id,'jenis'=> $jenis])}}" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('POST')
@@ -44,7 +39,7 @@
                                                             <option value="HRD">HRD</option>
                                                             <option value="Kepala Bagian">Kepala Bagian</option>
                                                             <option value="Manajer">Manajer</option>
-                                                            <option value="Direktur RS">Direktur RS</option>
+                                                            <option value="Direktur">Direktur</option>
                                                             <option value="Direktur PT">Direktur PT</option>
                                                         </select>
                                                     </div>

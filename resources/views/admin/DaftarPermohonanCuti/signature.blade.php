@@ -79,13 +79,13 @@
                 </p>
             </div>
             <div class="ttd_koor">
-                <p>Mengetahui,<br>
-                    Ka./Koor.Bagian
-                @if ($suratCuti->kepala_bagian)</p>
+                <p>Menyetujui,<br>
+                    Direktur RSI
+                @if ($suratCuti->tanda_tangan_direktur)</p>
                 <img style="height: 120px ; width:120px;"
-                    src="{{ public_path('assets/ttd/'.$suratCuti->kepala_bagian) }}" alt="Tanda Tangan">
+                    src="{{ public_path('assets/ttd/'.$suratCuti->tanda_tangan_direktur) }}" alt="Tanda Tangan">
                 @endif
-            <p>{{ $suratCuti->nama_kepala_bagian }}</p>
+            <p>Direktur RSI Asy-Syifaa</p>
 
             </div>
             <div class="ttd_pemohon">

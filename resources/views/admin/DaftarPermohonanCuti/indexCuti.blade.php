@@ -53,11 +53,16 @@
                                                         <td>{{ $Cuti->status }}</td>
 
                                                         <td>
-                                                            @if ($Cuti->status == auth()->user()->jabatan && $Cuti->kepala_bagian == NULL)
+                                                            @if ($Cuti->status == auth()->user()->jabatan && $Cuti->status!='disetujui' )
                                                             <a href="{{ route('PermohonanCuti.priview', $Cuti->id) }}"><button
                                                                 class="btn btn-warning" style="background:#1AACAC">
                                                                 <i class="fa-solid fa-file-signature"></i></button></a>
-                                                                
+                                                            
+                                                            <a
+                                                            href="{{ route('kbdisposisi.tambah', ['id' => $Cuti->id, 'jenis' => "surat cuti"]) }}"><button
+                                                                class="btn btn-success"><i
+                                                                    class="fa-solid fa-share-from-square"></i></button></a>
+                                                  
                                                             @endif
 
                                                             @if ($Cuti->file)

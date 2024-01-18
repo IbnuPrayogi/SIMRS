@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Karyawan;
 
-use Illuminate\Http\Request;
-use App\Models\SuratCuti;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Disposisi;
+use App\Models\SuratCuti;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\StoreSuratCutiRequest;
 use App\Http\Requests\UpdateSuratCutiRequest;
-use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\Controller;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\File;
 
 
 
@@ -31,6 +32,21 @@ class SuratCutiController extends Controller
         $validatedData = $request->validate([
             'file' => 'mimes:pdf,doc,docx|max:5120',
         ]);
+        $kepala = User::where(function ($query) {
+            $query->where('jabatan', 'Kepala Bagian')
+                  ->orWhere('jabatan', 'Kepala Ruangan');
+        })
+        ->where('nama_bagian', auth()->user()->nama_bagian)
+        ->first();
+
+        if($kepala!=null){
+            $status=$kepala->jabatan;
+
+        }
+        else{
+            $status='Direktur';
+        }
+    
 
         $location1 = 'assets/suratCuti/';
 
@@ -43,7 +59,7 @@ class SuratCutiController extends Controller
             'jabatan' => $request->jabatan,
             'keterangan' => $request->keterangan,
             'tanda_tangan'=>auth()->user()->tanda_tangan,
-            'status' => "Kepala Bagian",
+            'status' => $status,
         ]);
 
         $suratCuti->nama_surat ="Surat Cuti ".auth()->user()->nama_karyawan.$suratCuti->id;
@@ -79,8 +95,7 @@ class SuratCutiController extends Controller
     public function Sign($id)
     {
         $suratCuti = SuratCuti::where('id', $id)->first();
-        $suratCuti->kepala_bagian = auth()->user()->tanda_tangan;
-        $suratCuti->nama_kepala_bagian = auth()->user()->nama_karyawan;
+        $suratCuti->tanda_tangan_direktur = auth()->user()->tanda_tangan;
         $suratCuti->save();
 
         $pdf = PDF::loadView('admin.DaftarPermohonanCuti.signature', compact('suratCuti'));
@@ -145,7 +160,7 @@ class SuratCutiController extends Controller
             'id_surat'=> $suratCuti->id,
             'nama_surat' => $suratCuti->nama_surat,
             'status' => $suratCuti->status,
-            'deskripsi' => "Surat Telah Ditolak oleh Kepala Bagian",
+            'deskripsi' => "Surat Telah Ditolak oleh Direktur",
             // Tambahkan kolom-kolom lainnya sesuai kebutuhan
         ]);
 

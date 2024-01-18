@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\KepalaBagian;
 
 use App\Models\Disposisi;
+use App\Models\SuratCuti;
+use App\Models\SuratIzin;
 use App\Models\SuratMasuk;
 use App\Models\SuratKeluar;
+use App\Models\SuratTukarJaga;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDisposisiRequest;
@@ -31,6 +34,15 @@ class KBDisposisiController extends Controller
         else if($jenis == "surat masuk"){
             $surat = SuratMasuk::where('id', $id)->first();
         }
+        else if($jenis == "surat cuti"){
+            $surat = SuratCuti::where('id', $id)->first();
+        }
+        else if($jenis == "surat izin"){
+            $surat = SuratIzin::where('id', $id)->first();
+        }
+        else if($jenis == "surat tukar jaga"){
+            $surat = SuratTukarJaga::where('id', $id)->first();
+        }
 
         return view('kepalabagian.disposisi.create',compact('surat','jenis'));
     }
@@ -46,6 +58,15 @@ class KBDisposisiController extends Controller
         }
         else if($jenis == "surat masuk"){
             $surat=SuratMasuk::find($id);
+        }
+        else if($jenis == "surat cuti"){
+            $surat=SuratCuti::find($id);
+        }
+        else if($jenis == "surat izin"){
+            $surat=SuratIzin::find($id);
+        }
+        else if($jenis == "surat tukar jaga"){
+            $surat=SuratTukarJaga::find($id);
         }
         
         
@@ -65,7 +86,7 @@ class KBDisposisiController extends Controller
         ]);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('kbsuratkeluar.index')->with('success', 'Data berhasil disimpan!');
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
     /**
