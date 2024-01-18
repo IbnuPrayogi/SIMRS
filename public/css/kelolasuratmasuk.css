@@ -1,55 +1,106 @@
 body {
-    min-height: 100vh;
-    background-color: CFE1F8;
-  }
-  table thead {
-    background-color: blue;
-    color: white;
+    
+  background-color: CFE1F8;
+}
+table thead {
+  background-color: blue;
+  color: white;
 }
 /* Reduce the button size in the "Aksi" column */
 .btn-primary {
-    padding: 0.25rem 0.5rem;
-    font-size: 10px;
+  padding: 0.25rem 0.5rem;
+  font-size: 10px;
 }
 .btn-warning{
-    padding: 0.25rem 0.5rem;
-    font-size: 10px;
+  padding: 0.25rem 0.5rem;
+  font-size: 10px;
 }
 .btn-danger{
-    padding: 0.25rem 0.5rem;
-    font-size: 10px;
+  padding: 0.25rem 0.5rem;
+  font-size: 10px;
 }
 .btn-success{
-    padding: 0.25rem 0.5rem;
-    font-size: 10px;
+  padding: 0.25rem 0.5rem;
+  font-size: 10px;
 }
 /* Menentukan lebar tabel */
 table {
-    width: 100%;
+  width: 100%;
 }
 .button-container {
-    display: flex;
-    justify-content: center;
-  }
+  display: flex;
+  justify-content: center;
+}
 
-  .button {
-    width: 150px;
-    text-align: center;
-    padding: 5px 10px;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #777; /* Mengganti warna font menjadi abu-abu */
-    border-radius: 20px; /* Untuk membuat tombol lebih lonjong */
-    justify-content: center;
-      }
+.button {
+  width: 150px;
+  text-align: center;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #777; /* Mengganti warna font menjadi abu-abu */
+  border-radius: 20px; /* Untuk membuat tombol lebih lonjong */
+  justify-content: center;
+    }
 
-  .active-button {
-    background-color: #3498db;
-    color: #fff;
-  }
+.active-button {
+  background-color: #3498db;
+  color: #fff;
+}
 
-  .separator {
-    width: 1px;
-    background-color: #ccc;
-  }
+.separator {
+  width: 1px;
+  background-color: #ccc;
+}
+/* Gaya untuk layar seluler */
+@media only screen and (max-width: 767px) {
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.font-weight-bold {
+    font-size: 12px;
+}
+
+.card-header {
+    padding: 15px;
+}
+
+.btn {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.modal-footer {
+    height: auto;
+}
+}
+
+/* Gaya untuk layar yang lebih besar */
+@media only screen and (min-width: 768px) {
+.container {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.font-weight-bold {
+    font-size: 15px;
+}
+
+.card-header {
+    padding: 20px;
+}
+
+.btn {
+    width: auto;
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.modal-footer {
+    height: 80px;
+}
+}

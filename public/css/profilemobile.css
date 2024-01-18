@@ -4,9 +4,8 @@
 
 @media (max-width: 616px) {
     .container {
-        margin: 5%;
         margin-top: 12px;
-        margin-left: 77px;
+        margin-left: 30px;
     }
     .card {
         background: rgba(230, 239, 250, 0.80);
@@ -24,14 +23,14 @@
     .card-body {
         background: rgba(230, 239, 250, 0.65);
         width: 90%;
-        height: 502px;
+        height: 670px;
         overflow-y: scroll;
     }
     .box_foto {
         background: white;
         width: 95%;
-        height: 50%;
-        margin: 2.3%;
+        height: 300px;
+        margin: 2%;
         border-radius: 10px;
     }
     .lapisan {
@@ -183,7 +182,7 @@
 
 @media (max-width: 497px) {
     .container {
-        margin-left: 61px;
+        margin-left: 40px;
     }
     .ganti_foto {
         width: 83%;

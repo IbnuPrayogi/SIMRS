@@ -2,7 +2,7 @@
 
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
-<link rel="stylesheet" href="css/homemobile.css">
+<link rel="stylesheet" href="css/buatpengajuan.css">
 
 <div class="container">
     <div class="card-header">

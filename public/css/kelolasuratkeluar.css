@@ -1,5 +1,5 @@
 body {
-    min-height: 100vh;
+    
     background-color: CFE1F8;
   }
   table thead {
@@ -53,3 +53,54 @@ table {
     width: 1px;
     background-color: #ccc;
   }
+/* Gaya untuk layar seluler */
+@media only screen and (max-width: 767px) {
+  .container {
+      padding-left: 15px;
+      padding-right: 15px;
+  }
+
+  .font-weight-bold {
+      font-size: 12px;
+  }
+
+  .card-header {
+      padding: 15px;
+  }
+
+  .btn {
+      width: 100%;
+      margin-top: 10px;
+      font-size: 12px;
+  }
+
+  .modal-footer {
+      height: auto;
+  }
+}
+
+/* Gaya untuk layar yang lebih besar */
+@media only screen and (min-width: 768px) {
+  .container {
+      padding-left: 30px;
+      padding-right: 30px;
+  }
+
+  .font-weight-bold {
+      font-size: 15px;
+  }
+
+  .card-header {
+      padding: 20px;
+  }
+
+  .btn {
+      width: auto;
+      margin-top: 0;
+      font-size: 14px;
+  }
+
+  .modal-footer {
+      height: 80px;
+  }
+}

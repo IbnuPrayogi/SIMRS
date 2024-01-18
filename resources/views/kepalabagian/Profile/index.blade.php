@@ -15,34 +15,32 @@
 
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
-        <link rel="stylesheet" href="css/arsip.css">
+        <link rel="stylesheet" href="css/profilemobilekabag.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     </head>
 
     <body>
-
-        <div class="container py-5" style="background-color: blue; border-radius: 25px;">
-
-            <div class="container py-6">
+        <div class="container py-12" style="background-color: blue; ">
+            <div class="container py-12">
                 <div class="card-header" style="background-color: blue; color: white;">
                     <div class="d-flex justify-content-between align-items-center">
                         <div style="display: flex; align-items: center;">
-                            <span class="font-weight-bold" style="font-size: 30px;">Kelola Pengguna >></span>
-                            <span class="font" style="font-size: 20px;">Edit Pengguna</span>
+                            <span class="font-weight-bold" style="font-size: 15px;">Kelola Pengguna >></span>
+                            <span class="font" style="font-size: 15px;">Edit Pengguna</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row py-6">
-                <div class="col-lg-12 mx-auto">
-                    <div class="card rounded shadow border-2">
-                        <div class="card-body p-5 bg-white rounded">
+            <div class="row py-12">
+                <div class="col-lg-12 mx-auto" >
+                    <div class="card rounded shadow border-2" style="background-color: blue">
+                        {{-- <div class="card-body p-12 bg-blue rounded"> --}}
 
                             <div class="container light-style flex-grow-1 container-p-y">
                                 <div class="card overflow-hidden"style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
                                     <div class="card-header"
-                                        style="background-color: blue;color:white;text-align:center;border-radius:10px;">
-                                        <h4>Edit Pengguna</h4>
+                                        style="background-color: blue;color:white;text-align:center;">
+                                        <h6>Edit Pengguna</h6>
                                     </div>
                                     <div class="row no-gutters row-bordered row-border-light"
                                         style="justify-content: center">

@@ -198,6 +198,17 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::get('/permintaan', function () {
         return view('karyawan.permintaan');
     });
+    Route::get('/pengajuan', function () {
+        return view('karyawan.buatpengajuan');
+    });
+    Route::get('/presensi', function () {
+        return view('karyawan.presensi');
+    });
+
+    Route::get('/detailpresensi', function () {
+        return view('karyawan.detailpresensi');
+    });
+    
 });
 
 // route::resource('suratkeluar', SuratKeluarController::class);

@@ -3,6 +3,14 @@
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <link rel="stylesheet" href="css/home.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      canvas {
+        max-width: 100%;
+        margin: 20px 0;
+      }
+    </style>
+
 
     <div class="container">
         <div class="row">
@@ -10,12 +18,12 @@
                 <div class="small-box">
                     <div class="inner">
                         <h3>{{ $countUsers }}</h3>
-                        <p>Pengguna</p>
+                        <p>Admin</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="{{ route('user.index') }}" class="small-box-footer">Jumlah Pengguna <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('user.index') }}" class="small-box-footer">Jumlah Admin <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -23,12 +31,12 @@
                 <div class="small-box">
                     <div class="inner">
                         <h3>{{ $countArsips }}</h3>
-                        <p>Arsip</p>
+                        <p>Karyawan</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="{{ route('arsip.index') }}" class="small-box-footer">Jumlah Arsip <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('arsip.index') }}" class="small-box-footer">Jumlah Karyawan <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -36,12 +44,12 @@
                 <div class="small-box">
                     <div class="inner">
                         <h3>{{ $countSuratMasuk }}</h3>
-                        <p>Surat Masuk</p>
+                        <p>Shift</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="{{ route('suratkeluar.index') }}" class="small-box-footer">Jumlah Surat Masuk <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('suratkeluar.index') }}" class="small-box-footer">Jumlah Shift <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -49,46 +57,109 @@
                 <div class="small-box">
                     <div class="inner">
                         <h3>{{ $countSuratKeluar }}</h3>
-                        <p>Surat Keluar</p>
+                        <p>Telat</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="{{ route('suratmasuk.index') }}" class="small-box-footer">Jumlah Surat Keluar <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('suratmasuk.index') }}" class="small-box-footer">Jumlah Telat <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
 
-        {{-- <div class="container">
+        {{-- {{-- <div class="container"> --}}
             <div class="row">
-                <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-header border-0">
-                            <h3 class="card-title" style="text-align: center;color:#0051B9;">Statistik Surat Masuk-Keluar</h3>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="barChart" height="400"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header" style="background-color: #0051B9;color:white">
-                            <h4 class="card-title">Aktivitas Terbaru</h4>
+                            <h4 class="card-title">Telat Hari Ini</h4>
                         </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>Nur Keqing telah menandatangi surat <ID_SURAT></li>
-                                <li>Nur Keqing membuat permohonan tukar jaga.</li>
-                                <li>Nur Keqing menerima permohonan tukar jaga</li>
-                                <li>Nur Keqing menandatangi permohonan tukar jaga <ID_Permohonan></li>
-                                <li>Nur Keqing menambah template surat</li>
-                            </ul>
+                        <div class="card rounded shadow border-2">
+                            <div class="card-body p-9 bg-white rounded">
+                        <div class="table-responsive">
+                            <table id="example" style="width: 100%"
+                                class="table table-striped table-bordered">
+
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Bagian</th>
+                                        <th>Shift</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Agus</td>
+                                            <td>Dokter</td>
+                                            <td>Pagi</td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>  
                         </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header" style="background-color: #0051B9;color:white">
+                            <h4 class="card-title">Karyawan Sesuai Shift</h4>
+                        </div>
+                        <div style="text-align: center;">
+                            <!-- Tambahkan elemen canvas sebagai tempat diagram batang -->
+                            <canvas id="barChart"></canvas>
+                          </div>
+                        
+                          <script>
+                            // Data untuk diagram batang
+                            var data = {
+                              labels: ["Pagi", "Sore", "Malam", "Pagi/Sore", "Pagi/Malam"],
+                              datasets: [{
+                                label: 'Shift Karyawan',
+                                data: [10, 20, 15, 25, 30], // Tinggi untuk setiap kategori
+                                backgroundColor: [
+                                  'rgba(255, 99, 132, 0.7)',
+                                  'rgba(54, 162, 235, 0.7)',
+                                  'rgba(255, 206, 86, 0.7)',
+                                  'rgba(75, 192, 192, 0.7)',
+                                  'rgba(153, 102, 255, 0.7)',
+                                ],
+                                borderColor: [
+                                  'rgba(255, 99, 132, 1)',
+                                  'rgba(54, 162, 235, 1)',
+                                  'rgba(255, 206, 86, 1)',
+                                  'rgba(75, 192, 192, 1)',
+                                  'rgba(153, 102, 255, 1)',
+                                ],
+                                borderWidth: 1
+                              }]
+                            };
+                        
+                            // Konfigurasi untuk diagram batang
+                            var options = {
+                              scales: {
+                                y: {
+                                  beginAtZero: true
+                                }
+                              }
+                            };
+                        
+                            // Mengambil elemen canvas
+                            var ctx = document.getElementById('barChart').getContext('2d');
+                        
+                            // Membuat objek diagram batang
+                            var barChart = new Chart(ctx, {
+                              type: 'bar',
+                              data: data,
+                              options: options
+                            });
+                          </script>
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div> 
 
         <!-- Sisipkan script untuk Chart.js (jika belum ada) -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>

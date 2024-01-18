@@ -1,0 +1,27 @@
+/* Tambahkan di dalam tag <style> atau dalam file CSS terpisah */
+@media (max-width: 768px) {
+    .navbar-nav {
+        margin-top: 10px; /* Sesuaikan dengan margin yang diinginkan */
+    }
+
+    .navbar-toggler {
+        margin-right: 10px; /* Sesuaikan dengan margin yang diinginkan */
+    }
+
+    .navbar-collapse {
+        margin-top: 10px; /* Sesuaikan dengan margin yang diinginkan */
+    }
+
+    .dropdown-menu {
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu-box {
+        padding: 10px;
+    }
+
+    .footer {
+        margin-top: 10px; /* Sesuaikan dengan margin yang diinginkan */
+    }
+}

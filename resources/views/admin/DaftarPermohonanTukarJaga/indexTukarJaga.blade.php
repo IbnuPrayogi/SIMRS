@@ -11,20 +11,17 @@
     </head>
 
     <body>
-
-        <div class="container py-5" style="background-color: blue; border-radius: 25px;">
-
-            <div class="container py-6">
-                <div class="card-header" style="background-color: blue; color: white; border-bottom: 2px solid white;">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="font-weight-bold" style="font-size: 30px;">Daftar Permohonan Tukar Jaga</span>
-                        </div>
-                    </div><br>
-                    <div class="row py-6">
-                        <div class="col-lg-12 mx-auto">
-                            <div class="card rounded shadow border-2">
-                                <div class="card-body p-5 bg-white rounded">
+        <div class="container py-12" style="background-color: blue; border-radius: 25px; height: 100vh;">
+            <div class="card-header" style="background-color: blue; color: white; border-bottom: 2px solid white;">
+            
+                    <div style="text-align:center;">
+                        <span class="font-weight-bold" style="font-size: 20px;">Daftar Permohonan Tukar Jaga</span>
+                    </div>
+        
+                <br>
+                <div class="row py-12">
+                    <div class="col-lg-12 mx-auto">
+                        <div class="card rounded shadow border-2" style="height: 85vh;margin-left:-25px;margin-right:-25px;">
                                     
                                     <div class="table-responsive">
                                         <table id="example" style="width: 100%"

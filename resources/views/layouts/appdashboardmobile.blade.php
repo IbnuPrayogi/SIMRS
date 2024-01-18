@@ -28,7 +28,7 @@
 </head>
 
 <body
-    style="background-image: url('{{ asset('img/bg-mobile.png') }}');
+    style="background-image: url('{{ asset('img/bg.jpeg') }}');
              background-size: cover;
              background-position: center;
              background-repeat: no-repeat;">
@@ -38,7 +38,7 @@
                 <img src="../img/logo.png" alt="logo" style="width:100%; height:100%;" />
             </div>
             <div class="atur_jarak">
-                <p>Perizinan</p>
+                <p>RS Islam Asy-syifa</p>
             </div>
             <div class="icon-belt">
                 <a href="/permintaantukarjaga"><i class='bx bxs-bell'></i></a>
@@ -72,6 +72,7 @@
         <div class="navbar-content">
             <div class="navbar">
                 <a href="/home" class="{{ Request::is('/home') ? 'active' : '' }}"><i class='bx bx-home'></i></a>
+                <a href="/pengajuan" class="{{ Request::is('/pengajuan') ? 'active' : '' }}"><i class="fas fa-plus add-file-icon"></i></a>
                 <a href="/status" class="{{ Request::is('/status') ? 'active' : '' }}"><i class="fa-solid fa-list-check"></i></a>
                 <a href="/profile" class="{{ Request::is('/profile') ? 'active' : '' }}"><i class='bx bxs-user' ></i></a>
             </div>
