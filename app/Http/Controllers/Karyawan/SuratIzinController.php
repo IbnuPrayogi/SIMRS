@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers\Karyawan;
 
+use Carbon\Carbon;
+use App\Models\Izin;
 use App\Models\User;
+use App\Models\Shift;
+use App\Models\Jadwal;
+use App\Models\Presensi;
 use App\Models\Disposisi;
 use App\Models\SuratIzin;
 use App\Models\TemplateSK;
+use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
@@ -191,6 +197,26 @@ class SuratIzinController extends Controller
             'status' => 'disetujui',
             'deskripsi' => "Surat Telah disetujui ",
             // Tambahkan kolom-kolom lainnya sesuai kebutuhan
+        ]);
+
+        $pengaju=User::where('nama_karyawan',$suratIzin->nama_pengaju)->first();
+        $carbonDate = Carbon::createFromFormat('Y-m-d', $suratIzin->tanggal_izin);
+        $convertedDateFormat1 = $carbonDate->format('d/m/Y');
+      
+
+        
+       
+
+        Presensi::updateOrCreate([
+            'id_karyawan' => $pengaju->id,
+            'nama_karyawan' => $pengaju->nama_karyawan,
+            'nama_bagian' => $pengaju->nama_bagian,
+            'cin1' => null,
+            'cout1' => null,
+            'cin2' => null,
+            'cout2' => null,
+            'status' => 'izin',
+            'tanggal' => $convertedDateFormat1
         ]);
 
         // Redirect ke halaman suratIzin.show dengan menambahkan ID baru

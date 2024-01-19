@@ -60,6 +60,10 @@ class PresensiController extends Controller
                 $presensi = DataPresensi::where('username', $user->nama_karyawan)
                     ->where('eDate', $tanggal)
                     ->first();
+                
+                $data = Presensi::where('username', $user->nama_karyawan)
+                    ->where('eDate', $tanggal)
+                    ->first();
 
                 $shiftDay = Shift::find($dayValue);
 
