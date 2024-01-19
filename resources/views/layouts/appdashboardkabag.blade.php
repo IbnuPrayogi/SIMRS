@@ -66,6 +66,8 @@
                     <li><a href="{{ route('DaftarPermohonan.indexCuti') }}"><i class="fas fa-bed"></i> Cuti</a></li>
                     <li><a href="{{ route('DaftarPermohonan.indexIzin') }}"><i class="fas fa-clock"></i> Izin</a></li>
                     <li><a href="{{ route('DaftarPermohonan.indexTukarJaga') }}"><i class="fas fa-exchange-alt"></i> Tukar Jaga</a></li>
+                    <li><a href="#"><i class="fas fa-user-check"></i> Presensi</a></li>
+                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
                 </ul>
                 <div class="footer">
                     <p>&copy; 2023 Do'a Ayah</p>
@@ -105,7 +107,7 @@
                                     {{ Auth::user()->name }}
                                 </a>
                             
-                                <div class="dropdown-menu" style="background-color: rgb(0, 60, 255)">
+                                <div class="dropdown-menu" >
                                     <div class="menu-box">
                                         <!-- Displayed on small screens (mobile) -->
                                         <ul class="menu d-block d-md-none">
@@ -116,6 +118,8 @@
                                             <li><a href="{{ route('DaftarPermohonan.indexCuti') }}"><i class="fas fa-bed"></i> Cuti</a></li>
                                             <li><a href="{{ route('DaftarPermohonan.indexIzin') }}"><i class="fas fa-clock"></i> Izin</a></li>
                                             <li><a href="{{ route('DaftarPermohonan.indexTukarJaga') }}"><i class="fas fa-exchange-alt"></i> Tukar Jaga</a></li>
+                                            <li><a href="#"><i class="fas fa-user-check"></i> Presensi</a></li>
+                                            <li><a href="#"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
                                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <i class="fas fa-sign-out-alt"></i>
                                                 {{ __('Logout') }}
@@ -123,8 +127,8 @@
                                         </ul>
                             
                                         <!-- Always displayed on larger screens (laptop) -->
-                                        <ul class="menu d-none d-md-block">
-                                            <li>                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                        <ul class="menu d-none d-md-block ">
+                                            <li>     <a class="dropdown-item" href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
                                                              document.getElementById('logout-form').submit();">
                                                 {{ __('Logout') }}
