@@ -36,14 +36,16 @@
         <p><b>Wassalamu’alaikum Wr. Wb.</b></p>
         <div class="tanda_tangan">
             <div class="ttd_aju">
-                <p> Mengetahui,<br>
-                    Manager Keuangan Umum & Personalia
+                <p> Menyetujui,<br>
+                    Direktur Rs
                     <div class="kotak">
-                        @if ($suratIzin->manajer)
+                        @if ($suratIzin->tanda_tangan_direktur)
                         <img style="height: 120px ; width:120px;"
-                        src="{{ asset('assets/ttd/'.$suratIzin->manajer) }}"
+                        src="{{ asset('assets/ttd/'.$suratIzin->tanda_tangan_direktur) }}"
                         alt="Tanda Tangan">
                         @else
+                        @if (auth()->user()->jabatan=="Direktur")
+                            
                         <form method="POST" action="{{route("PermohonanIzin.Sign",['id' => $suratIzin->id])}}">
                             @csrf
                             @method('put')
@@ -55,9 +57,10 @@
                             <button type="submit">Tolak</button>
                         </form>
                         @endif
+                        @endif
 
                     </div>
-                    <b>Nurul Hakim, SE</b>
+                    <b>Direktur RSI Asy Syifaa</b>
                 </p>
             </div>
             <div class="ttd_nama">

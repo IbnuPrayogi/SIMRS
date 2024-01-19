@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Karyawan;
 
-use App\Models\SuratIzin;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\File;
+use App\Models\User;
 use App\Models\Disposisi;
+use App\Models\SuratIzin;
+use App\Models\TemplateSK;
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 
 
 
@@ -32,6 +34,21 @@ class SuratIzinController extends Controller
             'bukti' => 'mimes:pdf,doc,docx|max:5120',
         ]);
 
+        $kepala = User::where(function ($query) {
+            $query->where('jabatan', 'Kepala Bagian')
+                  ->orWhere('jabatan', 'Kepala Ruangan');
+        })
+        ->where('nama_bagian', auth()->user()->nama_bagian)
+        ->first();
+
+        if($kepala!=null){
+            $status=$kepala->jabatan;
+
+        }
+        else{
+            $status='Direktur';
+        }
+
         // dd(SuratIzin::all());]
         // $file1 = $validatedData['file'];
         $file2 = $validatedData['bukti'];
@@ -46,7 +63,7 @@ class SuratIzinController extends Controller
             'bagian' => $request->bagian,
             'keterangan' => $request->keterangan,
             'bukti' => $filename2,
-            'status' => "Manajer",
+            'status' => $status,
             'tanda_tangan'=>auth()->user()->tanda_tangan
             // 'tanda_tangan' => 'ttd.jpg',
             // 'file' => $filename1,
@@ -147,8 +164,7 @@ class SuratIzinController extends Controller
     {
 
         $suratIzin = suratIzin::where('id', $id)->first();
-        $suratIzin->manajer = auth()->user()->tanda_tangan;
-        $suratIzin->nama_manajer = auth()->user()->nama_karyawan;
+        $suratIzin->tanda_tangan_direktur = auth()->user()->tanda_tangan;
         $suratIzin->save();
 
         $pdf = PDF::loadView('admin.DaftarPermohonanIzin.signature', compact('suratIzin'));

@@ -54,11 +54,16 @@
                                                         <td>{{ $Izin->status }}</td>
 
                                                         <td>
-                                                            @if ($Izin->status == auth()->user()->jabatan && $Izin->manajer== NULL)
+                                                            @if ($Izin->status == auth()->user()->jabatan && $Izin->status!='disetujui' )
                                                             <a href="{{ route('PermohonanIzin.priview', $Izin->id) }}"><button
                                                                 class="btn btn-warning" style="background:#1AACAC">
                                                                 <i class="fa-solid fa-file-signature"></i></button></a>
-                                                                
+                                                            
+                                                            <a
+                                                            href="{{ route('kbdisposisi.tambah', ['id' => $Izin->id, 'jenis' => "surat izin"]) }}"><button
+                                                                class="btn btn-success"><i
+                                                                    class="fa-solid fa-share-from-square"></i></button></a>
+                                                  
                                                             @endif
 
                                                             @if ($Izin->file)
@@ -66,6 +71,7 @@
                                                                     class="btn btn-success" target="_blank"><i
                                                                         class="fas fa-download"></i></a>
                                                             @endif
+                                                            
                                                             <a href="{{ route('kbdisposisi.showsurat', ['id' => $Izin->id, 'nama' => $Izin->nama_surat]) }}"><button
                                                                 class="btn btn-primary"><i
                                                                     class="fa-regular fa-note-sticky"></i></button></a>

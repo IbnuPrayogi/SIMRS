@@ -42,7 +42,9 @@ class SuratTukarJagaController extends Controller
         $validatedData = $request->validate([
             'file' => 'mimes:pdf,doc,docx|max:5120',
         ]);
+
        
+        
 
         // $location1 = 'assets/suratTukarJaga/';
 
@@ -89,20 +91,10 @@ class SuratTukarJagaController extends Controller
     {
 
         $suratTukarJaga = SuratTukarJaga::where('id', $id)->first();
-        if($jenis == 'Kepala Ruangan'){
-            $suratTukarJaga->kepala_ruangan = auth()->user()->tanda_tangan;
-            $suratTukarJaga->status= 'Kepala Bagian';
-            $suratTukarJaga->nama_kepala_ruangan=auth()->user()->nama_karyawan;
-        }
-        else if($jenis == 'Kepala Bagian'){
-            $suratTukarJaga->kepala_bagian = auth()->user()->tanda_tangan;
-            $suratTukarJaga->status= 'disetujui';
-            $suratTukarJaga->nama_kepala_bagian=auth()->user()->nama_karyawan;
-        }
-
-
-
+ 
+        $suratTukarJaga->tanda_tangan_direktur = auth()->user()->tanda_tangan;
         $suratTukarJaga->save();
+
 
         $pdf = PDF::loadView('admin.DaftarPermohonanTukarJaga.signature', compact('suratTukarJaga'));
         $file_name = $suratTukarJaga->file;
@@ -122,7 +114,7 @@ class SuratTukarJagaController extends Controller
             'id_surat'=> $suratTukarJaga->id,
             'nama_surat' => $suratTukarJaga->nama_surat,
             'status' => $suratTukarJaga->status,
-            'deskripsi' => "Surat Telah disetujui ".$jenis,
+            'deskripsi' => "disetujui",
             // Tambahkan kolom-kolom lainnya sesuai kebutuhan
         ]);
 
@@ -142,10 +134,23 @@ class SuratTukarJagaController extends Controller
 
         $suratTukarJaga = SuratTukarJaga::where('id', $id)->first();
       
-            $suratTukarJaga->termohon = auth()->user()->tanda_tangan;
-            $suratTukarJaga->status= 'Kepala Ruangan';
+        $suratTukarJaga->termohon = auth()->user()->tanda_tangan;
+        
+        $kepala = User::where(function ($query) {
+            $query->where('jabatan', 'Kepala Bagian')
+                  ->orWhere('jabatan', 'Kepala Ruangan');
+        })
+        ->where('nama_bagian', auth()->user()->nama_bagian)
+        ->first();
 
+        if($kepala!=null){
+            $status=$kepala->jabatan;
+        }
+        else{
+            $status='Direktur';
+        }
 
+        $suratTukarJaga->status=$status;
         $suratTukarJaga->save();
 
         $pdf = PDF::loadView('admin.DaftarPermohonanTukarJaga.signature', compact('suratTukarJaga'));
@@ -166,7 +171,7 @@ class SuratTukarJagaController extends Controller
         Disposisi::create([
             'id_surat'=> $suratTukarJaga->id,
             'nama_surat' => $suratTukarJaga->nama_surat,
-            'status' => $suratTukarJaga->status,
+            'status' => $status,
             'deskripsi' => "Surat Telah disetujui Termohon",
             // Tambahkan kolom-kolom lainnya sesuai kebutuhan
         ]);

@@ -53,10 +53,15 @@
                                                         <td>{{ $TukarJaga->status }}</td>
 
                                                         <td>
-                                                            @if ($TukarJaga->status== auth()->user()->jabatan)
+                                                            @if ($TukarJaga->status== auth()->user()->jabatan && $TukarJaga->status !='disetujui')
                                                             <a href="{{ route('PermohonanTukarJaga.priview', $TukarJaga->id) }}"><button
                                                                 class="btn btn-warning" style="background:#1AACAC">
                                                                 <i class="fa-solid fa-file-signature"></i></button></a>
+
+                                                            <a
+                                                            href="{{ route('kbdisposisi.tambah', ['id' => $TukarJaga->id, 'jenis' => "surat tukar jaga"]) }}"><button
+                                                                class="btn btn-success"><i
+                                                                    class="fa-solid fa-share-from-square"></i></button></a>
                                                                 
                                                             @endif
                                                             

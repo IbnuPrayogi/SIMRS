@@ -30,6 +30,7 @@ class SuratTukarJaga extends Model
         'nama_surat',
         'tanda_tangan',
         'nama_kepala_bagian',
-        'nama_kepala_ruangan'
+        'nama_kepala_ruangan',
+        'tanda_tangan_direktur'
     ];
 }

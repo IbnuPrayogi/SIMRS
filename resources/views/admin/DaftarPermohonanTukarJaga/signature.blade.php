@@ -68,21 +68,14 @@
         </div>
 
         <div class="ttd_kar">
-            <p>Ka. Ruangan</p>
-            @if ($suratTukarJaga->kepala_ruangan)
+            <p>Direktur</p>
+            @if ($suratTukarJaga->tanda_tangan_direktur)
             <img style="height: 120px ; width:120px;"
-                src="{{ public_path('assets/ttd/' . $suratTukarJaga->kepala_ruangan) }}" alt="Tanda Tangan">
+                src="{{ public_path('assets/ttd/' . $suratTukarJaga->tanda_tangan_direktur) }}" alt="Tanda Tangan">
         @endif
-        <p><b>{{ $suratTukarJaga->nama_kepala_ruangan }}</b></p>
+        <p><b>Direktur RSI Asy-Syifaa</b></p>
         </div>
-        <div class="ttd_kab">
-            <p>Ka. Bagian</p>
-            @if ($suratTukarJaga->kepala_bagian)
-            <img style="height: 120px ; width:120px;"
-                src="{{ public_path('assets/ttd/' . $suratTukarJaga->kepala_bagian) }}" alt="Tanda Tangan">
-        @endif
-        <p><b>{{ $suratTukarJaga->nama_kepala_bagian }}</b></p>
-        </div>
+
         </div>
 </body>
 

@@ -90,13 +90,13 @@
 
             <div class="pihak_termohon">
                 <div class="ttd_kar">
-                    <p>Ka. Ruangan</p>
+                    <p>Direktur RS</p>
                     <p>
-                        @if ($suratTukarJaga->kepala_ruangan)
+                        @if ($suratTukarJaga->tanda_tangan_direktur)
                         <img style="height: 120px ; width:120px;"
                         src="{{ asset('assets/ttd/' . $suratTukarJaga->kepala_ruangan) }}"
                         alt="Tanda Tangan">
-                        @elseif($suratTukarJaga->kepala_ruangan == NULL && $suratTukarJaga->status =='Kepala Ruangan')
+                        @elseif($suratTukarJaga->tanda_tangan_direktur == NULL && $suratTukarJaga->status =='Direktur')
                         <form method="POST" action="{{route("PermohonanTukarJaga.Sign",['id' => $suratTukarJaga->id,'jenis'=>'Kepala Ruangan'])}}">
                             @csrf
                             @method('put')
@@ -110,31 +110,6 @@
                         @endif
                     </p>
                     <b>{{ $suratTukarJaga->nama_kepala_ruangan }}</b>
-                    <div class="line"></div>
-                </div>
-
-
-                <div class="ttd_kab">
-                    <p>Ka. Bagian</p>
-                    <p>
-                        @if ($suratTukarJaga->kepala_bagian)
-                        <img style="height: 120px ; width:120px;"
-                        src="{{ asset('assets/ttd/' . $suratTukarJaga->kepala_bagian) }}"
-                        alt="Tanda Tangan">
-                        @elseif($suratTukarJaga->kepala_bagian == NULL && $suratTukarJaga->status =='Kepala Bagian')
-                        <form method="POST" action="{{route("PermohonanTukarJaga.Sign",['id' => $suratTukarJaga->id,'jenis'=>'Kepala Bagian'])}}">
-                            @csrf
-                            @method('put')
-                            <button type="submit">Tanda Tangani</button>
-                        </form>
-                        <form method="POST" action="{{ route('PermohonanTukarJaga.Tolak', ['id' => $suratTukarJaga->id,'jenis'=>'Kepala Bagian']) }}">
-                            @csrf
-                            @method('put')
-                            <button type="submit">Tolak</button>
-                        </form>
-                        @endif
-                    </p>
-                    <b>{{ $suratTukarJaga->nama_kepala_bagian }}</b>
                     <div class="line"></div>
                 </div>
             </div>

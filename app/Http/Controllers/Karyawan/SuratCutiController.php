@@ -102,7 +102,7 @@ class SuratCutiController extends Controller
         $file_name = 'ACC_' . $suratCuti->file; // Assuming you want to prepend 'ACC_' to the existing file name
         $file_path = public_path('../public/assets/suratCuti/') . $file_name;
 
-        $FileToDelete = public_path('../public/assets/suratCuti/') . $suratCuti->file;
+        $FileToDelete = public_path('assets/suratCuti/') . $suratCuti->file;
 
         if (File::exists($FileToDelete)) {
             File::delete($FileToDelete);

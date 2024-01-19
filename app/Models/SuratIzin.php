@@ -18,7 +18,7 @@ class SuratIzin extends Model
         'status',
         'tanda_tangan',
         'nama_surat',
-        'file', 'tanggal_mulai' , 'tanggal_selesai' ,'bagian', 'tanggal_izin','manajer','nama_manajer'
+        'file', 'tanggal_mulai' , 'tanggal_selesai' ,'bagian', 'tanggal_izin','manajer','nama_manajer','tanda_tangan_direktur'
     ];
 
 }
