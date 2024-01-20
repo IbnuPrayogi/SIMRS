@@ -203,10 +203,6 @@ class SuratIzinController extends Controller
         $carbonDate = Carbon::createFromFormat('Y-m-d', $suratIzin->tanggal_izin);
         $convertedDateFormat1 = $carbonDate->format('d/m/Y');
       
-
-        
-       
-
         Presensi::updateOrCreate([
             'id_karyawan' => $pengaju->id,
             'nama_karyawan' => $pengaju->nama_karyawan,

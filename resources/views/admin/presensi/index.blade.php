@@ -74,6 +74,7 @@
         @endfor
         <th>Terlambat</th> <!-- Kolom terlambat -->
         <th>Terpotong</th>
+        <th>Izin</th>
     </tr>
 
     @foreach ($users as $user)
@@ -87,6 +88,9 @@
                 $totalTerpotong = \App\Models\Potongan::where('user_id', $user->id)
                     ->where('tanggal','like',"%/$selectedMonth/%")
                     ->sum('waktu_potongan');
+                $totalIzin = \App\Models\Izin::where('nama_karyawan', $user->nama_karyawan)
+                    ->where('tanggal','like',"%/$selectedMonth/%")
+                    ->sum('waktu_izin');
             @endphp
 
             @for ($day = 1; $day <= $daysInMonth; $day++)
@@ -100,6 +104,10 @@
                             echo 'green';  // Warna hijau untuk tepat waktu
                         } elseif ($datapresensi->status === 'alfa') {
                             echo 'red';  // Warna merah untuk alfa
+                        } elseif ($datapresensi->status === 'izin') {
+                            echo 'blue';
+                        } elseif ($datapresensi->status === 'cuti') {
+                            echo 'black';
                         } elseif ($datapresensi->status !== null) {
                             echo 'yellow';  // Warna kuning untuk kondisi lainnya
                         } else {
@@ -120,6 +128,8 @@
             <!-- Kolom terlambat -->
             <td>{{ $totalTerlambat }} jam</td>
             <td>{{ $totalTerpotong }} jam</td>
+            <td>{{ $totalIzin }} jam</td>
+            
         </tr>
     @endforeach
 </table>

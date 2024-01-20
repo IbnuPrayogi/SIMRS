@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Izin;
 use App\Models\User;
 use App\Models\Shift;
 use App\Models\Jadwal;
@@ -9,8 +11,8 @@ use App\Models\Potongan;
 use App\Models\Presensi;
 use App\Models\Terlambat;
 use App\Models\DataPresensi;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use App\Http\Requests\StorePresensiRequest;
 use App\Http\Requests\UpdatePresensiRequest;
@@ -49,23 +51,40 @@ class PresensiController extends Controller
         $jadwals = Jadwal::where('bulan', $bulan)->get();
 
         foreach ($jadwals as $jadwal) {
+         
             for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, 1, now()->format('Y')); $day++) {
                 $data = Jadwal::where("tanggal_$day", '!=', null)->where('bulan', $bulan)->pluck("tanggal_$day")->toArray();
                 $dayValue = !empty($data) ? $data[0] : null;
 
                 $dayValues["tanggal_$day"] = $dayValue;
 
+
+
                 $tanggal = "$day/$bulan/$tahun";
                 $user = User::find($jadwal->user_id);
                 $presensi = DataPresensi::where('username', $user->nama_karyawan)
                     ->where('eDate', $tanggal)
                     ->first();
-                
-                $data = Presensi::where('username', $user->nama_karyawan)
-                    ->where('eDate', $tanggal)
-                    ->first();
+                $shiftDay = Shift::where('id',$jadwal->{"tanggal_$day"})->first();
+            
 
-                $shiftDay = Shift::find($dayValue);
+                $datapresensi=Presensi::where('tanggal',$tanggal)->where('nama_karyawan',$user->nama_karyawan)->first();
+
+                if($datapresensi!=null && $datapresensi->status=='izin'){
+                    $waktu_izin = Carbon::parse($shiftDay->lama_waktu);
+
+                    Izin::Create([
+                        'nama_karyawan' => $user->nama_karyawan,
+                        'shift_id' => $shiftDay->id,
+                        'tanggal' => $tanggal,
+                        'waktu_izin' => $waktu_izin->hour
+                    ]);
+
+                }
+                
+              
+
+                
 
                 if ($presensi != null && $shiftDay->kode_shift != "L") {
                     $status = 'tepat waktu';
@@ -106,6 +125,7 @@ class PresensiController extends Controller
 
                     $cin1 = $cout1 = $cin2 = $cout2 = null;
                     $closestIndex = null;
+                   
 
                     foreach ($columns as $col) {
                         if (count($arrayData) != 0) {
@@ -129,10 +149,19 @@ class PresensiController extends Controller
                             ${$col} = $arrayData[$closestIndex];
                             unset($arrayData[$closestIndex]);
                         }
+                    }
+                    
+                    
+                        
 
                         if ($shiftDay->cin1 != null && $shiftDay->cout1 != null) {
                             if ($cin1 != null) {
-                                $cin1 = new \DateTime($cin1);
+
+                                if (!($cin1 instanceof \DateTime)) {
+                                    $cin1= new \DateTime($cin1);
+                                }
+                               
+                           
 
                                 if (($cin1->getTimestamp() - $shiftDay->cin1->getTimestamp()) > 300) {
                                     $selisihWaktu = $shiftDay->cin1->diff($cin1);
@@ -163,10 +192,13 @@ class PresensiController extends Controller
                                     $arrayData = explode(' ', $arrayData);
                                     $cout1 = $arrayData[0];
                                 }
+                               
 
                                 if ($cout1 != null) {
-                                    $cout1 = new \DateTime($cout1);
 
+                                    if (!($cout1 instanceof \DateTime)) {
+                                        $cout1= new \DateTime($cout1);
+                                    }
                                     if (($shiftDay->cout1->getTimestamp() - $cout1->getTimestamp()) > 300) {
                                         $timeDifferent = $shiftDay->cout1->getTimestamp() - $cout1->getTimestamp();
                                         $waktuPulangCepat = round($timeDifferent / 1800) * 0.5;
@@ -186,16 +218,22 @@ class PresensiController extends Controller
                                         }
                                     }
                                 } else {
+                                  
                                     $status = 'alfa';
                                 }
                             } else {
+                          
                                 $status = 'alfa';
                             }
                         }
 
                         if ($shiftDay->cin2 != null && $shiftDay->cout2 != null) {
                             if ($cin2 != null) {
-                                $cin2 = new \DateTime($cin2);
+                                if (!($cin2 instanceof \DateTime)) {
+                                    $cin2= new \DateTime($cin2);
+                                }
+                              
+                            
 
                                 if (($cin2->getTimestamp() - $shiftDay->cin2->getTimestamp()) > 300) {
                                     $selisihWaktu = $shiftDay->cin2->diff($cin2);
@@ -247,14 +285,13 @@ class PresensiController extends Controller
                                         $status = 'terlambat dan terpotong';
                                     }
                                     
-                                } else {
-                                    $status = 'alfa';
-                                }
+                                } 
                             } else {
+                             
                                 $status = 'alfa';
                             }
                         }
-                    }
+                    
 
                     Presensi::updateOrCreate([
                         'id_karyawan' => $jadwal->user_id,
@@ -268,6 +305,7 @@ class PresensiController extends Controller
                         'tanggal' => $presensi->eDate
                     ]);
                 } elseif ($presensi == null && $shiftDay->kode_shift != "L") {
+              
                     $status = "alfa";
                     $user = User::find($jadwal->user_id);
 
