@@ -9,7 +9,7 @@
     background-color: #333;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 20px;
 }
 
 .sidebar img {
@@ -34,6 +34,23 @@
     padding: 16px;
 }
 
+.dropdown-menu {
+    display: none;
+    background-color: rgba(0, 0, 255, 0);
+}
+
+.dropdown-menu .menu-box {
+    padding: 0;
+}
+
+.dropdown-menu ul.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+
 @media (max-width: 768px) {
     /* Style untuk tampilan mobile */
     .sidebar {
@@ -48,8 +65,8 @@
         background-color: rgb(0, 60, 255);
         /* Tambahkan style yang diperlukan untuk tampilan mobile */
         position: fixed;
-        width: 100%;
-        top: 60px; /* Adjust top position as needed */
+        width: 80%;
+        top: 10px; /* Adjust top position as needed */
         left: 0;
         padding: 20px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -75,3 +92,7 @@
         text-decoration: none;
     }
 }
+
+ 
+
+

@@ -56,15 +56,15 @@
                     </div>
                     <div class="line"></div>
                     <div class="icon-exit">
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                        class="d-none">
-                        @csrf
-                            <button type="submit" class="submit">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 <h1>Keluar</h1>
-                            </button>
-                       </form>
+                            </a>
+                        </form>
                     </div>
+                    
                 </div>
             </div>
         </div>

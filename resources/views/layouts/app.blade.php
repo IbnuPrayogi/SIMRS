@@ -64,7 +64,8 @@
                     <li><a href="{{ route('arsip.index') }}"><i class="fas fa-archive"></i> Arsip</a></li>
                     <li><a href="{{ route('templateSK.create') }}"><i class="fas fa-file"></i> Template Surat</a></li>
                     <li><a href="{{ route('suratkeluar.index') }}"><i class="fas fa-envelope"></i> Kelola Surat</a></li>
-
+                    <li><a href="#"><i class="fas fa-user-check"></i> Presensi</a></li>
+                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
                     <li><a href="{{ route('user.index') }}"><i class="fas fa-users"></i> Pengguna</a></li>
                 </ul>
                 <br><br><br><br>
