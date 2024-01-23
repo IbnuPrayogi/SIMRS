@@ -35,6 +35,13 @@ return [
 
     'connections' => [
 
+        'odbc' => [
+            'driver'   => 'odbc',
+            'dsn'      => env('ODBC_DSN', 'dsn3'),
+            'prefix'   => '',
+            // ...
+        ],
+
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),

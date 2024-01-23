@@ -12,6 +12,8 @@ use App\Models\Presensi;
 use App\Models\Terlambat;
 use App\Models\DataPresensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use App\Http\Requests\StorePresensiRequest;
@@ -38,8 +40,37 @@ class PresensiController extends Controller
      */
     public function create()
     {
-        //
+        $conn = \odbc_connect('MS Access Database','111','111');
+        if ($conn) {
+            // Query SQL untuk mendapatkan semua data dari tabel
+            $sql = "SELECT * FROM CHECKINOUT
+            WHERE MONTH(CHECKTIME) = 12 AND YEAR(CHECKTIME) = 2023";
+        
+            // Menjalankan query
+            $result = odbc_exec($conn, $sql);
+        
+            // Membuat tabel HTML
+            echo '<table border="1">';
+            echo '<tr><th>Column1</th><th>Column2</th><th>Column3</th></tr>';
+        
+            // Loop melalui hasil dan tampilkan data dalam tabel
+            while ($row = odbc_fetch_array($result)) {
+                echo '<tr>';
+                echo '<td>' . $row['USERID'] . '</td>';
+                echo '<td>' . $row['CHECKTIME'] . '</td>';
+                echo '<td>' . $row['CHECKTYPE'] . '</td>';
+                echo '</tr>';
+            }
+        
+            echo '</table>';
+        
+            // Menutup koneksi ODBC
+            odbc_close($conn);
+        } else {
+            echo "Koneksi ODBC gagal.";
+        }
     }
+    
 
     /**
      * Store a newly created resource in storage.

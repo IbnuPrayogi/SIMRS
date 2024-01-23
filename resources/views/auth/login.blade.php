@@ -12,7 +12,7 @@
                     SISTEM INFORMASI
                 </h1>
                 <h2>
-                    PENGELOLAAN SURAT DAN ARSIP (SURATIN FEAT ARSIPIN)
+                    MANAJEMEN PRESENSI DAN PENGELOLAAN PERIZINAN
                 </h2>
             </div>  
             <div class="img">
