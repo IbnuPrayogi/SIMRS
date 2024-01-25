@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +14,9 @@
             /* Updated styling for employee name */
             text-align: left;
             font-weight: bold;
-            background-color: #4CAF50;
+            background-color: #0D72F2;
             color: white;
-            padding: 8px;
+            padding: 5px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -53,7 +56,7 @@
 <form method="post" action="{{ route('jadwal.store') }}">
     @csrf
 
-    <h2>Jadwal Karyawan Bulan {{ date('F', mktime(0, 0, 0, $bulan, 1)) }}</h2>
+    <h4>Jadwal Karyawan Bulan {{ date('F', mktime(0, 0, 0, $bulan, 1)) }}</h4>
 
     <table>
         <tr>
@@ -108,6 +111,7 @@
 
     <input type="hidden" name="bulan" value="{{ $bulan }}">
 
+    <br>
     <button type="submit">Simpan Jadwal</button>
 </form>
 <form method="post" action="{{ route('presensi.store') }}" enctype="multipart/form-data">
@@ -125,3 +129,4 @@
 
 </body>
 </html>
+@endsection

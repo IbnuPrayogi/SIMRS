@@ -112,10 +112,6 @@ class PresensiController extends Controller
                     ]);
 
                 }
-                
-              
-
-                
 
                 if ($presensi != null && $shiftDay->kode_shift != "L") {
                     $status = 'tepat waktu';

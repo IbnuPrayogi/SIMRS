@@ -1,49 +1,54 @@
 <!-- resources/views/schedule/index.blade.php -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalender Jadwal Kerja Karyawan - Index</title>
-    <style>
-        /* Updated Styles */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
 
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
 
-        .employee-name {
-            font-weight: bold;
-            background-color: #4CAF50;
-            color: white;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+@extends('layouts.app')
 
-        .calendar-cell {
-            text-align: center;
-        }
-        /* Updated Styles */
-    </style>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-</head>
-<body>
+@section('content')
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Kalender Jadwal Kerja Karyawan - Index</title>
+            <style>
+                /* Updated Styles */
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+        
+                th, td {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 5px;
+                }
+        
+                .employee-name {
+                    font-weight: bold;
+                    background-color: #0D72F2;
+                    color: white;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+        
+                .calendar-cell {
+                    text-align: center;
+                }
+                /* Updated Styles */
+            </style>
+            <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+        </head>
 
-@php
+        <body>
+            @php
     $selectedMonth = request('selectedMonth', now()->format('m'));
     $selectedYear = request('selectedYear', now()->format('Y'));
     $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $selectedMonth, $selectedYear);
 @endphp
 
-<h2>Jadwal Karyawan Bulan 
+<h4>Jadwal Karyawan Bulan 
     <select id="selectMonth" onchange="updateTable()" value="{{ $selectedMonth }}">
         @for ($i = 1; $i <= 12; $i++)
             <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
@@ -64,7 +69,7 @@
             </option>
         @endfor
     </select>
-</h2>
+</h4>
 
 <table id="scheduleTable">
     <tr>
@@ -133,7 +138,7 @@
         </tr>
     @endforeach
 </table>
-
+<br>
 <a href="javascript:void(0);" onclick="downloadImage()" class="btn btn-primary">Download Image</a>
 <a href="{{ route('jadwal.editjadwal', ['bulan' => $selectedMonth]) }}" class="btn btn-primary">Edit Schedule</a>
 
@@ -145,22 +150,24 @@
     <label for="">Rekap Presensi</label><br>
     <button type="submit">Rekap Data Presensi</button>
 </form>
+        </body>
 
-</body>
-<script>
-    function downloadImage() {
-        html2canvas(document.querySelector("#scheduleTable")).then(canvas => {
-            var link = document.createElement('a');
-            link.href = canvas.toDataURL("image/png");
-            link.download = 'jadwal_karyawan.png';
-            link.click();
-        });
-    }
+        <script>
+            function downloadImage() {
+                html2canvas(document.querySelector("#scheduleTable")).then(canvas => {
+                    var link = document.createElement('a');
+                    link.href = canvas.toDataURL("image/png");
+                    link.download = 'jadwal_karyawan.png';
+                    link.click();
+                });
+            }
+        
+            function updateTable() {
+                var selectedMonth = document.getElementById('selectMonth').value;
+                var selectedYear = document.getElementById('selectYear').value;
+                window.location.href = window.location.pathname + '?selectedMonth=' + selectedMonth + '&selectedYear=' + selectedYear;
+            }
+        </script>
+    </html>
+@endsection
 
-    function updateTable() {
-        var selectedMonth = document.getElementById('selectMonth').value;
-        var selectedYear = document.getElementById('selectYear').value;
-        window.location.href = window.location.pathname + '?selectedMonth=' + selectedMonth + '&selectedYear=' + selectedYear;
-    }
-</script>
-</html>

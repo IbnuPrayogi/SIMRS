@@ -1,4 +1,4 @@
-@extends('layouts.appdashboardkabag')
+@extends('layouts.app')
 
 @section('content')
 
@@ -23,7 +23,7 @@
 
         .employee-name {
             font-weight: bold;
-            background-color: #4CAF50;
+            background-color: #0D72F2;
             color: white;
             white-space: nowrap;
             overflow: hidden;

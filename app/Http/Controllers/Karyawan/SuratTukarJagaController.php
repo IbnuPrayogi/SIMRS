@@ -43,11 +43,6 @@ class SuratTukarJagaController extends Controller
             'file' => 'mimes:pdf,doc,docx|max:5120',
         ]);
 
-       
-        
-
-        // $location1 = 'assets/suratTukarJaga/';
-
         $suratTukarJaga = SuratTukarJaga::create([
             'nama_pengaju' => auth()->user()->nama_karyawan,
             'nama_target' => $request->nama_target,
@@ -58,8 +53,6 @@ class SuratTukarJagaController extends Controller
             'tanda_tangan'=>auth()->user()->tanda_tangan,
             'status' => "Termohon",
         ]);
-
-      
         $suratTukarJaga->nama_surat ="Surat Tukar Jaga ".auth()->user()->nama_karyawan.$suratTukarJaga->id;
 
         $suratTukarJaga->save();

@@ -28,7 +28,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div style="display: flex; align-items: center;">
                             <span class="font-weight-bold" style="font-size: 30px;">Kelola Pengguna >></span>
-                            <span class="font" style="font-size: 20px;">Edit Pengguna</span>
+                            <span class="font" style="font-size: 20px;">Edit Profile</span>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                                 <div class="card overflow-hidden"style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
                                     <div class="card-header"
                                         style="background-color: blue;color:white;text-align:center;border-radius:10px;">
-                                        <h4>Edit Pengguna</h4>
+                                        <h4>Edit Profile</h4>
                                     </div>
                                     <div class="row no-gutters row-bordered row-border-light"
                                         style="justify-content: center">
