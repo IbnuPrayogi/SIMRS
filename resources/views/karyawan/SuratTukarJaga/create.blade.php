@@ -28,6 +28,12 @@
                     <b>Tanggal yang dimasukkan telah lewat</b>
                 </div>
 
+                <div class="popup-tgl" id="myPopup-tgl-limit">
+                    <!-- Isi popup di sini -->
+                    <i class='bx bx-error'></i>
+                    <b>Ajukan Izin maksimal H-3</b>
+                </div>
+
                 <div class="content-text">
                     <h3>Jadwal Yang Ingin Diubah</h3>
                 </div>
@@ -137,20 +143,38 @@
         var today = new Date().toISOString().split('T')[0];
         var startDate =document.getElementById('Tanggal_Pengajuan').value;
         var endDate =document.getElementById('Tanggal_Target').value;
+        startdateDifference=getDateDifference(today,startDate);
+        enddateDifference=getDateDifference(today,endDate);
 
         if (inputDate < today) {
             showPopup();
             document.getElementById(inputId).value="";
-            // Tambahkan logika atau tindakan lain yang sesuai
-            document.getElementById(inputId).value = "";
-        } else if(endDate != "" && endDate < startDate ){
-        showPopup();
-        document.getElementById("Tanggal_Pengajuan").value = "";
-        document.getElementById("Tanggal_Target").value = "";
+        
+        } 
+        else if (startdateDifference < 3 || enddateDifference < 3) {
+        showPopupLimit();
+        document.getElementById(inputId).value ="";
+        }
     }
+    function getDateDifference(date1, date2) {
+    // Implementasikan logika perbedaan tanggal di sini
+    // Misalnya, hitung selisih hari
+        var diffInMilliseconds = new Date(date2) - new Date(date1);
+        var diffInDays = Math.floor(diffInMilliseconds / (24 * 60 * 60 * 1000));
+        return diffInDays;
     }
     function showPopup() {
         var popup = document.getElementById("myPopup-tgl");
+        var overlay = document.getElementById("overlay_berhasil")
+        popup.style.display = "block"; // Tampilkan popup
+        overlay.style.display = "block";
+        setTimeout(function () {
+            popup.style.display = "none";
+            overlay.style.display = "none"; // Setelah beberapa waktu, sembunyikan kembali popup
+        },2000); // Misalnya, disetel untuk hilang setelah 3 detik (3000 milidetik)
+    }
+    function showPopupLimit() {
+        var popup = document.getElementById("myPopup-tgl-limit");
         var overlay = document.getElementById("overlay_berhasil")
         popup.style.display = "block"; // Tampilkan popup
         overlay.style.display = "block";

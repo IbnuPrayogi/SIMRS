@@ -72,7 +72,7 @@
         <div class="navbar-content">
             <div class="navbar">
                 <a href="/home" class="{{ Request::is('/home') ? 'active' : '' }}"><i class='bx bx-home'></i></a>
-                <a href="/pengajuan" class="{{ Request::is('/pengajuan') ? 'active' : '' }}"><i class="fas fa-plus add-file-icon"></i></a>
+                <a href="{{ route('DaftarPermohonan.create') }}" class="{{ Request::is('/pengajuan') ? 'active' : '' }}"><i class="fas fa-plus add-file-icon"></i></a>
                 <a href="/status" class="{{ Request::is('/status') ? 'active' : '' }}"><i class="fa-solid fa-list-check"></i></a>
                 <a href="/profile" class="{{ Request::is('/profile') ? 'active' : '' }}"><i class='bx bxs-user' ></i></a>
             </div>

@@ -110,6 +110,11 @@ class SuratTukarJagaController extends Controller
             'deskripsi' => "disetujui",
             // Tambahkan kolom-kolom lainnya sesuai kebutuhan
         ]);
+        $dayPengaju= $suratTukarJaga->jadwal_asli->getDate();
+        $dayTarget= $suratTukarJaga->jadwal_asli->getDate();
+
+
+       
 
 
         // Redirect ke halaman SuratCuti.show dengan menambahkan ID baru

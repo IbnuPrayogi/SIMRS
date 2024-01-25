@@ -28,6 +28,18 @@
                     <b>Tanggal telah lewat!!!</b>
                 </div>
 
+                <div class="popup-tgl" id="myPopup-tgl-month">
+                    <!-- Isi popup di sini -->
+                    <i class='bx bx-error'></i>
+                    <b>Tanggal Mulai dan Tanggal Selesai Harus Dalam Bulan yang sama</b>
+                </div>
+
+                <div class="popup-tgl" id="myPopup-tgl-limit">
+                    <!-- Isi popup di sini -->
+                    <i class='bx bx-error'></i>
+                    <b>Ajukan Cuti maksimal H-3</b>
+                </div>
+
                 <div class="content-text">
                     <h3>Tanggal Selesai</h3>
                 </div>
@@ -98,6 +110,7 @@
             </div>
         </div>
     </div>
+    <div id="myElement"></div>
 @endsection
 
 <script>
@@ -107,6 +120,8 @@
         var popup = document.getElementById("myPopup");
         var overlay = document.getElementById("overlay");
         var prosesButton = document.getElementById("prosesButton");
+
+        
 
         if (notifBerhasil.style.display === "none") {
             notifBerhasil.style.display = "block";
@@ -130,18 +145,49 @@
     function checkDate(inputId) {
         var inputDate = document.getElementById(inputId).value;
         var today = new Date().toISOString().split('T')[0];
-        var startDate =document.getElementById('Tanggal_Mulai').value;
-        var endDate =document.getElementById('Tanggal_izin').value;
+        var startDate = document.getElementById('Tanggal_Mulai').value;
+        var endDate = document.getElementById('Tanggal_izin').value;
+        var dateDifference = getDateDifference(today, startDate);
+        
+
 
         if (inputDate < today) {
             showPopup();
             // Tambahkan logika atau tindakan lain yang sesuai
             document.getElementById(inputId).value = "";
-        } else if(endDate != "" && endDate < startDate ){
-        showPopupSel();
-        document.getElementById("Tanggal_Mulai").value = "";
-        document.getElementById("Tanggal_izin").value = "";
+            document.getElementById("keterangan").value = (today-startDate);
+        } else if (endDate != "" && endDate < startDate) {
+            showPopupSel();
+            document.getElementById("Tanggal_Mulai").value = "";
+            document.getElementById("Tanggal_izin").value = "";
+        } else if ( dateDifference < 3) {
+            showPopupLimit();
+            document.getElementById("Tanggal_Mulai").value = "";
+            // Contoh: document.getElementById(inputId).value = "";
+        }
+        else if ( endDate!="" && isTwoMonthsApart(startDate, endDate)) {
+            // Tindakan yang ingin Anda lakukan jika tanggal berada dalam dua bulan yang berbeda
+            // Misalnya, menampilkan pesan kesalahan
+            showPopupMonth()
+            document.getElementById(inputId).value = "";
+        }
     }
+    function getDateDifference(date1, date2) {
+    // Implementasikan logika perbedaan tanggal di sini
+    // Misalnya, hitung selisih hari
+        var diffInMilliseconds = new Date(date2) - new Date(date1);
+        var diffInDays = Math.floor(diffInMilliseconds / (24 * 60 * 60 * 1000));
+        return diffInDays;
+    }
+
+    function isTwoMonthsApart(date1, date2) {
+    // Mendapatkan bulan dari tanggal pertama
+        var month1 = new Date(date1).getMonth();
+        // Mendapatkan bulan dari tanggal kedua
+        var month2 = new Date(date2).getMonth();
+
+        // Memeriksa apakah bulan dari kedua tanggal berbeda
+        return month1 !== month2;
     }
     function showPopup() {
         var popup = document.getElementById("myPopup-tgl");
@@ -155,6 +201,27 @@
     }
     function showPopupSel() {
         var popup = document.getElementById("myPopup-tgl-sel");
+        var overlay = document.getElementById("overlay_berhasil")
+        popup.style.display = "block"; // Tampilkan popup
+        overlay.style.display = "block";
+        setTimeout(function () {
+            popup.style.display = "none";
+            overlay.style.display = "none"; // Setelah beberapa waktu, sembunyikan kembali popup
+        },2000); // Misalnya, disetel untuk hilang setelah 3 detik (3000 milidetik)
+    }
+    function showPopupLimit() {
+        var popup = document.getElementById("myPopup-tgl-limit");
+        var overlay = document.getElementById("overlay_berhasil")
+        popup.style.display = "block"; // Tampilkan popup
+        overlay.style.display = "block";
+        setTimeout(function () {
+            popup.style.display = "none";
+            overlay.style.display = "none"; // Setelah beberapa waktu, sembunyikan kembali popup
+        },2000); // Misalnya, disetel untuk hilang setelah 3 detik (3000 milidetik)
+    }
+
+    function showPopupMonth() {
+        var popup = document.getElementById("myPopup-tgl-month");
         var overlay = document.getElementById("overlay_berhasil")
         popup.style.display = "block"; // Tampilkan popup
         overlay.style.display = "block";

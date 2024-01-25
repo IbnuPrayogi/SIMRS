@@ -27,6 +27,12 @@
                     <i class='bx bx-error'></i>
                     <b>Tanggal yang dimasukkan telah lewat</b>
                 </div>
+
+                <div class="popup-tgl" id="myPopup-tgl-limit">
+                    <!-- Isi popup di sini -->
+                    <i class='bx bx-error'></i>
+                    <b>Ajukan Izin maksimal H-3</b>
+                </div>
     
                 <div class="content-text">
                     <h3>Bagian</h3>
@@ -104,26 +110,42 @@
         }
     }
 
-    function checkDate() {
-        var inputDate = document.getElementById('Tanggal_izin').value;
-        var today = new Date().toISOString().split('T')[0];
+    // function checkDate() {
+    //     var inputDate = document.getElementById('Tanggal_izin').value;
+    //     var today = new Date().toISOString().split('T')[0];
+    //     dateDifference=getDateDifference(today,inputDate);
 
-        if (inputDate < today) {
-            alert('Tanggal yang dimasukkan sudah lewat!');
-            document.getElementById("Tanggal_izin").value = "";
-            // Tambahkan logika atau tindakan lain yang sesuai
-        }
+    //     if (inputDate < today) {
+    //         alert('Tanggal yang dimasukkan sudah lewat!');
+    //         document.getElementById("Tanggal_izin").value = "";
+    //         // Tambahkan logika atau tindakan lain yang sesuai
+    //     }
+        
+    // }
+
+    function getDateDifference(date1, date2) {
+    // Implementasikan logika perbedaan tanggal di sini
+    // Misalnya, hitung selisih hari
+        var diffInMilliseconds = new Date(date2) - new Date(date1);
+        var diffInDays = Math.floor(diffInMilliseconds / (24 * 60 * 60 * 1000));
+        return diffInDays;
     }
 
     function checkDate(inputId) {
         var inputDate = document.getElementById(inputId).value;
         var today = new Date().toISOString().split('T')[0];
+        dateDifference=getDateDifference(today,inputDate);
 
         if (inputDate < today) {
             showPopup();
             document.getElementById(inputId).value="";
             // Tambahkan logika atau tindakan lain yang sesuai
             document.getElementById(inputId).value = "";
+        }
+        else if ( dateDifference < 3) {
+            showPopupLimit();
+            document.getElementById("Tanggal_izin").value = "";
+            // Contoh: document.getElementById(inputId).value = "";
         }
     }
     function showPopup() {
@@ -136,6 +158,18 @@
             overlay.style.display = "none"; // Setelah beberapa waktu, sembunyikan kembali popup
         },2000); // Misalnya, disetel untuk hilang setelah 3 detik (3000 milidetik)
     }
+
+    function showPopupLimit() {
+        var popup = document.getElementById("myPopup-tgl-limit");
+        var overlay = document.getElementById("overlay_berhasil")
+        popup.style.display = "block"; // Tampilkan popup
+        overlay.style.display = "block";
+        setTimeout(function () {
+            popup.style.display = "none";
+            overlay.style.display = "none"; // Setelah beberapa waktu, sembunyikan kembali popup
+        },2000); // Misalnya, disetel untuk hilang setelah 3 detik (3000 milidetik)
+    }
+
 
     function goBack() {
         window.history.back();
