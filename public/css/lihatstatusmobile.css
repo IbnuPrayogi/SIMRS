@@ -65,3 +65,22 @@
         margin-left: 1.3rem;
     }
 }
+
+@media (width: 360px) and (height: 740px) {
+    .card-body {
+        max-height: 400px; /* Nilai max-height sesuai kebutuhan pada tampilan 360 x 740 */
+        overflow-y: auto; /* Membuat card body scrollable jika kontennya melebihi max-height */
+    }
+
+    /* Gaya lainnya sesuai kebutuhan */
+}
+
+/* Gaya khusus untuk layar dengan lebar 375px dan tinggi 667px */
+@media (width: 375px) and (height: 667px) {
+    .card-body {
+        max-height: 400px; /* Nilai max-height sesuai kebutuhan pada tampilan 375 x 667 */
+        overflow-y: auto; /* Membuat card body scrollable jika kontennya melebihi max-height */
+    }
+
+    /* Gaya lainnya sesuai kebutuhan */
+}

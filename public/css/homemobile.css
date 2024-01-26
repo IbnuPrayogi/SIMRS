@@ -120,7 +120,6 @@
     width: 171px;
     height: 250px;
     top: 0;
-    left: ;
     border-radius: 10px;
     background: linear-gradient(180deg, rgb(26, 45, 131) 0%, rgb(37, 170, 226) 100%);
   }
@@ -291,7 +290,6 @@
     -webkit-background-clip: text !important;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
     font-family: "Inter-ExtraBold", Helvetica;
     font-weight: 800;
     color: transparent;
@@ -300,3 +298,38 @@
     line-height: normal;
   }
   
+@media (width: 360px) and (height: 740px) {
+  .screen .overlap {
+    position: absolute;
+    width: 356px;
+    height: 246px;
+    top: 250px;
+    left: 20px;
+  }
+
+  .screen .title {
+    position: absolute;
+    width: 354px;
+    height: 43px;
+    top: 200px;
+    left: 18px;
+  }
+}
+
+/* Gaya khusus untuk layar dengan lebar 375px dan tinggi 667px */
+@media (width: 375px) and (height: 667px) {
+  .screen .overlap {
+    position: absolute;
+    width: 356px;
+    height: 246px;
+    top: 250px;
+    left: 20px;
+  }
+  .screen .title {
+    position: absolute;
+    width: 354px;
+    height: 43px;
+    top: 200px;
+    left: 18px;
+  }
+}

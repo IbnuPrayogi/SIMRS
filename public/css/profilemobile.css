@@ -6,12 +6,13 @@
     .container {
         margin-top: 12px;
         margin-left: 30px;
+        height: 100px;
     }
     .card {
         background: rgba(230, 239, 250, 0.80);
         border-radius: 10px 10px 0px 0px;
         width: 90%;
-        height: 50px;
+        height: auto;
     }
     .card h1 {
         color: #0253BA;
@@ -23,8 +24,9 @@
     .card-body {
         background: rgba(230, 239, 250, 0.65);
         width: 90%;
-        height: 670px;
-        overflow-y: scroll;
+        height: auto;
+        overflow-y: auto;
+        max-height: 550px;
     }
     .box_foto {
         background: white;
@@ -183,6 +185,7 @@
 @media (max-width: 497px) {
     .container {
         margin-left: 40px;
+        height: 100px;
     }
     .ganti_foto {
         width: 83%;
@@ -190,4 +193,23 @@
     .box_gelap {
         margin: .2rem 1rem;
     }
+}
+
+@media (width: 360px) and (height: 740px) {
+    .card-body {
+        max-height: 410px; /* Nilai max-height sesuai kebutuhan pada tampilan 360 x 740 */
+        overflow-y: auto; /* Membuat card body scrollable jika kontennya melebihi max-height */
+    }
+
+    /* Gaya lainnya sesuai kebutuhan */
+}
+
+/* Gaya khusus untuk layar dengan lebar 375px dan tinggi 667px */
+@media (width: 375px) and (height: 667px) {
+    .card-body {
+        max-height: 410px; /* Nilai max-height sesuai kebutuhan pada tampilan 375 x 667 */
+        overflow-y: auto; /* Membuat card body scrollable jika kontennya melebihi max-height */
+    }
+
+    /* Gaya lainnya sesuai kebutuhan */
 }
