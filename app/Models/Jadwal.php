@@ -45,6 +45,8 @@ class Jadwal extends Model
         'tanggal_29',
         'tanggal_30',
         'tanggal_31',
+        'tahun',
+        'nama_bagian'
     ];
 
     public function user()

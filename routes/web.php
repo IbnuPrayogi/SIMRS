@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\KBJadwalController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ArsipController;
@@ -104,6 +105,10 @@ Route::middleware(['auth', 'role:2'])->group(function () {
 
     Route::resource('kbsuratkeluar', KBSuratKeluarController::class);
     Route::resource('kbdisposisi', KBDisposisiController::class);
+    Route::resource('kbjadwal', KBJadwalController::class);
+    Route::get('/kbjadwal/download/file', [KBJadwalController::class, 'download'])->name('kbjadwal.download');
+    Route::get('/kbjadwal/edit/{bulan}/{tahun}', [KBJadwalController::class, 'editjadwal'])->name('kbjadwal.editjadwal');
+    Route::post('/kbjadwal/import/import-sql-table', [KBJadwalController::class, 'importTable'])->name('kbjadwal.importsql');
     Route::get('/kbdisposisi/add/{id}/{jenis}', [KBDisposisiController::class, 'tambah'])->name('kbdisposisi.tambah');
     Route::get('/kbdisposisi/showsurat/{id}/{nama}', [KBDisposisiController::class, 'showsurat'])->name('kbdisposisi.showsurat');
     Route::post('/kbdisposisi/store/{id}/{jenis}', [KBDisposisiController::class, 'store'])->name('kbdisposisi.tambahdisposisi');
@@ -158,6 +163,7 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::resource('suratizin', SuratIzinController::class);
     Route::resource('suratcuti', SuratCutiController::class);
     Route::resource('surattukarjaga', SuratTukarJagaController::class);
+    Route::get('/pengajuansurat/buatsurat', [StatusSuratController::class, 'create'])->name('statussurat.create');
     Route::get('/statuscuti/{id}', [StatusSuratController::class, 'statuscuti'])->name('status.cuti');
     Route::get('/statusizin/{id}', [StatusSuratController::class, 'statusizin'])->name('status.izin');
     Route::get('/statustukarjaga/{id}', [StatusSuratController::class, 'statustukarjaga'])->name('status.tukarjaga');
@@ -168,6 +174,7 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::delete('statusizin/destroy/{id}', [StatusSuratController::class, 'destroyIzin'])->name('statusizin.destroy');
     Route::delete('statustukarjaga/destroy/{id}', [StatusSuratController::class, 'destroyTukarJaga'])->name('statustukarjaga.destroy');
     Route::post('/changepassword', [ProfileKaryawanController::class, 'changePassword'])->name('change.password');
+    
 
     Route::resource('profile', SuratIzinController::class);
     Route::put('/updateprofile', [ProfileKaryawanController::class, 'updateprofile'])->name('update.profile');
@@ -176,8 +183,8 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::put('/permintaansurattukarjaga/tolak/{id}', [SuratTukarJagaController::class, 'tolak'])->name('tolak.tukarjaga');
 
 
-    Route::get('/dashboardkaryawan', function () {
-        return view('karyawan.index');
+    Route::get('/buatpengajuansurat', function () {
+        return view('karyawan.buatpengajuan');
     });
     Route::get('/status', function () {
         return view('karyawan.lihatstatusmobile');
@@ -201,13 +208,8 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::get('/pengajuan', function () {
         return view('karyawan.buatpengajuan');
     });
-    Route::get('/presensi', function () {
-        return view('karyawan.presensi');
-    });
 
-    Route::get('/detailpresensi', function () {
-        return view('karyawan.detailpresensi');
-    });
+  
     
 });
 

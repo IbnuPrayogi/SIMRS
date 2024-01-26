@@ -28,6 +28,12 @@
                     <b>Tanggal yang dimasukkan telah lewat</b>
                 </div>
 
+                <div class="popup-tgl" id="myPopup-tgl-warning">
+                    <!-- Isi popup di sini -->
+                    <i class='bx bx-error'></i>
+                    <b>Jumlah Tukar Jaga Bulan Ini Mencapai Batas Maksimal</b>
+                </div>
+
                 <div class="popup-tgl" id="myPopup-tgl-limit">
                     <!-- Isi popup di sini -->
                     <i class='bx bx-error'></i>
@@ -73,7 +79,7 @@
                 </div>
 
                 <!-- Button trigger modal -->
-                <button onclick="togglePopup()" class="btn btn-primary">
+                <button onclick="" class="btn btn-primary">
                     Buat Pengajuan
                 </button>
         </form>
@@ -84,7 +90,8 @@
                 <h1><b>Pengajuan Tukar Jaga Berhasil Dibuat</b></h1>
             </div>
             <div class="icon_sukses">
-                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"
+                    fill="none">
                     <circle cx="60" cy="60" r="60" fill="#0253BA" />
                 </svg>
                 <div class="ceklis">
@@ -92,33 +99,42 @@
                         fill="none">
                         <path
                             d="M28.4408 50.124L11.3807 33.0638C8.7772 30.4603 4.55611 30.4603 1.95262 33.0638C-0.650872 35.6673 -0.650872 39.8884 1.95262 42.4919L24.1748 64.7141C26.9468 67.4861 31.5006 67.2795 34.0103 64.2679L78.4546 10.9347C80.8117 8.1062 80.4296 3.90244 77.6011 1.54536C74.7726 -0.811733 70.5688 -0.429574 68.2117 2.39893L28.4408 50.124Z"
-                            fill="#E6EFFA" />
+                            fill="#E6EFFA"/>
                     </svg>
                 </div>
             </div>
         </div>
     </div>
     </div>
+    <script>
+        @if(Session::has('permission_limit_exceeded'))
+            showPopupWarning("{{ Session::get('permission_limit_exceeded') }}");
+        @elseif(Session::has('success'))
+            notifSukses()
+        @endif
+    </script>
 @endsection
 
 <script>
     // Fungsi untuk menampilkan pop-up
-    function togglePopup() {
-        var notifBerhasil = document.querySelector('.notif_berhasil');
-        var overlay_berhasil = document.getElementById("overlay_berhasil");
+    function notifSukses() {
+    var notifBerhasil = document.querySelector('.notif_berhasil');
+    var overlay_berhasil = document.getElementById("overlay_berhasil");
 
-        if (overlay_berhasil.style.display === "none" || notifBerhasil.style.display === "none") {
-            notifBerhasil.style.display = "block";
-            overlay_berhasil.style.display = "block";
-        } else {
-            notifBerhasil.style.display = "block";
-            overlay_berhasil.style.display = "block";
-        }
+    if (notifBerhasil.style.display === "none") {
+        notifBerhasil.style.display = "block";
+        overlay_berhasil.style.display = "block";
+
+        // Sembunyikan notifikasi setelah 5 detik (5000 milidetik)
         setTimeout(function() {
             notifBerhasil.style.display = "none";
             overlay_berhasil.style.display = "none";
         }, 1000);
+    } else {
+        notifBerhasil.style.display = "none";
+        overlay_berhasil.style.display = "none";
     }
+}
 
     document.getElementById('fileInput').addEventListener('change', function() {
         var selectedFile = this.files[0];
@@ -175,6 +191,16 @@
     }
     function showPopupLimit() {
         var popup = document.getElementById("myPopup-tgl-limit");
+        var overlay = document.getElementById("overlay_berhasil")
+        popup.style.display = "block"; // Tampilkan popup
+        overlay.style.display = "block";
+        setTimeout(function () {
+            popup.style.display = "none";
+            overlay.style.display = "none"; // Setelah beberapa waktu, sembunyikan kembali popup
+        },2000); // Misalnya, disetel untuk hilang setelah 3 detik (3000 milidetik)
+    }
+    function showPopupWarning() {
+        var popup = document.getElementById("myPopup-tgl-warning");
         var overlay = document.getElementById("overlay_berhasil")
         popup.style.display = "block"; // Tampilkan popup
         overlay.style.display = "block";

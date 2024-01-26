@@ -39,63 +39,82 @@ class SuratIzinController extends Controller
             'file' => 'mimes:pdf,doc,docx|max:5120',
             'bukti' => 'mimes:pdf,doc,docx|max:5120',
         ]);
+     
+        $explodedDate = explode("-", $request->tanggal_izin);
+        $month = $explodedDate[1];
+        $year= $explodedDate[0];
+        $time= $year."-".$month;
 
-        $kepala = User::where(function ($query) {
-            $query->where('jabatan', 'Kepala Bagian')
-                  ->orWhere('jabatan', 'Kepala Ruangan');
-        })
-        ->where('nama_bagian', auth()->user()->nama_bagian)
-        ->first();
+       
+        $jumlahIzin= SuratIzin::where('nama_pengaju',auth()->user()->nama_karyawan)->where('tanggal_izin',"LIKE","$time%")->count();
+        
 
-        if($kepala!=null){
-            $status=$kepala->jabatan;
-
+        if ($jumlahIzin >= 3) {
+            // Simpan pesan flash jika batas izin terlampaui
+            Session::flash('permission_limit_exceeded', 'Batas izin terlampaui. Tidak dapat membuat izin lebih lanjut.');
         }
         else{
-            $status='Direktur';
+            $kepala = User::where(function ($query) {
+                $query->where('jabatan', 'Kepala Bagian')
+                      ->orWhere('jabatan', 'Kepala Ruangan');
+            })
+            ->where('nama_bagian', auth()->user()->nama_bagian)
+            ->first();
+    
+            if($kepala!=null){
+                $status=$kepala->jabatan;
+    
+            }
+            else{
+                $status='Direktur';
+            }
+    
+            // dd(SuratIzin::all());]
+            // $file1 = $validatedData['file'];
+            $file2 = $validatedData['bukti'];
+            // $filename1 = $file1->getClientOriginalName();
+            $filename2 = $file2->getClientOriginalName();
+            $location1 = 'assets/surat/';
+            $location2 = 'assets/bukti/';
+    
+            $suratIzin = SuratIzin::create([
+                'nama_pengaju' => auth()->user()->nama_karyawan,
+                'tanggal_izin' => $request->tanggal_izin,
+                'bagian' => $request->bagian,
+                'keterangan' => $request->keterangan,
+                'bukti' => $filename2,
+                'status' => $status,
+                'tanda_tangan'=>auth()->user()->tanda_tangan
+                // 'tanda_tangan' => 'ttd.jpg',
+                // 'file' => $filename1,
+            ]);
+    
+            $suratIzin->nama_surat ="Surat Izin ".auth()->user()->nama_karyawan.$suratIzin->id;
+            $suratIzin->save();
+            $pdf = PDF::loadView('karyawan.SuratIzin.templateizin', compact('suratIzin'));
+            $file_name = $suratIzin->nama_surat  . '.pdf';
+            $file_path = storage_path('../public/assets/suratIzin/') . $file_name;
+            $pdf->save($file_path);
+            $suratIzin->file = $file_name;
+            $suratIzin->save();
+    
+            Disposisi::create([
+                'id_surat'=> $suratIzin->id,
+                'nama_surat' => $suratIzin->nama_surat,
+                'status' => $suratIzin->status,
+                'deskripsi' => "Surat Telah diajukan oleh ".$suratIzin->nama_pengaju,
+                // Tambahkan kolom-kolom lainnya sesuai kebutuhan
+            ]);
+    
+    
+            // $file1->move(public_path($location1), $filename1);
+            Session::flash('success', 'Data surat Berhasil Ditambahkan');
+
         }
 
-        // dd(SuratIzin::all());]
-        // $file1 = $validatedData['file'];
-        $file2 = $validatedData['bukti'];
-        // $filename1 = $file1->getClientOriginalName();
-        $filename2 = $file2->getClientOriginalName();
-        $location1 = 'assets/surat/';
-        $location2 = 'assets/bukti/';
 
-        $suratIzin = SuratIzin::create([
-            'nama_pengaju' => auth()->user()->nama_karyawan,
-            'tanggal_izin' => $request->tanggal_izin,
-            'bagian' => $request->bagian,
-            'keterangan' => $request->keterangan,
-            'bukti' => $filename2,
-            'status' => $status,
-            'tanda_tangan'=>auth()->user()->tanda_tangan
-            // 'tanda_tangan' => 'ttd.jpg',
-            // 'file' => $filename1,
-        ]);
-
-        $suratIzin->nama_surat ="Surat Izin ".auth()->user()->nama_karyawan.$suratIzin->id;
-        $suratIzin->save();
-        $pdf = PDF::loadView('karyawan.SuratIzin.templateizin', compact('suratIzin'));
-        $file_name = $suratIzin->nama_surat  . '.pdf';
-        $file_path = storage_path('../public/assets/suratIzin/') . $file_name;
-        $pdf->save($file_path);
-        $suratIzin->file = $file_name;
-        $suratIzin->save();
-
-        Disposisi::create([
-            'id_surat'=> $suratIzin->id,
-            'nama_surat' => $suratIzin->nama_surat,
-            'status' => $suratIzin->status,
-            'deskripsi' => "Surat Telah diajukan oleh ".$suratIzin->nama_pengaju,
-            // Tambahkan kolom-kolom lainnya sesuai kebutuhan
-        ]);
-
-
-        // $file1->move(public_path($location1), $filename1);
-        Session::flash('success', 'Data surat Berhasil Ditambahkan');
-        return redirect()->route('suratizin.create')->with('success', 'surat berhasil ditambahkan.');
+        
+        return redirect()->back();
     }
 
     public function storeSKForm(Request $request, $id)

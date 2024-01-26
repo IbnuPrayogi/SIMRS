@@ -28,6 +28,12 @@
                     <b>Tanggal telah lewat!!!</b>
                 </div>
 
+                <div class="popup-tgl" id="myPopup-tgl-warning">
+                    <!-- Isi popup di sini -->
+                    <i class='bx bx-error'></i>
+                    <b>Jumlah Cuti Bulan ini Telah Mencapai Batas Maksimal</b>
+                </div>
+
                 <div class="popup-tgl" id="myPopup-tgl-month">
                     <!-- Isi popup di sini -->
                     <i class='bx bx-error'></i>
@@ -83,7 +89,7 @@
                 </div>
     
                 <!-- Button trigger modal -->
-                <button type="submit" onclick="notifSukses()" class="btn btn-primary">
+                <button type="submit" onclick="" class="btn btn-primary">
                     Buat Pengajuan
                 </button>
             </Form>
@@ -91,7 +97,7 @@
             <div id="overlay_berhasil" class="overlay_berhasil" style="display: none;"></div>
             <div class="notif_berhasil" style="display: none;">
                 <div class="info_pengajuan">
-                    <h1><b>Pengajuan Tukar Jaga Berhasil Dibuat</b></h1>
+                    <h1><b>Pengajuan Cuti Berhasil Dibuat</b></h1>
                 </div>
                 <div class="icon_sukses">
                     <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"
@@ -111,35 +117,34 @@
         </div>
     </div>
     <div id="myElement"></div>
+    <script>
+        @if(Session::has('permission_limit_exceeded'))
+            showPopupWarning("{{ Session::get('permission_limit_exceeded') }}");
+        @elseif(Session::has('success'))
+            notifSukses()
+        @endif
+    </script>
 @endsection
 
 <script>
-    function notifSukses() {
-        var notifBerhasil = document.querySelector('.notif_berhasil');
-        var overlay_berhasil = document.getElementById("overlay_berhasil");
-        var popup = document.getElementById("myPopup");
-        var overlay = document.getElementById("overlay");
-        var prosesButton = document.getElementById("prosesButton");
+function notifSukses() {
+    var notifBerhasil = document.querySelector('.notif_berhasil');
+    var overlay_berhasil = document.getElementById("overlay_berhasil");
 
-        
+    if (notifBerhasil.style.display === "none") {
+        notifBerhasil.style.display = "block";
+        overlay_berhasil.style.display = "block";
 
-        if (notifBerhasil.style.display === "none") {
-            notifBerhasil.style.display = "block";
-            overlay_berhasil.style.display = "block";
-            popup.style.display = "none";
-            overlay.style.display = "none";
-            prosesButton.style.display = "none";
-
-            // Sembunyikan notifikasi setelah 5 detik (5000 milidetik)
-            setTimeout(function() {
-                notifBerhasil.style.display = "none";
-                overlay_berhasil.style.display = "none";
-            }, 1000);
-        } else {
+        // Sembunyikan notifikasi setelah 5 detik (5000 milidetik)
+        setTimeout(function() {
             notifBerhasil.style.display = "none";
             overlay_berhasil.style.display = "none";
-        }
+        }, 1000);
+    } else {
+        notifBerhasil.style.display = "none";
+        overlay_berhasil.style.display = "none";
     }
+}
 </script>
 <script>
     function checkDate(inputId) {
@@ -230,6 +235,17 @@
             overlay.style.display = "none"; // Setelah beberapa waktu, sembunyikan kembali popup
         },2000); // Misalnya, disetel untuk hilang setelah 3 detik (3000 milidetik)
     }
+
+    function showPopupWarning() {
+        var popup = document.getElementById("myPopup-tgl-warning");
+        var overlay = document.getElementById("overlay_berhasil")
+        popup.style.display = "block"; // Tampilkan popup
+        overlay.style.display = "block";
+        setTimeout(function () {
+            popup.style.display = "none";
+            overlay.style.display = "none"; // Setelah beberapa waktu, sembunyikan kembali popup
+        },2000); // Misalnya, disetel untuk hilang setelah 3 detik (3000 milidetik)
+    }a
 
     function goBack() {
         window.history.back();

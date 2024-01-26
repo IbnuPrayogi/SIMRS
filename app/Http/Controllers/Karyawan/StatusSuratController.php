@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\File;
 
 class StatusSuratController extends Controller
 {
+    public function create(){
+        return view('karyawan.buatpengajuan');
+    }
     public function statuscuti($id){
         $user= User::where('id',$id)->first();
         
@@ -152,10 +155,7 @@ class StatusSuratController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+ 
 
     /**
      * Store a newly created resource in storage.

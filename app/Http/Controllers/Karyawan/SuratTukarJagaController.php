@@ -43,35 +43,52 @@ class SuratTukarJagaController extends Controller
             'file' => 'mimes:pdf,doc,docx|max:5120',
         ]);
 
-        $suratTukarJaga = SuratTukarJaga::create([
-            'nama_pengaju' => auth()->user()->nama_karyawan,
-            'nama_target' => $request->nama_target,
-            'jadwal_asli' => $request->jadwal_asli,
-            'jadwal_dirubah' => $request->jadwal_dirubah,
-            'target_tukar_jaga' => $request->target_tukar_jaga,
-            'keterangan' => $request->keterangan,
-            'tanda_tangan'=>auth()->user()->tanda_tangan,
-            'status' => "Termohon",
-        ]);
-        $suratTukarJaga->nama_surat ="Surat Tukar Jaga ".auth()->user()->nama_karyawan.$suratTukarJaga->id;
+        $explodedDate = explode("-", $request->jadwal_asli);
+        $month = $explodedDate[1];
+        $year= $explodedDate[0];
+        $time= $year."-".$month;
 
-        $suratTukarJaga->save();
-        $Convertpdf = PDF::loadView('karyawan.SuratTukarJaga.templatetukarjaga', compact('suratTukarJaga'));
-        $file_name = $suratTukarJaga->nama_surat . '.pdf';
-        $file_path = storage_path('../public/assets/SuratTukarJaga/') . $file_name;
-        $Convertpdf->save($file_path);
-        $suratTukarJaga->file = $file_name;
-        $suratTukarJaga->save();
+       
+        $jumlahIzin= SuratTukarJaga::where('nama_pengaju',auth()->user()->nama_karyawan)->where('jadwal_asli',"LIKE","$time%")->count();
 
-        Disposisi::create([
-            'id_surat'=> $suratTukarJaga->id,
-            'nama_surat' => $suratTukarJaga->nama_surat,
-            'status' => $suratTukarJaga->status,
-            'deskripsi' => "Surat Telah diajukan oleh ".$suratTukarJaga->nama_pengaju,
-            // Tambahkan kolom-kolom lainnya sesuai kebutuhan
-        ]);
+        if ($jumlahIzin >= 3) {
+            // Simpan pesan flash jika batas izin terlampaui
+            Session::flash('permission_limit_exceeded', 'Batas izin terlampaui. Tidak dapat membuat izin lebih lanjut.');
+        }
 
-        Session::flash('success', 'Data surat Berhasil Ditambahkan');
+        else{
+            $suratTukarJaga = SuratTukarJaga::create([
+                'nama_pengaju' => auth()->user()->nama_karyawan,
+                'nama_target' => $request->nama_target,
+                'jadwal_asli' => $request->jadwal_asli,
+                'jadwal_dirubah' => $request->jadwal_dirubah,
+                'target_tukar_jaga' => $request->target_tukar_jaga,
+                'keterangan' => $request->keterangan,
+                'tanda_tangan'=>auth()->user()->tanda_tangan,
+                'status' => "Termohon",
+            ]);
+            $suratTukarJaga->nama_surat ="Surat Tukar Jaga ".auth()->user()->nama_karyawan.$suratTukarJaga->id;
+    
+            $suratTukarJaga->save();
+            $Convertpdf = PDF::loadView('karyawan.SuratTukarJaga.templatetukarjaga', compact('suratTukarJaga'));
+            $file_name = $suratTukarJaga->nama_surat . '.pdf';
+            $file_path = storage_path('../public/assets/SuratTukarJaga/') . $file_name;
+            $Convertpdf->save($file_path);
+            $suratTukarJaga->file = $file_name;
+            $suratTukarJaga->save();
+    
+            Disposisi::create([
+                'id_surat'=> $suratTukarJaga->id,
+                'nama_surat' => $suratTukarJaga->nama_surat,
+                'status' => $suratTukarJaga->status,
+                'deskripsi' => "Surat Telah diajukan oleh ".$suratTukarJaga->nama_pengaju,
+                // Tambahkan kolom-kolom lainnya sesuai kebutuhan
+            ]);
+            Session::flash('success', 'Data surat Berhasil Ditambahkan');
+
+        }
+
+        
         return redirect()->route('surattukarjaga.create')->with('success', 'surat berhasil ditambahkan.');
     }
 
@@ -112,10 +129,6 @@ class SuratTukarJagaController extends Controller
         ]);
         $dayPengaju= $suratTukarJaga->jadwal_asli->getDate();
         $dayTarget= $suratTukarJaga->jadwal_asli->getDate();
-
-
-       
-
 
         // Redirect ke halaman SuratCuti.show dengan menambahkan ID baru
         return redirect()->route('DaftarPermohonan.indexTukarJaga')

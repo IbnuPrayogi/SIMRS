@@ -34,60 +34,81 @@ class SuratCutiController extends Controller
         $validatedData = $request->validate([
             'file' => 'mimes:pdf,doc,docx|max:5120',
         ]);
-        $kepala = User::where(function ($query) {
-            $query->where('jabatan', 'Kepala Bagian')
-                  ->orWhere('jabatan', 'Kepala Ruangan');
-        })
-        ->where('nama_bagian', auth()->user()->nama_bagian)
-        ->first();
 
-        if($kepala!=null){
-            $status=$kepala->jabatan;
+        $explodedDate = explode("-", $request->tanggal_mulai);
+        $month = $explodedDate[1];
+        $year= $explodedDate[0];
+        $time= $year."-".$month;
 
+       
+        $jumlahIzin= SuratCuti::where('nama_pengaju',auth()->user()->nama_karyawan)->where('tanggal_mulai',"LIKE","$time%")->count();
+
+        if ($jumlahIzin >= 3) {
+            // Simpan pesan flash jika batas izin terlampaui
+            Session::flash('permission_limit_exceeded', 'Batas izin terlampaui. Tidak dapat membuat izin lebih lanjut.');
         }
         else{
-            $status='Direktur';
-        }
+            $kepala = User::where(function ($query) {
+                $query->where('jabatan', 'Kepala Bagian')
+                      ->orWhere('jabatan', 'Kepala Ruangan');
+            })
+            ->where('nama_bagian', auth()->user()->nama_bagian)
+            ->first();
     
+            if($kepala!=null){
+                $status=$kepala->jabatan;
+    
+            }
+            else{
+                $status='Direktur';
+            }
+        
+    
+            $location1 = 'assets/suratCuti/';
+    
+            $suratCuti = SuratCuti::create([
+                'nama_pengaju' => auth()->user()->nama_karyawan,
+                'bagian' => $request->bagian,
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_selesai' => $request->tanggal_selesai,
+                'alamat' => $request->alamat,
+                'jabatan' => $request->jabatan,
+                'keterangan' => $request->keterangan,
+                'tanda_tangan'=>auth()->user()->tanda_tangan,
+                'status' => $status,
+            ]);
+    
+            $suratCuti->nama_surat ="Surat Cuti ".auth()->user()->nama_karyawan.$suratCuti->id;
+    
+            $suratCuti->save();
+    
+    
+            $pdf = PDF::loadView('karyawan.SuratCuti.templatecuti', compact('suratCuti'));
+            $file_name = $suratCuti->nama_surat . '.pdf';
+            $file_path = storage_path('../public/assets/suratCuti/') . $file_name;
+            $pdf->save($file_path);
+            $suratCuti->file = $file_name;
+            $suratCuti->save();
+    
+            Disposisi::create([
+                'id_surat'=> $suratCuti->id,
+                'nama_surat' => $suratCuti->nama_surat,
+                'status' => $suratCuti->status,
+                'deskripsi' => "Surat Telah diajukan oleh ".$suratCuti->nama_pengaju,
+                // Tambahkan kolom-kolom lainnya sesuai kebutuhan
+            ]);
+    
+            
+    
+            Session::flash('success', 'Data surat Berhasil Ditambahkan');
 
-        $location1 = 'assets/suratCuti/';
-
-        $suratCuti = SuratCuti::create([
-            'nama_pengaju' => auth()->user()->nama_karyawan,
-            'bagian' => $request->bagian,
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
-            'alamat' => $request->alamat,
-            'jabatan' => $request->jabatan,
-            'keterangan' => $request->keterangan,
-            'tanda_tangan'=>auth()->user()->tanda_tangan,
-            'status' => $status,
-        ]);
-
-        $suratCuti->nama_surat ="Surat Cuti ".auth()->user()->nama_karyawan.$suratCuti->id;
-
-        $suratCuti->save();
+        }
 
 
-        $pdf = PDF::loadView('karyawan.SuratCuti.templatecuti', compact('suratCuti'));
-        $file_name = $suratCuti->nama_surat . '.pdf';
-        $file_path = storage_path('../public/assets/suratCuti/') . $file_name;
-        $pdf->save($file_path);
-        $suratCuti->file = $file_name;
-        $suratCuti->save();
 
-        Disposisi::create([
-            'id_surat'=> $suratCuti->id,
-            'nama_surat' => $suratCuti->nama_surat,
-            'status' => $suratCuti->status,
-            'deskripsi' => "Surat Telah diajukan oleh ".$suratCuti->nama_pengaju,
-            // Tambahkan kolom-kolom lainnya sesuai kebutuhan
-        ]);
 
         
-
-        Session::flash('success', 'Data surat Berhasil Ditambahkan');
-        return redirect()->route('suratcuti.create')->with('success', 'surat berhasil ditambahkan.');
+        return redirect()->back();
     }
 
     public function priview(Request $request, $id)

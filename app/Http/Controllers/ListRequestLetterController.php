@@ -35,7 +35,7 @@ class ListRequestLetterController extends Controller
      */
     public function create()
     {
-        return view('karyawan.buatpengajuan');
+        
     }
 
     /**
