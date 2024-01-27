@@ -79,7 +79,7 @@ class PresensiController extends Controller
     { 
         $bulan = intval($request->input('bulan'));
         $tahun = intval($request->input('tahun'));
-        $jadwals = Jadwal::where('bulan', $bulan)->get();
+        $jadwals = Jadwal::where('bulan', $bulan)->where('tahun',$tahun)->get();
 
         foreach ($jadwals as $jadwal) {
          
@@ -108,7 +108,8 @@ class PresensiController extends Controller
                         'nama_karyawan' => $user->nama_karyawan,
                         'shift_id' => $shiftDay->id,
                         'tanggal' => $tanggal,
-                        'waktu_izin' => $waktu_izin->hour
+                        'waktu_izin' => $waktu_izin->hour,
+                    
                     ]);
 
                 }
@@ -198,6 +199,7 @@ class PresensiController extends Controller
                                         'user_id' => $presensi->badgenumber,
                                         'shift_id' => $shiftDay->id,
                                         'tanggal' => $presensi->eDate,
+                                        'nama_karyawan'=>$user->nama_karyawan
                                     ], [
                                         'waktu_terlambat' => $waktuTelat
                                     ]);
@@ -211,13 +213,20 @@ class PresensiController extends Controller
                                     $cout1 = DataPresensi::where('username', $user->nama_karyawan)
                                         ->where('eDate', $tanggal3)
                                         ->first();
+                                    if($cout1!=null){
+                                        $arrayData = explode(' ', $cout1->stime);
+                                        $uniqueArray = array_unique($arrayData);
+                                        $arrayData = implode(' ', $uniqueArray);
 
-                                    $arrayData = explode(' ', $cout1->stime);
-                                    $uniqueArray = array_unique($arrayData);
-                                    $arrayData = implode(' ', $uniqueArray);
+                                        $arrayData = explode(' ', $arrayData);
+                                        $cout1 = $arrayData[0];
 
-                                    $arrayData = explode(' ', $arrayData);
-                                    $cout1 = $arrayData[0];
+                                    }
+                                    else{
+                                        $status='alfa';
+                                    }
+
+                                    
                                 }
                                
 
@@ -234,6 +243,7 @@ class PresensiController extends Controller
                                             'user_id' => $presensi->badgenumber,
                                             'shift_id' => $shiftDay->id,
                                             'tanggal' => $presensi->eDate,
+                                            'nama_karyawan'=>$user->nama_karyawan
                                         ], [
                                             'waktu_potongan' => $waktuPulangCepat
                                         ]);
@@ -270,7 +280,8 @@ class PresensiController extends Controller
                                         'user_id' => $presensi->badgenumber,
                                         'shift_id' => $shiftDay->id,
                                         'tanggal' => $presensi->eDate,
-                                        'waktu_terlambat' => $waktuTelat
+                                        'waktu_terlambat' => $waktuTelat,
+                                        'nama_karyawan'=>$user->nama_karyawan
                                     ]);
 
                                     $status = 'terlambat';
@@ -282,13 +293,20 @@ class PresensiController extends Controller
                                     $cout2 = DataPresensi::where('username', $user->nama_karyawan)
                                         ->where('eDate', $tanggal2)
                                         ->first();
+                                    if($cout2!=null){
+                                        $arrayData = explode(' ', $cout2->stime);
+                                        $uniqueArray = array_unique($arrayData);
+                                        $arrayData = implode(' ', $uniqueArray);
 
-                                    $arrayData = explode(' ', $cout2->stime);
-                                    $uniqueArray = array_unique($arrayData);
-                                    $arrayData = implode(' ', $uniqueArray);
+                                        $arrayData = explode(' ', $arrayData);
+                                        $cout2 = $arrayData[0];
 
-                                    $arrayData = explode(' ', $arrayData);
-                                    $cout2 = $arrayData[0];
+                                    }
+                                    else{
+                                        $status='alfa';
+                                    }
+
+                                    
 
                                 }
                                 
@@ -302,6 +320,7 @@ class PresensiController extends Controller
                                         'user_id' => $presensi->badgenumber,
                                         'shift_id' => $shiftDay->id,
                                         'tanggal' => $presensi->eDate,
+                                        'nama_karyawan'=>$user->nama_karyawan
                                     ], [
                                         'waktu_potongan' => $waktuPulangCepat
                                     ]);

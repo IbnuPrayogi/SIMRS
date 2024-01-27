@@ -11,13 +11,17 @@
       }
     </style>
 
+    @php
+        
+    @endphp
+
 
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-6">
                 <div class="small-box">
                     <div class="inner">
-                        <h3>{{ $countUsers }}</h3>
+                        <h3>{{ $jumlahAdmin }}</h3>
                         <p>Admin</p>
                     </div>
                     <div class="icon">
@@ -30,7 +34,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box">
                     <div class="inner">
-                        <h3>{{ $countArsips }}</h3>
+                        <h3>{{ $jumlahUser }}</h3>
                         <p>Karyawan</p>
                     </div>
                     <div class="icon">
@@ -43,7 +47,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box">
                     <div class="inner">
-                        <h3>{{ $countSuratMasuk }}</h3>
+                        <h3>{{ $jumlahShift }}</h3>
                         <p>Shift</p>
                     </div>
                     <div class="icon">
@@ -56,7 +60,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box">
                     <div class="inner">
-                        <h3>{{ $countSuratKeluar }}</h3>
+                        <h3>{{ $jumlahShift }}</h3>
                         <p>Telat</p>
                     </div>
                     <div class="icon">
@@ -82,19 +86,28 @@
 
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                       
                                         <th>Nama</th>
                                         <th>Bagian</th>
                                         <th>Shift</th>
+                                        <th>Waktu</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Agus</td>
-                                            <td>Dokter</td>
-                                            <td>Pagi</td>
-                                        </tr>
+                                    @foreach ($dataTerlambat as $terlambat)
+                                    <tr>
+                                        @php
+                                            $shift= \App\Models\Shift::where('id',$terlambat->shift_id)->first();
+                                        @endphp
+                                     
+                                        <td>Nama</td>
+                                        <td>Dokter</td>
+                                        <td>{{ $shift->nama_shift }}</td>
+                                        <td>{{ $terlambat->waktu_terlambat }}</td>
+                                    </tr>
+                                        
+                                    @endforeach
+                                        
                                 </tbody>
                             </table>
                         </div>  
@@ -114,11 +127,12 @@
                         
                           <script>
                             // Data untuk diagram batang
+                            var dynamicData = @json($dynamicsData);
                             var data = {
                               labels: ["Pagi", "Sore", "Malam", "Pagi/Sore", "Pagi/Malam"],
                               datasets: [{
                                 label: 'Shift Karyawan',
-                                data: [10, 20, 15, 25, 30], // Tinggi untuk setiap kategori
+                                data: dynamicData, // Tinggi untuk setiap kategori
                                 backgroundColor: [
                                   'rgba(255, 99, 132, 0.7)',
                                   'rgba(54, 162, 235, 0.7)',

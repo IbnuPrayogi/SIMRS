@@ -16,5 +16,6 @@ class Potongan extends Model
         'shift_id',
         'tanggal',
         'waktu_potongan',
+        'nama_karyawan'
     ];
 }

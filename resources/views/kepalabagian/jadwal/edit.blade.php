@@ -47,8 +47,8 @@
 </head>
 <body>
 @php
-    $users = App\Models\User::all();
-    $shifts = App\Models\Shift::all();
+    $users = App\Models\User::where('nama_bagian',auth()->user()->nama_bagian)->get();
+    $shifts = App\Models\Shift::where('bagian',auth()->user()->nama_bagian)->get();
     $bulan=intval($bulan);
     $jadwal = App\Models\Jadwal::where('bulan', $bulan)->where('tahun',$tahun)->where('nama_bagian',auth()->user()->nama_bagian)->get();
 

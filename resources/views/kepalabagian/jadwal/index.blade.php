@@ -101,10 +101,9 @@
             @for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $selectedMonth, now()->format('Y')); $day++)
                 <td class="calendar-cell">
                     @php
-                        $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $selectedMonth)->first();
+                        $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $selectedMonth)->where('tahun',$selectedYear)->first();
                         $userShift = $userSchedule ? $shifts->where('id', $userSchedule->{"tanggal_$day"})->first() : null;
                         $shiftId = $userShift ? $userShift->kode_shift : '-';
-                   
                     @endphp
                     {{ $shiftId }}
                 </td>
@@ -130,7 +129,9 @@
 
     function updateTable() {
         var selectedMonth = document.getElementById('selectMonth').value;
-        window.location.href = window.location.pathname + '?selectedMonth=' + selectedMonth;
+        var selectedYear = document.getElementById('selectYear').value;
+        window.location.href = window.location.pathname + '?selectedMonth=' + selectedMonth + '&selectedYear=' + selectedYear;
+       
     }
 </script>
 </html>

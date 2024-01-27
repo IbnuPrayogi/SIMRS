@@ -54,10 +54,12 @@ public function store(Request $request)
     foreach ($jadwalData as $userId => $shifts) {
         // Inisialisasi $totalMinutes di sini untuk setiap user
         $totalMinutes = 0;
+        $user=User::find($userId);
 
         foreach ($shifts as $day => $shiftId) {
             // Pastikan $day memiliki nilai yang valid sebelum digunakan
                 $shift = Shift::find($shiftId);
+                
 
                 if ($shift) {
                     list($hours, $minutes, $second) = explode(':', $shift->lama_waktu);
@@ -68,6 +70,7 @@ public function store(Request $request)
                 $jadwal = Jadwal::updateOrCreate(
                     [
                         'user_id' => $userId,
+                        'nama_karyawan'=>$user->nama_karyawan,
                         'bulan' => intval($bulan),
                         'nama_bagian'=>auth()->user()->nama_bagian,
                         'tahun'=>$tahun

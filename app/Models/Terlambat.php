@@ -15,5 +15,6 @@ class Terlambat extends Model
         'shift_id',
         'tanggal',
         'waktu_terlambat',
+        'nama_karyawan'
     ];
 }
