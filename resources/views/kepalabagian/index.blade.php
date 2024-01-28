@@ -16,7 +16,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box">
                     <div class="inner">
-                        <h3>{{ $countUsers }}</h3>
+                        <h3>{{ $jumlahKaryawan }}</h3>
                         <p>Karyawan</p>
                     </div>
                     <div class="icon">
@@ -29,7 +29,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box">
                     <div class="inner">
-                        <h3>{{ $countArsips }}</h3>
+                        <h3>{{ $jumlahCuti }}</h3>
                         <p>Cuti</p>
                     </div>
                     <div class="icon">
@@ -42,7 +42,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box">
                     <div class="inner">
-                        <h3>{{ $countSuratMasuk }}</h3>
+                        <h3>{{ $jumlahIzin }}</h3>
                         <p>Izin</p>
                     </div>
                     <div class="icon">
@@ -55,8 +55,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box">
                     <div class="inner">
-                        <h3>{{ $countSuratKeluar }}</h3>
-                        <p>Tukar Jaga</p>
+                        <h3>1</h3>
+                        <p>{{ $jumlahTukarJaga }}</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -109,11 +109,12 @@
                         
                           <script>
                             // Data untuk diagram batang
+                            var dynamicData = @json($dynamicsData);
                             var data = {
                               labels: ["Cuti", "Izin"],
                               datasets: [{
                                 label: 'Karyawan',
-                                data: [10, 20], // Tinggi untuk setiap kategori
+                                data: dynamicData, // Tinggi untuk setiap kategori
                                 backgroundColor: [
                                   'rgba(255, 99, 132, 0.7)',
                                   'rgba(54, 162, 235, 0.7)',

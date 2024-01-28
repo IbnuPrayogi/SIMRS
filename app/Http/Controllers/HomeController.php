@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Izin;
 use App\Models\User;
 use App\Models\Arsip;
 use App\Models\Shift;
 use App\Models\Jadwal;
+use App\Models\SuratCuti;
+use App\Models\SuratIzin;
 use App\Models\Terlambat;
 use App\Models\SuratMasuk;
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
+use App\Models\SuratTukarJaga;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,7 +43,7 @@ class HomeController extends Controller
             $jumlahUser=User::where('role',3)->count();
             $jumlahShift = Shift::count();
             $jumlahTerlambat = Terlambat::count();
-            $dataTerlambat=Terlambat::take(4)->get();
+            $dataTerlambat=Terlambat::latest()->take(4)->get();
             $today= Carbon::now()->day;
             $month=Carbon::now()->month;
             $year=Carbon::now()->year;
@@ -74,13 +78,24 @@ class HomeController extends Controller
                 // ->with('suratDataJson', json_encode($suratData));
 
         } else if (Auth::user()->role == 2) {
-            $countUsers = User::count();
-            $countArsips = Arsip::count();
-            $countSuratMasuk = SuratMasuk::count();
-            $countSuratKeluar = SuratKeluar::count();
+            $jumlahKaryawan = User::where('nama_bagian',auth()->user()->nama_bagian)->count();
+            $jumlahIzin = SuratIzin::where('bagian',auth()->user()->nama_bagian)->count();
+            $jumlahCuti = SuratCuti::where('bagian',auth()->user()->nama_bagian)->count();
+            $jumlahTukarJaga = SuratTukarJaga::where('bagian',auth()->user()->nama_bagian)->count();
+            $dateNow=Carbon::now()->format('Y-m-d');
+            $izinHariIni=SuratIzin::where('tanggal_izin',$dateNow)->where('bagian',auth()->user()->nama_bagian)->get();
+            $CutiHariIni =SuratCuti::where(function ($query) use ($dateNow) {
+                $query->Where('tanggal_mulai', '<=', $dateNow)
+                      ->where('tanggal_selesai', '>=', $dateNow);
+            })
+            ->where('bagian', auth()->user()->nama_bagian)
+            ->get();
+
+            $dynamicsData=[$izinHariIni,$CutiHariIni];
+           
          
             return view('kepalabagian.index')
-                ->with(compact('countUsers', 'countArsips', 'countSuratMasuk', 'countSuratKeluar'));
+                ->with(compact('jumlahKaryawan','jumlahIzin','jumlahCuti','jumlahTukarJaga','dynamicsData'));
                 // ->with('suratDataJson', json_encode($suratData));
         } else if (Auth::user()->role == 3) {
             return view('karyawan.index');

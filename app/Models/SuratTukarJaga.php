@@ -16,6 +16,7 @@ class SuratTukarJaga extends Model
         'waktu',
         'keterangan',
         'bukti',
+        'bagian',
         'target_tukar_jaga',
         'status',
         'file',

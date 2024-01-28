@@ -65,6 +65,7 @@ class SuratTukarJagaController extends Controller
                 'target_tukar_jaga' => $request->target_tukar_jaga,
                 'keterangan' => $request->keterangan,
                 'tanda_tangan'=>auth()->user()->tanda_tangan,
+                'bagian'=>auth()->user()->nama_bagian,
                 'status' => "Termohon",
             ]);
             $suratTukarJaga->nama_surat ="Surat Tukar Jaga ".auth()->user()->nama_karyawan.$suratTukarJaga->id;

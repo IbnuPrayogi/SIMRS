@@ -61,9 +61,9 @@
                 <ul class="menu">
                     <li><a href="{{route('admin.index')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                     <li><a href="{{route('profile.user')}}"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a href="{{ route('arsip.index') }}"><i class="fas fa-archive"></i> Shift</a></li>
-                    <li><a href="#"><i class="fas fa-user-check"></i> Presensi</a></li>
-                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
+                    <li><a href="{{ route('shift.index') }}"><i class="fas fa-archive"></i> Shift</a></li>
+                    <li><a href="{{ route('presensi.index') }}"><i class="fas fa-user-check"></i> Presensi</a></li>
+                    <li><a href="{{ route('jadwal.index') }}"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
                     <li><a href="{{ route('user.index') }}"><i class="fas fa-users"></i> Pengguna</a></li>
                 </ul>
                 <br><br><br><br>

@@ -98,10 +98,11 @@
                                     <tr>
                                         @php
                                             $shift= \App\Models\Shift::where('id',$terlambat->shift_id)->first();
+                                            $user=\App\Models\User::where('nama_karyawan',$terlambat->nama_karyawan)->first();
                                         @endphp
                                      
-                                        <td>Nama</td>
-                                        <td>Dokter</td>
+                                        <td>{{ $terlambat->nama_karyawan }}</td>
+                                        <td>{{ $user->nama_bagian }}</td>
                                         <td>{{ $shift->nama_shift }}</td>
                                         <td>{{ $terlambat->waktu_terlambat }}</td>
                                     </tr>
