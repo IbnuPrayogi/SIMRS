@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Linefont:wght@100&display=swap');
 
+
+
+body {
+    height: 100vh;
+}
 @media screen and (min-width: 617px) {
     body {
         display: none;
@@ -20,7 +25,7 @@
 
 @media (max-width: 617px) {
     body {
-        height: 100vh;
+        overflow-x: hidden; 
     }
     .upbar {
         background: #0253BA;
@@ -122,7 +127,7 @@
         margin-left: 31px;
         position: absolute;
         width: 22.9rem;
-        bottom: 0.5rem;
+        bottom: 50px;
     }
     .navbar {
         background: #0253BA;
