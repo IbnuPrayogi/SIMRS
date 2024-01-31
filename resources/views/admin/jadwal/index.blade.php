@@ -61,6 +61,7 @@
 
 @php
     $selectedMonth = request('selectedMonth', now()->format('m'));
+    $selectedYear = request('selectedYear', now()->format('Y'));
 @endphp
 
 <h4>Jadwal Karyawan Bulan 
@@ -68,6 +69,18 @@
         @for ($i = 1; $i <= 12; $i++)
             <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
                 {{ date('F', mktime(0, 0, 0, $i, 1)) }}
+            </option>
+        @endfor
+    </select>
+    <label for="selectYear">Tahun:</label>
+    <select id="selectYear" onchange="updateTable()" value="{{ $selectedYear }}">
+        @php
+            $currentYear = now()->format('Y');
+        @endphp
+
+        @for ($year = $currentYear - 5; $year <= $currentYear + 5; $year++)
+            <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>
+                {{ $year }}
             </option>
         @endfor
     </select>
@@ -88,10 +101,9 @@
             @for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $selectedMonth, now()->format('Y')); $day++)
                 <td class="calendar-cell">
                     @php
-                        $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $selectedMonth)->first();
+                        $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $selectedMonth)->where('tahun',$selectedYear)->first();
                         $userShift = $userSchedule ? $shifts->where('id', $userSchedule->{"tanggal_$day"})->first() : null;
                         $shiftId = $userShift ? $userShift->kode_shift : '-';
-                   
                     @endphp
                     {{ $shiftId }}
                 </td>
@@ -101,7 +113,7 @@
 </table>
 
 <a href="javascript:void(0);" onclick="downloadImage()" class="btn btn-primary">Download Image</a>
-<a href="{{ route('jadwal.editjadwal', ['bulan' => $selectedMonth]) }}" class="btn btn-primary">Edit Schedule</a>
+<a href="{{ route('jadwal.editjadwal', ['bulan' => $selectedMonth,'tahun'=>$selectedYear]) }}" class="btn btn-primary">Edit Schedule</a>
 
 
 </body>
@@ -117,7 +129,9 @@
 
     function updateTable() {
         var selectedMonth = document.getElementById('selectMonth').value;
-        window.location.href = window.location.pathname + '?selectedMonth=' + selectedMonth;
+        var selectedYear = document.getElementById('selectYear').value;
+        window.location.href = window.location.pathname + '?selectedMonth=' + selectedMonth + '&selectedYear=' + selectedYear;
+       
     }
 </script>
 </html>

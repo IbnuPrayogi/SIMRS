@@ -47,10 +47,13 @@
 </head>
 <body>
 @php
-    $users = App\Models\User::all();
-    $shifts = App\Models\Shift::all();
-    $jadwal = App\Models\Jadwal::where('bulan', $bulan)->get();
+    $users = App\Models\User::where('nama_bagian',auth()->user()->nama_bagian)->get();
+    $shifts = App\Models\Shift::where('bagian',auth()->user()->nama_bagian)->get();
+    $bulan=intval($bulan);
+    $jadwal = App\Models\Jadwal::where('bulan', $bulan)->where('tahun',$tahun)->where('nama_bagian',auth()->user()->nama_bagian)->get();
+
     $bulan = $bulan ?? now()->format('m');
+    $tahun = $tahun ?? now()->format('Y');
 @endphp
 
 <form method="post" action="{{ route('jadwal.store') }}">
@@ -110,15 +113,16 @@
     </table>
 
     <input type="hidden" name="bulan" value="{{ $bulan }}">
+    <input type="hidden" name="tahun" value="{{ $tahun }}">
 
     <br>
     <button type="submit">Simpan Jadwal</button>
 </form>
-<form method="post" action="{{ route('presensi.store') }}" enctype="multipart/form-data">
+{{-- <form method="post" action="{{ route('presensi.store') }}" enctype="multipart/form-data">
     @csrf
     <label for="">Rekap Presensi</label><br>
     <button type="submit">Rekap Data Presensi</button>
-</form>
+</form> --}}
 
 <script>
     function changeShift(shiftId, userName, day) {

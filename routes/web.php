@@ -50,6 +50,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
     Route::resource('shift', ShiftController::class);
     Route::resource('presensi', PresensiController::class);
+    Route::post('/presensi/rekap', [PresensiController::class, 'rekap'])->name('presensi.rekap');
     Route::resource('jadwal', JadwalController::class);
     Route::get('/jadwal/download/file', [JadwalController::class, 'download'])->name('jadwal.download');
     Route::get('/jadwal/edit/{bulan}', [JadwalController::class, 'editjadwal'])->name('jadwal.editjadwal');

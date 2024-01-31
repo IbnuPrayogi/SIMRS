@@ -38,38 +38,146 @@ class PresensiController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $conn = \odbc_connect('MS Access Database','111','111');
-        if ($conn) {
-            // Query SQL untuk mendapatkan semua data dari tabel
-            $sql = "SELECT * FROM CHECKINOUT
-            WHERE MONTH(CHECKTIME) = 12 AND YEAR(CHECKTIME) = 2023";
         
-            // Menjalankan query
-            $result = odbc_exec($conn, $sql);
         
-            // Membuat tabel HTML
-            echo '<table border="1">';
-            echo '<tr><th>Column1</th><th>Column2</th><th>Column3</th></tr>';
-        
-            // Loop melalui hasil dan tampilkan data dalam tabel
-            while ($row = odbc_fetch_array($result)) {
-                echo '<tr>';
-                echo '<td>' . $row['USERID'] . '</td>';
-                echo '<td>' . $row['CHECKTIME'] . '</td>';
-                echo '<td>' . $row['CHECKTYPE'] . '</td>';
-                echo '</tr>';
+        $bulan = intval($request->input('bulan'));
+        $tahun = intval($request->input('tahun'));
+        $jadwals = Jadwal::where('bulan', 1)->where('tahun',2024)->get();
+      
+
+        foreach ($jadwals as $jadwal) {
+            $conn = \odbc_connect('MS Access Database','111','111');
+            if ($conn) {
+                // Query SQL untuk mendapatkan USERID dari USERINFO berdasarkan nama karyawan
+                $sql1 = "SELECT USERID FROM USERINFO WHERE Name='$jadwal->nama_karyawan'";
+            
+                // Menjalankan query
+                $result1 = \odbc_exec($conn, $sql1);
+            
+                // Memeriksa apakah query berhasil dieksekusi
+                if ($result1) {
+                    // Mengambil data dari hasil query
+                    $row1 = \odbc_fetch_array($result1);
+            
+                    // Memeriksa apakah data ditemukan
+                    if ($row1) {
+                        $userid = $row1['USERID'];
+            
+                        // Tanggal yang diinginkan
+                        $targetDate = '12/12/2023';
+            
+                        // Query SQL untuk mendapatkan data dari tabel pada tanggal dan USERID tertentu
+                        $sql2 = "SELECT USERID, CHECKTIME, CHECKTYPE FROM CHECKINOUT WHERE USERID = $userid AND DateValue(CHECKTIME) = #$targetDate#";
+            
+                        // Menjalankan query
+                        $result2 = \odbc_exec($conn, $sql2);
+            
+                        // Variabel untuk menyimpan waktu terpisah
+                        $combinedTimes = '';
+            
+                        // Loop melalui hasil dan tampilkan data dalam tabel
+                        while ($row2 = \odbc_fetch_array($result2)) {
+                            // Ekstrak waktu dari CHECKTIME
+                            $checkTime = date("H:i", strtotime($row2['CHECKTIME']));
+            
+                            // Tambahkan waktu ke variabel
+                            $combinedTimes .= $checkTime . ' ';
+                        }
+            
+                        // Hapus spasi ekstra di akhir variabel
+                        $combinedTimes = rtrim($combinedTimes);
+            
+                        // Membuat tabel HTML atau melakukan operasi lainnya
+                        dd($combinedTimes);
+                    } else {
+                        echo "Data tidak ditemukan untuk $jadwal->nama_karyawan";
+                    }
+                } else {
+                    // Menangani kesalahan eksekusi query
+                    echo "Terjadi kesalahan dalam menjalankan query.";
+                }
+            
+                // Menutup koneksi ODBC
+                \odbc_close($conn);
+            } else {
+                echo "Koneksi gagal.";
             }
-        
-            echo '</table>';
-        
-            // Menutup koneksi ODBC
-            odbc_close($conn);
-        } else {
-            echo "Koneksi ODBC gagal.";
+            
+         
+            for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, 1, now()->format('Y')); $day++) {
+                $data = Jadwal::where("tanggal_$day", '!=', null)->where('bulan', $bulan)->pluck("tanggal_$day")->toArray();
+                $tanggal = "$day/$bulan/$tahun";
+
+               
         }
+        // if ($conn) {
+        //     $sql = "SELECT * FROM USERINFO";
+
+        //     $result = \odbc_exec($conn, $sql);
+
+        //     // Membuat tabel HTML
+        //     echo '<table border="1">';
+        //     echo '<tr>';
+        //     echo '<th>USERID</th>';
+        //     echo '<th>Badgenumber</th>';
+        //     echo '<th>SSN</th>';
+        //     echo '<th>NAME</th>';
+        //     echo '<th>GENDER</th>';
+        //     // ... (Tambahkan kolom lain sesuai kebutuhan)
+        //     echo '</tr>';
+
+        //     // Loop melalui hasil dan tampilkan data dalam tabel
+        //     while ($row = \odbc_fetch_array($result)) {
+        //         echo '<tr>';
+        //         echo '<td>' . $row['USERID'] . '</td>';
+        //         echo '<td>' . $row['Badgenumber'] . '</td>';
+        //         echo '<td>' . $row['SSN'] . '</td>';
+        //         echo '<td>' . $row['Name'] . '</td>';
+        //         echo '<td>' . $row['Gender'] . '</td>';
+        //         // ... (Tambahkan kolom lain sesuai kebutuhan)
+        //         echo '</tr>';
+        //     }
+
+        //     echo '</table>';
+
+        //     // Menutup koneksi ODBC
+        //     \odbc_close($conn);
+
+            // $userId = 1;
+
+            // $targetDate = '12/12/2023'; 
+            // $sql = "SELECT USERID, CHECKTIME, CHECKTYPE FROM CHECKINOUT WHERE USERID = $userId AND DateValue(CHECKTIME) = #$targetDate#";
+            // // Menjalankan query
+            // $result = \odbc_exec($conn, $sql);
+            // // Variabel untuk menyimpan waktu terpisah
+            // $combinedTimes = '';
+
+            // // Loop melalui hasil dan tampilkan data dalam tabel
+            // while ($row = \odbc_fetch_array($result)) {
+            //     // Ekstrak waktu dari CHECKTIME
+            //     $checkTime = date("H:i", strtotime($row['CHECKTIME']));
+
+            //     // Tambahkan waktu ke variabel
+            //     $combinedTimes .= $checkTime . ' ';
+            // }
+
+            // // Hapus spasi ekstra di akhir variabel
+            // $combinedTimes = rtrim($combinedTimes);
+
+            // // Membuat tabel HTML
+            // dd($combinedTimes);
+            // echo $combinedTimes;
+            
+
+            // // Menutup koneksi ODBC
+            // \odbc_close($conn);
+        // } else {
+        //     echo "Koneksi ODBC gagal.";
+        // }
     }
+}
     
 
     /**

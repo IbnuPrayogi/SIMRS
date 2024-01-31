@@ -53,10 +53,14 @@
                                                         <td>{{ $Izin->created_at->format('Y-m-d') }}</td>
                                                         <td>{{ $Izin->status }}</td>
                                                         <td>
-                                                            @if ($Izin->status == auth()->user()->jabatan && $Izin->status!='disetujui' )
+                                                            @if ($Izin->status == auth()->user()->jabatan  && $Izin->status!='disetujui' )
+                                                            @if (auth()->user()->jabatan=='Direktur')
+                                                            
                                                             <a href="{{ route('PermohonanIzin.priview', $Izin->id) }}"><button
                                                                 class="btn btn-warning" style="background:#1AACAC">
                                                                 <i class="fa-solid fa-file-signature"></i></button></a>
+                                                                
+                                                            @endif
                                                             <a
                                                             href="{{ route('kbdisposisi.tambah', ['id' => $Izin->id, 'jenis' => "surat izin"]) }}"><button
                                                                 class="btn btn-success"><i

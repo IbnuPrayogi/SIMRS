@@ -13,7 +13,7 @@
         <p style="color: green;">{{ session('success') }}</p>
     @endif
 
-    <form method="post" action="{{ route('jadwal.importsql') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('kbjadwal.importsql') }}" enctype="multipart/form-data">
         @csrf
         <label for="sql_file">Upload SQL File:</label><br>
         <input type="file" name="sql_file"><br><br>

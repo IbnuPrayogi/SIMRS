@@ -111,13 +111,11 @@
                                         <ul class="menu d-block d-md-none">
                                             <li><a href="/home"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                                             <li><a href="{{ route('KBprofile.user') }}"><i class="fas fa-user"></i> Profile</a></li>
-                                            <li><a href="{{ route('kbsuratkeluar.index') }}"><i class="fas fa-envelope"></i> Surat Keluar</a></li>
-                                            <li><a href="{{ route('kbsuratmasuk.index') }}"><i class="fas fa-envelope-open"></i> Surat Masuk</a></li>
                                             <li><a href="{{ route('DaftarPermohonan.indexCuti') }}"><i class="fas fa-bed"></i> Cuti</a></li>
                                             <li><a href="{{ route('DaftarPermohonan.indexIzin') }}"><i class="fas fa-clock"></i> Izin</a></li>
                                             <li><a href="{{ route('DaftarPermohonan.indexTukarJaga') }}"><i class="fas fa-exchange-alt"></i> Tukar Jaga</a></li>
                                             <li><a href="#"><i class="fas fa-user-check"></i> Presensi</a></li>
-                                            <li><a href="#"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
+                                            <li><a href="{{ route('kbjadwal.index') }}"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
                                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <i class="fas fa-sign-out-alt"></i>
                                                 {{ __('Logout') }}
