@@ -122,7 +122,7 @@
                 @endphp
                 ">
                     @php
-                        $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $selectedMonth)->first();
+                        $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $selectedMonth)->where('tahun',$selectedYear)->first();
                         $userShift = $userSchedule ? $shifts->where('id', $userSchedule->{"tanggal_$day"})->first() : null;
                         $shiftId = $userShift ? $userShift->kode_shift : '-';
                     @endphp

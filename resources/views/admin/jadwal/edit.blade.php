@@ -64,10 +64,11 @@
     <table>
         <tr>
             <th></th>
+            <th>Jam Kerja</th>
             @for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $bulan, now()->format('Y')); $day++)
                 <th>{{ $day }}</th>
             @endfor
-            <th>Jam Kerja</th>
+            
         </tr>
 
         @foreach ($users as $user)
@@ -77,6 +78,18 @@
 
             <tr>
                 <td class="employee-name">{{ $user->nama_karyawan }}</td>
+                @php
+                if($userSchedule){
+                    $hours = floor($userSchedule->jumlah_jam_kerja / 60);
+                    $minutes = $userSchedule->jumlah_jam_kerja % 60;
+                }
+                else{
+                    $hours = '0';
+                    $minutes = '0';
+                }
+                    
+                @endphp
+                <td>{{ $hours.' jam' }}</td>
 
                 @for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $bulan, now()->format('Y')); $day++)
                     @php
@@ -96,18 +109,7 @@
                     </td>
                 @endfor
 
-                @php
-                if($userSchedule){
-                    $hours = floor($userSchedule->jumlah_jam_kerja / 60);
-                    $minutes = $userSchedule->jumlah_jam_kerja % 60;
-                }
-                else{
-                    $hours = '0';
-                    $minutes = '0';
-                }
-                    
-                @endphp
-                <td>{{ $hours.' jam' }}</td>
+               
             </tr>
         @endforeach
     </table>
