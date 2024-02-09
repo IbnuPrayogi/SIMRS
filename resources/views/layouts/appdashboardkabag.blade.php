@@ -68,7 +68,7 @@
                     <li><a href="{{ route('kbjadwal.index') }}"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
                 </ul>
                 <div class="footer">
-                    <p>&copy; 2023 Do'a Ayah</p>
+                    <p>&copy; 2023</p>
                 </div>
             </div>
         </div>

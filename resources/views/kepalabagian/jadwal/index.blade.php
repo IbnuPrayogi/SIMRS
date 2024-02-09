@@ -23,10 +23,10 @@
     
         .employee-name, .jam-kerja {
             text-align: left;
-            font-weight: bold;
+            font-weight: normal;
             background-color: #0D72F2;
             color: white;
-            padding: 5px;
+            padding: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -72,7 +72,7 @@
     $selectedYear = request('selectedYear', now()->format('Y'));
 @endphp
 
-<h4>Jadwal Karyawan Bulan 
+<h5>Jadwal Karyawan Bulan
     <select id="selectMonth" onchange="updateTable()" value="{{ $selectedMonth }}" style="font-size: 20px">
         @for ($i = 1; $i <= 12; $i++)
             <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
@@ -92,51 +92,116 @@
             </option>
         @endfor
     </select>
-</h4>
+</h5>
 
-<table id="scheduleTable">
-    <tr>
-        <th></th>
-        <th style="width: 200px">Jam Kerja</th>
-        @for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $selectedMonth, now()->format('Y')); $day++)
-            <th>{{ $day }}<br>
-                {{ date('l', strtotime("$year-$selectedMonth-$day")) === 'Sunday' ? 'Minggu' :
-                    (date('l', strtotime("$year-$selectedMonth-$day")) === 'Monday' ? 'Senin' :
-                    (date('l', strtotime("$year-$selectedMonth-$day")) === 'Tuesday' ? 'Selasa' :
-                    (date('l', strtotime("$year-$selectedMonth-$day")) === 'Wednesday' ? 'Rabu' :
-                    (date('l', strtotime("$year-$selectedMonth-$day")) === 'Thursday' ? 'Kamis' :
-                    (date('l', strtotime("$year-$selectedMonth-$day")) === 'Friday' ? 'Jumat' : 'Sabtu'))))) }}</th>
-        @endfor
-    </tr>
+<style>
+    /* Common Styles */
+    .employee-name, .jam-kerja {
+        text-align: left;
+        font-weight: normal;
+        background-color: #0D72F2;
+        color: white;
+        padding: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-    @foreach ($users as $user)
+    .scrollable-table-container {
+        overflow-x: auto;
+        margin-top: 10px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: auto;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        font-weight: normal;
+    }
+
+    /* Fixed Column Styles */
+    .fixed-column {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background-color: #0D72F2;
+        color: white;
+    }
+
+    .fixed-column th,
+    .fixed-column td {
+        white-space: nowrap;
+    }
+
+    .fixed-jam {
+        position: sticky;
+        left: 50px; /* Adjust as per your requirement */
+        z-index: 1;
+        background-color: #0D72F2;
+        color: white;
+    }
+
+    /* Other Styles */
+    .shift-dropdown {
+        display: flex;
+        justify-content: center;
+    }
+
+    .shift {
+        width: 100%;
+    }
+</style>
+
+<div class="scrollable-table-container">
+    <table id="scheduleTable">
         <tr>
-            <td class="employee-name">{{ $user->nama_karyawan }}</td>
-                   @php
-                   $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $selectedMonth)->where('tahun',$selectedYear)->first();
-                        if ($userSchedule) {
-                            $hours = floor($userSchedule->jumlah_jam_kerja / 60);
-                            $minutes = $userSchedule->jumlah_jam_kerja % 60;
-                        } else {
-                            $hours = '0';
-                            $minutes = '0';
-                        }
-                    @endphp
-                    <td class="jam-kerja">{{ $hours.' jam' }}</td>
-
+            <th class="fixed-column">Nama Karyawan</th>
+            <th class="fixed-jam" style="width: 200px">Jam Kerja</th>
             @for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $selectedMonth, now()->format('Y')); $day++)
-                <td class="calendar-cell">
-                    @php
-                        
-                        $userShift = $userSchedule ? $shifts->where('id', $userSchedule->{"tanggal_$day"})->first() : null;
-                        $shiftId = $userShift ? $userShift->kode_shift : '-';
-                    @endphp
-                    {{ $shiftId }}
-                </td>
+                <th>{{ $day }}<br>
+                    {{ date('l', strtotime("$year-$selectedMonth-$day")) === 'Sunday' ? 'Minggu' :
+                        (date('l', strtotime("$year-$selectedMonth-$day")) === 'Monday' ? 'Senin' :
+                        (date('l', strtotime("$year-$selectedMonth-$day")) === 'Tuesday' ? 'Selasa' :
+                        (date('l', strtotime("$year-$selectedMonth-$day")) === 'Wednesday' ? 'Rabu' :
+                        (date('l', strtotime("$year-$selectedMonth-$day")) === 'Thursday' ? 'Kamis' :
+                        (date('l', strtotime("$year-$selectedMonth-$day")) === 'Friday' ? 'Jumat' : 'Sabtu'))))) }}</th>
             @endfor
         </tr>
-    @endforeach
-</table>
+
+        @foreach ($users as $user)
+            <tr>
+                <td class="fixed-column employee-name">{{ $user->nama_karyawan }}</td>
+                @php
+                   $userSchedule = $jadwal->where('user_id', $user->id)->where('bulan', $selectedMonth)->where('tahun',$selectedYear)->first();
+                    if ($userSchedule) {
+                        $hours = floor($userSchedule->jumlah_jam_kerja / 60);
+                        $minutes = $userSchedule->jumlah_jam_kerja % 60;
+                    } else {
+                        $hours = '0';
+                        $minutes = '0';
+                    }
+                @endphp
+                <td class="fixed-jam jam-kerja">{{ $hours.' jam' }}</td>
+
+                @for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $selectedMonth, now()->format('Y')); $day++)
+                    <td class="calendar-cell">
+                        @php
+                            $userShift = $userSchedule ? $shifts->where('id', $userSchedule->{"tanggal_$day"})->first() : null;
+                            $shiftId = $userShift ? $userShift->kode_shift : '-';
+                        @endphp
+                        {{ $shiftId }}
+                    </td>
+                @endfor
+            </tr>
+        @endforeach
+    </table>
+</div>
+
 
 <a href="javascript:void(0);" onclick="downloadImage()" class="btn btn-primary">Download Image</a>
 <a href="{{ route('kbjadwal.editjadwal', ['bulan' => $selectedMonth,'tahun'=>$selectedYear]) }}" class="btn btn-primary">Edit Schedule</a>
