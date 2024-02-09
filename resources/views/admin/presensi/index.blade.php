@@ -22,10 +22,11 @@
                     border: 1px solid #dddddd;
                     text-align: left;
                     padding: 5px;
+                    font-weight: normal;
                 }
         
                 .employee-name {
-                    font-weight: bold;
+                    font-weight: normal;
                     background-color: #0D72F2;
                     color: white;
                     white-space: nowrap;
@@ -48,7 +49,7 @@
     $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $selectedMonth, $selectedYear);
 @endphp
 
-<h4>Jadwal Karyawan Bulan 
+<h5>Jadwal Karyawan Bulan 
     <select id="selectMonth" onchange="updateTable()" value="{{ $selectedMonth }}">
         @for ($i = 1; $i <= 12; $i++)
             <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>

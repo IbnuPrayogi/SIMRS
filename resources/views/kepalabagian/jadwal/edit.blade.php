@@ -72,7 +72,7 @@
                 background-color: #0D72F2;
                 color: white;
             }
-        
+        j
             .fixed-column th,
             .fixed-column td {
                 white-space: nowrap;

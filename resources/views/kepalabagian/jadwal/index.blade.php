@@ -140,7 +140,7 @@
 
     .fixed-jam {
         position: sticky;
-        left: 50px; /* Adjust as per your requirement */
+        left: 160px; /* Adjust as per your requirement */
         z-index: 1;
         background-color: #0D72F2;
         color: white;
@@ -155,7 +155,14 @@
     .shift {
         width: 100%;
     }
+
+    @media only screen and (max-width: 600px) {
+        .fixed-jam {
+            left: 100px;
+        }
+    }
 </style>
+
 
 <div class="scrollable-table-container">
     <table id="scheduleTable">
