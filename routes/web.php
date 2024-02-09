@@ -3,6 +3,8 @@
 use App\Models\ListRequestLetter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SMSController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\JadwalController;
@@ -45,6 +47,9 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/welcome2', function () {
         return view('test');
     });
+    Route::get('/send', [ChatController::class, 'sendWhatsAppMessage']);
+    Route::get('/sendsms', [SMSController::class, 'sendSMS']);
+
     Route::resource('arsip', ArsipController::class);
     Route::get('/arsip/{id}/{file}', [ArsipController::class, 'downloadarsip'])->name('arsipdownload');
 
