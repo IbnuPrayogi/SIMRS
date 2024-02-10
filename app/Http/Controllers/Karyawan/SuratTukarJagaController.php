@@ -59,7 +59,6 @@ class SuratTukarJagaController extends Controller
         else{
             $suratTukarJaga = SuratTukarJaga::create([
                 'nama_pengaju' => auth()->user()->nama_karyawan,
-                'nama_target' => $request->nama_target,
                 'jadwal_asli' => $request->jadwal_asli,
                 'jadwal_dirubah' => $request->jadwal_dirubah,
                 'target_tukar_jaga' => $request->target_tukar_jaga,

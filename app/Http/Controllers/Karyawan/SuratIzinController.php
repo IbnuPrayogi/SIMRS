@@ -80,7 +80,7 @@ class SuratIzinController extends Controller
             $suratIzin = SuratIzin::create([
                 'nama_pengaju' => auth()->user()->nama_karyawan,
                 'tanggal_izin' => $request->tanggal_izin,
-                'bagian' => $request->bagian,
+                'bagian' => auth()->user()->nama_bagian,
                 'keterangan' => $request->keterangan,
                 'bukti' => $filename2,
                 'status' => $status,

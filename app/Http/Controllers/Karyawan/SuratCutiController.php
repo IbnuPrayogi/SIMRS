@@ -68,11 +68,11 @@ class SuratCutiController extends Controller
     
             $suratCuti = SuratCuti::create([
                 'nama_pengaju' => auth()->user()->nama_karyawan,
-                'bagian' => $request->bagian,
+                'bagian' => auth()->user()->nama_bagian,
                 'tanggal_mulai' => $request->tanggal_mulai,
                 'tanggal_selesai' => $request->tanggal_selesai,
                 'alamat' => $request->alamat,
-                'jabatan' => $request->jabatan,
+                'jabatan' => auth()->user()->jabatan,
                 'keterangan' => $request->keterangan,
                 'tanda_tangan'=>auth()->user()->tanda_tangan,
                 'status' => $status,

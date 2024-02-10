@@ -48,10 +48,16 @@
             @csrf
         <div class="box_foto" style=" display: flex;flex-direction:column; justify-content: center;
         align-items: center;position: relative;padding-bottom:20px ">
+
+            @php
+            $fotoUser = auth()->user()->foto;
+            $path = 'assets/profil/' . $fotoUser;
+            @endphp
+
+        
+                <img id="preview-image" src="{{ asset(file_exists($path) ? $path : 'assets/profil/pp.jpg') }}" style="width: 200px; height: 200px; position: absolute; display: none;">
       
-                <img id="preview-image" src="{{ asset('assets/profil/'.auth()->user()->foto)}}" style="width: 200px; height: 200px; position: absolute; display: none;">
-      
-            <img  id="profile" src="{{ asset('assets/profil/'.auth()->user()->foto )}}" style="width:200px;height:200px;position: absolute">
+            <img  id="profile" src="{{ asset(file_exists($path) ? $path : 'assets/profil/pp.jpg') }}" style="width:200px;height:200px;position: absolute">
             <label for="fileInput" class="file-input-container">
                 <input type="file" id="fileInput" class="real-file-input" name="foto" onchange="previewImage()" title="Ganti Foto" accept=".jpg, .jpeg, .png, .gif">
                 Ganti Foto

@@ -7,9 +7,11 @@
 
     <div class="container">
         <div class="card-header">
-            <div class="icon-back" onclick="goBack()">
-                <i class='bx bx-arrow-back'></i>
-            </div>
+            <a href="/buatpengajuansurat">
+                <div class="icon-back">
+                    <i class='bx bx-arrow-back'></i>
+                </div>  
+            </a>
             <h1><b>Ajukan Permohonan Izin</b></h1>
         </div>
         <div class="card-body">
@@ -41,12 +43,7 @@
                     <b>Ajukan Izin maksimal H-3</b>
                 </div>
     
-                <div class="content-text">
-                    <h3>Bagian</h3>
-                </div>
-                <div class="content-box">
-                    <input class="input_waktu" type="text" id="keterangan" placeholder="Bagian" name="bagian">
-                </div>
+
     
                 <div class="content-text">
                     <h3>Alasan</h3>

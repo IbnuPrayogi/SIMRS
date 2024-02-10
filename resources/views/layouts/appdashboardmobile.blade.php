@@ -16,14 +16,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="../css/dashboardmobile.css">
+    <link rel="stylesheet" href="{{ asset('css/dashboardmobile.css') }}">
     {{-- <link rel="stylesheet" href="css/cutimobile.css"> --}}
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+   
 
 </head>
 
@@ -35,7 +35,7 @@
     <div id="app">
         <div class="upbar">
             <div class="logo_aplikasi">
-                <img src="../img/logo.png" alt="logo" style="width:100%; height:100%;" />
+                <img src="{{ asset('img/logo.png') }}" alt="logo" style="width:100%; height:100%;" />
             </div>
             <div class="atur_jarak">
                 <p>RS Islam Asy-syifa</p>
@@ -43,8 +43,13 @@
             <div class="icon-belt">
                 <a href="/permintaantukarjaga"><i class='bx bxs-bell'></i></a>
             </div>
+            @php
+            $fotoUser = auth()->user()->foto;
+            $path = 'assets/profil/' . $fotoUser;
+            @endphp
+
             <div class="elips">
-                <a href="/profile"><img src="{{ asset('assets/profil/'.auth()->user()->foto )}}" alt="logo_user"></a>
+                <a href="/profile"><img src="{{ asset(file_exists($path) ? $path : 'assets/profil/pp.jpg') }}"alt="logo_user"></a>
             </div>
             <div class="dropdown">
                 <div class="menu">

@@ -7,6 +7,7 @@ use App\Http\Controllers\SMSController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\BagianController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KBJadwalController;
 use App\Http\Controllers\PresensiController;
@@ -41,6 +42,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/dashboardadmin', function () {
         return view('admin.index');
     });
+
+
     Route::get('/welcome', function () {
         return view('welcome');
     });
@@ -52,6 +55,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
     Route::resource('arsip', ArsipController::class);
     Route::get('/arsip/{id}/{file}', [ArsipController::class, 'downloadarsip'])->name('arsipdownload');
+
+    Route::resource('bagian', BagianController::class);
 
     Route::resource('shift', ShiftController::class);
     Route::resource('presensi', PresensiController::class);
@@ -180,6 +185,9 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::delete('statusizin/destroy/{id}', [StatusSuratController::class, 'destroyIzin'])->name('statusizin.destroy');
     Route::delete('statustukarjaga/destroy/{id}', [StatusSuratController::class, 'destroyTukarJaga'])->name('statustukarjaga.destroy');
     Route::post('/changepassword', [ProfileKaryawanController::class, 'changePassword'])->name('change.password');
+
+    
+    Route::get('/presensi/karyawan/detail', [PresensiController::class, 'indexkaryawan'])->name('presensi.karyawan');
     
 
     Route::resource('profile', SuratIzinController::class);

@@ -38,7 +38,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
     </script>
@@ -56,7 +56,8 @@
 <body>
     <div id="app">
         <div class="sidebar">
-            <img src="/img/logo.png" alt="logo" style="width:40%;margin-left:50px;">
+
+            <img src="{{ asset('img/logo.png') }}" alt="logo" style="width:40%;margin-left:50px;">
             <div class="menu-box">
                 <ul class="menu">
                     <li><a href="{{route('admin.index')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>

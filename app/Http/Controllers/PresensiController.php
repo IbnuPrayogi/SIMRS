@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Izin;
 use App\Models\User;
 use App\Models\Shift;
+use App\Models\Bagian;
 use App\Models\Jadwal;
 use App\Models\Potongan;
 use App\Models\Presensi;
@@ -24,16 +25,52 @@ class PresensiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        $shifts = Shift::all();
-        $jadwal = Jadwal::all();
-        $presensi = Presensi::all();
+        $selectedMonth = $request->query('selectedMonth', now()->format('m'));
+        $selectedYear = $request->query('selectedYear', now()->format('Y'));
+        $selectedDepartment = $request->query('selectedDepartment', 'Satpam');
 
-        return View::make('admin.presensi.index', compact('users', 'shifts','jadwal','presensi'));
+        $users = User::where('nama_bagian',$selectedDepartment)->where('role',3)->get();
+        $shifts = Shift::where('bagian',$selectedDepartment)->get();
+        $jadwal = Jadwal::where('bulan', $selectedMonth)->where('tahun',$selectedYear)->where('nama_bagian',$selectedDepartment)->get();
+        $presensi = Presensi::where('nama_bagian',$selectedDepartment)->get();
+        $bagians=Bagian::all();
+
+        return View::make('admin.presensi.index', compact('users', 'shifts','jadwal','presensi','bagians'), [
+            'bagians' => $bagians,
+            'selectedMonth' => $selectedMonth,
+            'selectedYear' => $selectedYear,
+            'selectedDepartment' => $selectedDepartment,
+        ]);
         //
     }
+
+    public function indexkaryawan(Request $request)
+    {
+  
+        $selectedMonth = $request->query('selectedMonth', now()->format('m'));
+        $selectedYear = $request->query('selectedYear', now()->format('Y'));
+        $date=$selectedMonth."/".$selectedYear;
+        $shift = Shift::where('bagian',auth()->user()->nama_bagian)->get();
+        $jadwal = Jadwal::where('bulan', $selectedMonth)->where('tahun',$selectedYear)->where('nama_karyawan',auth()->user()->nama_karyawan)->first();
+        $presensi = Presensi::where('nama_karyawan',auth()->user()->nama_karyawan)->where('tanggal','like','%'.$date)->get();
+        if ($presensi->isEmpty()) {
+            // Data kosong, Anda dapat menangani ini di sini
+            $presensi= null;
+        }
+
+        
+    
+        $bagians=Bagian::all();
+
+        return View::make('karyawan.presensi', compact('jadwal','presensi','bagians','shift'), [
+            'bagians' => $bagians,
+            'selectedMonth' => $selectedMonth,
+            'selectedYear' => $selectedYear,
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

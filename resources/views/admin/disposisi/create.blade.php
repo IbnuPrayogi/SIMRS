@@ -32,9 +32,7 @@
                                             </div>
                                              
                                                
-                                    
-                
-
+                            
                                             <form method="POST" action="{{route('disposisi.tambahdisposisi', ['id'=>$surat->id,'jenis'=>$jenis])}}" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('POST')
