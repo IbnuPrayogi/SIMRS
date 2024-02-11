@@ -9,6 +9,7 @@ use Knp\Snappy\Image;
 use App\Models\Jadwal;
 use App\Models\Presensi;
 use App\Models\DataPresensi;
+use App\Models\StatusJadwal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -51,6 +52,8 @@ public function store(Request $request)
     $bulan = $request->input('bulan');
     $tahun = $request->input('tahun');
 
+    dd($bulan,$tahun);
+
     foreach ($jadwalData as $userId => $shifts) {
         // Inisialisasi $totalMinutes di sini untuk setiap user
         $totalMinutes = 0;
@@ -85,6 +88,13 @@ public function store(Request $request)
         }
 
     }
+
+    $statusjadwal= StatusJadwal::create([
+        'nama_bagian'=>auth()->user()->nama_bagian,
+        'bulan'=>$bulan,
+        'tahun'=>$tahun,
+        'status'=>'terkunci'
+    ]);
 
     // Additional logic if needed
 
