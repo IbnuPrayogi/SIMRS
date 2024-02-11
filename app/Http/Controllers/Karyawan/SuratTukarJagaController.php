@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Karyawan;
 
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Jadwal;
 use App\Models\Disposisi;
 use Illuminate\Http\Request;
 use App\Models\SuratTukarJaga;
@@ -103,6 +105,7 @@ class SuratTukarJagaController extends Controller
         $suratTukarJaga = SuratTukarJaga::where('id', $id)->first();
  
         $suratTukarJaga->tanda_tangan_direktur = auth()->user()->tanda_tangan;
+        $suratTukarJaga->status = 'disetujui';
         $suratTukarJaga->save();
 
 
@@ -127,8 +130,23 @@ class SuratTukarJagaController extends Controller
             'deskripsi' => "disetujui",
             // Tambahkan kolom-kolom lainnya sesuai kebutuhan
         ]);
-        $dayPengaju= $suratTukarJaga->jadwal_asli->getDate();
-        $dayTarget= $suratTukarJaga->jadwal_asli->getDate();
+        $hariAsli = Carbon::createFromFormat('Y-m-d', $suratTukarJaga->jadwal_asli)->day;
+        $bulanAsli =Carbon::createFromFormat('Y-m-d', $suratTukarJaga->jadwal_asli)->month;
+        $tahunAsli = Carbon::createFromFormat('Y-m-d', $suratTukarJaga->jadwal_asli)->year;
+        $hariUbah = Carbon::createFromFormat('Y-m-d', $suratTukarJaga->jadwal_dirubah)->day;
+        $bulanUbah =Carbon::createFromFormat('Y-m-d', $suratTukarJaga->jadwal_dirubah)->month;
+        $tahunUbah = Carbon::createFromFormat('Y-m-d', $suratTukarJaga->jadwal_dirubah)->year;
+
+        $jadwalAsli=Jadwal::where('bulan',$bulanAsli)->where('tahun',$tahunAsli)->first();
+        $jadwalUbah=Jadwal::where('bulan',$bulanUbah)->where('tahun',$tahunUbah)->first();
+
+
+        $temp=$jadwalAsli->{'tanggal_'.$hariAsli};
+        $jadwalAsli->{'tanggal_'.$hariAsli}=$jadwalUbah->{'tanggal_'.$hariUbah};
+        $jadwalUbah->{'tanggal_'.$hariUbah}=$temp;
+        $jadwalAsli->save();
+        $jadwalUbah->save();
+
 
         // Redirect ke halaman SuratCuti.show dengan menambahkan ID baru
         return redirect()->route('DaftarPermohonan.indexTukarJaga')

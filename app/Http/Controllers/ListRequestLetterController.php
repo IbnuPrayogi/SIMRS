@@ -16,17 +16,17 @@ class ListRequestLetterController extends Controller
      */
     public function indexIzin()
     {
-        $Izins = SuratIzin::all();
+        $Izins = SuratIzin::where('bagian',auth()->user()->nama_bagian)->get();
         return view("Admin.DaftarPermohonanIzin.index" , compact('Izins'));
     }
     public function indexCuti()
     {
-        $Cutis = SuratCuti::all();
+        $Cutis = SuratCuti::where('bagian',auth()->user()->nama_bagian)->get();
         return view("Admin.DaftarPermohonanCuti.indexCuti" , compact('Cutis'));
     }
     public function indexTukarJaga()
     {
-        $TukarJagas = SuratTukarJaga::all();
+        $TukarJagas = SuratTukarJaga::where('bagian',auth()->user()->nama_bagian)->get();
         return view("Admin.DaftarPermohonanTukarJaga.indexTukarJaga" , compact('TukarJagas'));
     }
 

@@ -15,5 +15,6 @@ class Izin extends Model
         'shift_id',
         'tanggal',
         'waktu_izin',
+        'bagian'
     ];
 }
