@@ -114,10 +114,7 @@ class PresensiController extends Controller
                     echo "Terjadi kesalahan dalam menjalankan query.";
                 }
             
-                // Menutup koneksi ODBC
-                
-            
-         
+
             for ($day = 1; $day <= $limit; $day++) {
                 $data = Jadwal::where("tanggal_$day", '!=', null)->where('bulan', $bulan)->pluck("tanggal_$day")->toArray();
                 $tanggal = "$day/$bulan/$tahun";
@@ -438,7 +435,6 @@ class PresensiController extends Controller
                 $dayValue = !empty($data) ? $data[0] : null;
 
                 $dayValues["tanggal_$day"] = $dayValue;
-
 
 
                 $tanggal = "$day/$bulan/$tahun";

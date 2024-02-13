@@ -2,6 +2,16 @@
 
 @section('content')
 
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @elseif (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,6 +76,8 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
+
+
 
 @php
     $selectedMonth = request('selectedMonth', now()->format('m'));

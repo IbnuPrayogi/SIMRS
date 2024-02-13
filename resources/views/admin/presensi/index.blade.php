@@ -180,14 +180,14 @@ function getColorClass($status) {
                 document.getElementById('selectMonth').value = "{{ $selectedMonth }}";
                 document.getElementById('selectYear').value = "{{ $selectedYear }}";
                 document.getElementById('selectDepartment').value = "{{ $selectedDepartment }}";
-
+        
                 // Simpan state sebelumnya
                 var prevState = {
                     selectedMonth: "{{ $selectedMonth }}",
                     selectedYear: "{{ $selectedYear }}",
                     selectedDepartment: "{{ $selectedDepartment }}"
                 };
-
+        
                 // Tambahkan event listener untuk setiap dropdown
                 document.getElementById('selectMonth').addEventListener('change', function () {
                     updateTable(prevState);
@@ -198,11 +198,11 @@ function getColorClass($status) {
                 document.getElementById('selectDepartment').addEventListener('change', function () {
                     updateTable(prevState);
                 });
-
+        
                 // Panggil fungsi updateTable untuk memperbarui URL
                 updateTable(prevState);
             });
-
+        
             function downloadImage() {
                 html2canvas(document.querySelector("#scheduleTable")).then(canvas => {
                     var link = document.createElement('a');
@@ -211,32 +211,43 @@ function getColorClass($status) {
                     link.click();
                 });
             }
-
+        
             function updateTable(prevState) {
                 var selectedMonth = document.getElementById('selectMonth').value;
                 var selectedYear = document.getElementById('selectYear').value;
                 var selectedDepartment = document.getElementById('selectDepartment').value;
-
-                // Cek apakah ada perubahan
-                if (
-                    selectedMonth !== prevState.selectedMonth ||
-                    selectedYear !== prevState.selectedYear ||
-                    selectedDepartment !== prevState.selectedDepartment
-                ) {
-                    var url = window.location.pathname + '?selectedMonth=' + selectedMonth + '&selectedYear=' + selectedYear;
-
-                    if (selectedDepartment) {
-                        url += '&selectedDepartment=' + selectedDepartment;
-                    }
-
-                    window.location.href = url;
+        
+                var url = window.location.pathname + '?selectedMonth=' + selectedMonth + '&selectedYear=' + selectedYear;
+        
+                if (selectedDepartment) {
+                    url += '&selectedDepartment=' + selectedDepartment;
                 }
+        
+                // Gunakan AJAX untuk memuat data tanpa merefresh seluruh halaman
+                fetch(url, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.text())
+                .then(data => {
+                    // Buat elemen div sementara untuk menyimpan data HTML baru
+                    var tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = data;
+        
+                    // Ganti isi HTML tabel dengan yang baru
+                    var newTable = tempDiv.querySelector('#scheduleTable');
+                    document.getElementById('scheduleTable').innerHTML = newTable.innerHTML;
+        
+                    // Inisialisasi ulang elemen atau script yang diperlukan di sini
+                    // Misalnya, jika ada script yang perlu dijalankan, pastikan inisialisasi dilakukan di sini.
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             }
-
-
-
-
         </script>
+        
     </html>
 @endsection
 

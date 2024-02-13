@@ -13,6 +13,7 @@ use App\Http\Controllers\KBJadwalController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ArsipController;
+use App\Http\Controllers\StatusJadwalController;
 use App\Http\Controllers\Admin\DisposisiController;
 use App\Http\Controllers\Admin\SuratMasukController;
 use App\Http\Controllers\Admin\TemplateSKController;
@@ -65,6 +66,11 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/jadwal/download/file', [JadwalController::class, 'download'])->name('jadwal.download');
     Route::get('/jadwal/edit/{bulan}', [JadwalController::class, 'editjadwal'])->name('jadwal.editjadwal');
     Route::post('/jadwal/import/import-sql-table', [JadwalController::class, 'importTable'])->name('jadwal.importsql');
+
+    Route::resource('statusjadwal', StatusJadwalController::class);
+    Route::post('/statusjadwal/lock', [StatusJadwalController::class, 'kunci'])->name('statusjadwal.lock');
+    Route::post('/statusjadwal/unlock', [StatusJadwalController::class, 'buka'])->name('statusjadwal.unlock');
+    Route::post('/statusjadwal/lockall', [StatusJadwalController::class, 'kuncisemua'])->name('statusjadwal.lockall');
 
 
     Route::resource('suratmasuk', SuratMasukController::class);

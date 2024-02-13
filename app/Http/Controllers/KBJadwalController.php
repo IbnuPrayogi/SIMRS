@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\StoreJadwalRequest;
 use App\Http\Requests\UpdateJadwalRequest;
@@ -52,7 +53,7 @@ public function store(Request $request)
     $bulan = $request->input('bulan');
     $tahun = $request->input('tahun');
 
-    dd($bulan,$tahun);
+    dd(intval(now()->format('m')));
 
     foreach ($jadwalData as $userId => $shifts) {
         // Inisialisasi $totalMinutes di sini untuk setiap user
@@ -89,12 +90,17 @@ public function store(Request $request)
 
     }
 
-    $statusjadwal= StatusJadwal::create([
-        'nama_bagian'=>auth()->user()->nama_bagian,
-        'bulan'=>$bulan,
-        'tahun'=>$tahun,
-        'status'=>'terkunci'
-    ]);
+    $statusjadwal=StatusJadwal::where('bulan',intval($bulan))->where('tahun',intval($tahun))->where('nama_bagian',auth()->user()->nama_bagian)->first();
+    if(!$statusjadwal){
+        $statusjadwal= StatusJadwal::create([
+            'nama_bagian'=>auth()->user()->nama_bagian,
+            'bulan'=>intval($bulan),
+            'tahun'=>$tahun,
+            'status'=>'terbuka'
+        ]); 
+    }
+
+    
 
     // Additional logic if needed
 
@@ -157,9 +163,34 @@ public function store(Request $request)
      */
     public function editjadwal($bulan,$tahun)
     {
-        return view('kepalabagian.jadwal.edit',compact('bulan','tahun'));
+        $currentDate = Carbon::now();
+        if(intval($tahun)==$currentDate->year){
+            $targetMonth=intval($bulan);
+        }
+        elseif(intval($tahun)>$currentDate->year){
+            $targetMonth=intval($bulan)+12;
+        } 
+        if((($currentDate->day >10) && (($targetMonth-$currentDate->month) <=1)) || $targetMonth<=$currentDate->month ){
+            $statusjadwal=StatusJadwal::where('bulan',intval($bulan))->where('tahun',$tahun)->first();
+            if($statusjadwal==null ){
+                $statusjadwal= StatusJadwal::create([
+                    'nama_bagian'=>auth()->user()->nama_bagian,
+                    'bulan'=>intval($bulan),
+                    'tahun'=>intval($tahun),
+                    'status'=>'terkunci'
+                ]);
+            }
+            elseif($statusjadwal!=null && $statusjadwal->status=='terbuka'){ 
+                return view('kepalabagian.jadwal.edit',compact('bulan','tahun'));
+            }
+            else{
+            return redirect()->route('kbjadwal.index')->with('error','Penambahan Jadwal Gagal, Telah Melewati Batas Waktu Pengisian. Silahkan Hubungi Admin');
+            }
+        }
+        else{
+            return view('kepalabagian.jadwal.edit',compact('bulan','tahun'));
+        }
     }
-
     /**
      * Update the specified resource in storage.
      */

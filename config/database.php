@@ -39,7 +39,7 @@ return [
             'driver'   => 'odbc',
             'dsn'      => env('ODBC_DSN', 'dsn3'),
             'prefix'   => '',
-            // ...
+            // ... 
         ],
 
         'sqlite' => [

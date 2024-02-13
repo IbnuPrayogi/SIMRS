@@ -45,7 +45,7 @@
             </div>
             @php
             $fotoUser = auth()->user()->foto;
-            $path = 'assets/profil/' . $fotoUser;
+            $path = 'assets/profil/'.$fotoUser;
             @endphp
 
             <div class="elips">
