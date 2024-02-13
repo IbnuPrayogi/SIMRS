@@ -80,25 +80,15 @@
             </div>
             <div class="ttd_koor">
                 <p>Menyetujui,<br>
-                    Direktur RSI
+                    Direktur RSI Asy-Syifaa
                 @if ($suratCuti->tanda_tangan_direktur)</p>
                 <img style="height: 120px ; width:120px;"
                     src="{{ public_path('assets/ttd/'.$suratCuti->tanda_tangan_direktur) }}" alt="Tanda Tangan">
                 @endif
-            <p>Direktur RSI Asy-Syifaa</p>
+            <p><b>dr. Imilia Sapitri, M.Kes</b></p>
 
             </div>
-            <div class="ttd_pemohon">
-                <p>Bandar Jaya,<br>
-                    Saya Yang Memohon</p>
-                <p>
-                @if ($suratCuti->tanda_tangan)
-                <img style="height: 120px ; width:120px;"
-                    src="{{ public_path('assets/ttd/'.$suratCuti->tanda_tangan) }}" alt="Tanda Tangan">
-                @endif
-                </p>
-                <p>{{ $suratCuti->nama_pengaju }}</p>
-            </div>
+           
         </div>
     </body>
     </html>

@@ -39,22 +39,10 @@
                 <img style="height: 120px ; width:120px;"
                     src="{{ public_path('assets/ttd/'.$suratIzin->tanda_tangan_direktur) }}" alt="Tanda Tangan">
             @endif
-            <p><b>Nurul Hakim, SE</b></p>
+            <p><b>dr. Imilia Sapitri, M.Kes</b></p>
         </div>
         <div class="ttd_nama">
-            <p> <br>
-                Hormat Saya,
-                <br>
-            </p>
-            <p>
-                @if ($suratIzin->tanda_tangan)
-                    <img style="height: 120px ; width:120px;"
-                        src="{{ public_path('assets/ttd/' . $suratIzin->tanda_tangan) }}" alt="Tanda Tangan">
-                @endif
-            </p>
-            <b>{{ $suratIzin->nama_pengaju }}</b>
-            <p></p>
-        </div>
+
     </div>
 </body>
 </html>

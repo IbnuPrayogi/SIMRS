@@ -78,10 +78,21 @@ class KBProfileController extends Controller
             'nomor_hp' => 'required',
         ]);
 
-        $validatedData = $request->validate([
-            'foto' => 'nullable|mimes:jpeg,png,jpg,gif|max:5120',
-            'tanda_tangan' => 'nullable|mimes:jpeg,png,jpg,gif|max:5120',
-        ]);
+        
+        
+        if($request->hasFile('tanda_tangan')){
+            $validatedData = $request->validate([
+                'tanda_tangan' => 'nullable|mimes:jpeg,png,jpg,gif|max:5120',
+                'foto' => 'nullable|mimes:jpeg,png,jpg,gif|max:5120',
+            ]);
+        }
+        else{
+            $validatedData = $request->validate([
+                'foto' => 'nullable|mimes:jpeg,png,jpg,gif|max:5120',
+            ]);
+
+        }
+      
 
 
         $user->nama_karyawan = $request->input('nama_karyawan');
@@ -96,9 +107,9 @@ class KBProfileController extends Controller
             $file1 = $validatedData[('foto')];
             $filename1 =  $file1->getClientOriginalName();
             // File upload location
-            $location1 = '../public/assets/profil/';
+            $location1 = public_path('assets/profil/');
 
-            $file1->move(public_path($location1), $filename1);
+            $file1->move($location1, $filename1);
             $user->foto = $filename1;
         }
         // Update tanda_tangan if provided
@@ -112,8 +123,8 @@ class KBProfileController extends Controller
 
             $filename2 = $file2->getClientOriginalName();
 
-            $location2 = '../public/assets/ttd/';
-            $file2->move(public_path($location2), $filename2);
+            $location2 = public_path('assets/ttd/');
+            $file2->move($location2, $filename2);
             $user->tanda_tangan = $filename2;
         }
 

@@ -30,6 +30,12 @@
                     <b>Tanggal yang dimasukkan telah lewat</b>
                 </div>
 
+                <div class="popup-tgl" id="myPopup-unknown">
+                    <!-- Isi popup di sini -->
+                    <i class='bx bx-error'></i>
+                    <b>Jadwal Bulan Ini Belum Diatur</b>
+                </div>
+
                 <div class="popup-tgl" id="myPopup-tgl-warning">
                     <!-- Isi popup di sini -->
                     <i class='bx bx-error'></i>
@@ -113,6 +119,8 @@
             showPopupWarning("{{ Session::get('permission_limit_exceeded') }}");
         @elseif(Session::has('success'))
             notifSukses()
+        @elseif(Session::has('unknown_schedule'))
+            showPopupUnknown("{{ Session::get('unknown_schedule') }}")
         @endif
     </script>
 @endsection
@@ -203,6 +211,16 @@
     }
     function showPopupWarning() {
         var popup = document.getElementById("myPopup-tgl-warning");
+        var overlay = document.getElementById("overlay_berhasil")
+        popup.style.display = "block"; // Tampilkan popup
+        overlay.style.display = "block";
+        setTimeout(function () {
+            popup.style.display = "none";
+            overlay.style.display = "none"; // Setelah beberapa waktu, sembunyikan kembali popup
+        },2000); // Misalnya, disetel untuk hilang setelah 3 detik (3000 milidetik)
+    }
+    function showPopupUnknown() {
+        var popup = document.getElementById("myPopup-unknown");
         var overlay = document.getElementById("overlay_berhasil")
         popup.style.display = "block"; // Tampilkan popup
         overlay.style.display = "block";

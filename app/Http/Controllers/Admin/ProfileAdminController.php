@@ -85,8 +85,8 @@ class ProfileAdminController extends Controller
 
         $validatedData = $request->validate([
             'foto' => 'nullable|mimes:jpeg,png,jpg,gif|max:5120',
-            'tanda_tangan' => 'nullable|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
+  
 
 
         $user->nama_karyawan = $request->input('nama_karyawan');
@@ -101,26 +101,12 @@ class ProfileAdminController extends Controller
             $file1 = $validatedData[('foto')];
             $filename1 =  $file1->getClientOriginalName();
             // File upload location
-            $location1 = '../public/assets/profil/';
+            $location1 = public_path('assets/profil');
 
-            $file1->move(public_path($location1), $filename1);
+            $file1->move($location1, $filename1);
             $user->foto = $filename1;
         }
-        // Update tanda_tangan if provided
-        if ($request->hasFile('tanda_tangan')) {
-            // Delete old profile photo if it exists
-            if ($user->foto) {
-                File::delete(public_path('assets/ttd/' . $user->tanda_tangan));
-            }
-
-            $file2 = $validatedData[('tanda_tangan')];
-
-            $filename2 = $file2->getClientOriginalName();
-
-            $location2 = '../public/assets/ttd/';
-            $file2->move(public_path($location2), $filename2);
-            $user->tanda_tangan = $filename2;
-        }
+     
 
         // Save the updated user
         $user->save();

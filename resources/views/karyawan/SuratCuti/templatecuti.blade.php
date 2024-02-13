@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Template Surat Cuti</title>
   <link rel="stylesheet" href="{{ public_path('css/templatecuti.css') }}">
+  <style>
+    /* Tambahkan style khusus untuk posisi div tanda_tangan */
+    .tanda_tangan {
+      float: right;
+      clear: both; /* Menjaga agar elemen berada di sebelah kanan */
+      width: 50%; /* Sesuaikan lebar sesuai kebutuhan */
+    }
+    </style>
 </head>
 <body>
     <p style="position: absolute;
@@ -54,22 +62,17 @@
                 ucapkan terimakasih. <br> <b>Wassalamu’alaikum Wr. Wb.</b>
             </p>
         </div>
-        <div class="ttd_koor">
-            <p>Mengetahui<br>
-            Ka./Koor.Bagian:</p>
-            <br><br>
+        <div styleclass="tanda_tangan">
+            <div class="ttd_aju">
+                <p> Menyetujui,<br>
+                    Direktur RSI Asy-Syifaa
+                    <br><br><br><br>
+                    <b>dr. Imilia Sapitri, M.Kes</b>
+                </p>
+            </div>
+    
         </div>
-        <div class="ttd_pemohon">
-            <p>Bandar Jaya,<br>
-            Saya Yang Memohon</p>
-            <p>
-                @if ($suratCuti->tanda_tangan)
-                    <img style="height: 120px ; width:120px;"
-                        src="{{ public_path('img/' . $suratCuti->tanda_tangan) }}" alt="Tanda Tangan">
-                @endif
-            </p>
-            <p>{{$suratCuti->nama_pengaju}}</p>
-        </div>
+
     </div>
     </body>
 </html>

@@ -51,42 +51,7 @@
             <p>Tgl. PENYERAHAN BLANKO</p>
             <div class="tgl_blangko"></div>
         
-            <div class="pihak_memohon">
-                <div class="ttd_A">
-                    <p>Yang Memohon,
-                    </p>
-                    <p>
-                        @if ($suratTukarJaga->tanda_tangan)
-                        <img style="height: 120px ; width:120px;"
-                        src="{{ asset('assets/ttd/'.$suratTukarJaga->tanda_tangan) }}"
-                        alt="Tanda Tangan">
-                        @endif
-                    </p>
-                    <b>{{ $suratTukarJaga->nama_pengaju }}</b>
-                    <div class="line"></div>
-                </div>
 
-
-                <div class="ttd_B">
-                    <p>Termohon,</p>
-                    <p>
-                        @if ($suratTukarJaga->termohon)
-                        <img style="height: 120px ; width:120px;"
-                        src="{{ asset('assets/ttd/' . $suratTukarJaga->termohon) }}"
-                        alt="Tanda Tangan">
-                        @elseif($suratTukarJaga->termohon == NULL && $suratTukarJaga->status =='Termohon')
-                    <form method="POST" action="{{route("PermohonanTukarJaga.Sign",['id' => $suratTukarJaga->id,'jenis'=>'Termohon'])}}">
-                        @csrf
-                        @method('put')
-                        <button type="submit">Tanda Tangani</button>
-                    </form>
-                    
-                    @endif
-                    </p>
-                    <b>{{ $suratTukarJaga->target_tukar_jaga }}</b>
-                    <div class="line"></div>
-                </div>
-            </div>
 
             <div class="pihak_termohon">
                 <div class="ttd_kar">
@@ -109,7 +74,7 @@
                         </form>
                         @endif
                     </p>
-                    <b>{{ $suratTukarJaga->nama_kepala_ruangan }}</b>
+                    <b>dr. Imilia Sapitri, M.Kes</b>
                     <div class="line"></div>
                 </div>
             </div>

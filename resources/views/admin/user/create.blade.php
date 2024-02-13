@@ -114,12 +114,6 @@
                             
                             
                         
-                                    <div class="form-group">
-                                        <label for="tanda_tangan">Tanda Tangan</label>
-                                        <img id="ttd-preview" src="#" alt="Preview" style="display:none; max-width: 200px; margin-top: 10px;">
-                                        <input name="tanda_tangan" class="btn btn-outline-primary" title="Upload Tanda Tangan" type="file" id="tanda_tangan" onchange="previewTTD(event)" accept="image/*">
-
-                                    </div>
                               
                             </div>
                             

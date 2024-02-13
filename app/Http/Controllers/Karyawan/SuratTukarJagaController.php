@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Jadwal;
 use App\Models\Disposisi;
+use App\Models\StatusJadwal;
 use Illuminate\Http\Request;
 use App\Models\SuratTukarJaga;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -50,13 +51,23 @@ class SuratTukarJagaController extends Controller
         $year= $explodedDate[0];
         $time= $year."-".$month;
 
+        $jadwal=Jadwal::where('bulan',intval($month))->where('tahun',intval($year))->where('nama_karyawan',$request->input('nama_pengaju'))->first();
+        if($jadwal==null){
+            Session::flash('unknown_schedule', 'Jadwal Pada Bulan Ini Belum Diatur');
+            return redirect()->route('surattukarjaga.create')->with('unknown_schedule', 'Jadwal Bulan Ini Belum diatur.');
+            
+        }
+
        
         $jumlahIzin= SuratTukarJaga::where('nama_pengaju',auth()->user()->nama_karyawan)->where('jadwal_asli',"LIKE","$time%")->count();
 
         if ($jumlahIzin >= 3) {
             // Simpan pesan flash jika batas izin terlampaui
             Session::flash('permission_limit_exceeded', 'Batas izin terlampaui. Tidak dapat membuat izin lebih lanjut.');
+            return redirect()->route('surattukarjaga.create')->with('permission_limit_exceeded', 'Batas izin terlampaui. Tidak dapat membuat izin lebih lanjut.');
         }
+
+        
 
         else{
             $suratTukarJaga = SuratTukarJaga::create([
@@ -65,7 +76,6 @@ class SuratTukarJagaController extends Controller
                 'jadwal_dirubah' => $request->jadwal_dirubah,
                 'target_tukar_jaga' => $request->target_tukar_jaga,
                 'keterangan' => $request->keterangan,
-                'tanda_tangan'=>auth()->user()->tanda_tangan,
                 'bagian'=>auth()->user()->nama_bagian,
                 'status' => "Termohon",
             ]);
@@ -163,7 +173,7 @@ class SuratTukarJagaController extends Controller
 
         $suratTukarJaga = SuratTukarJaga::where('id', $id)->first();
       
-        $suratTukarJaga->termohon = auth()->user()->tanda_tangan;
+  
         
         $kepala = User::where(function ($query) {
             $query->where('jabatan', 'Kepala Bagian')

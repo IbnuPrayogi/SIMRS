@@ -46,26 +46,8 @@
         </table>
         <p>Tgl. PENYERAHAN BLANKO</p>
         <div class="tgl_blangko"></div>
-        <div class="ttd_A">
-            <p>Yang Memohon, <b>{{ $suratTukarJaga->nama_pengaju }}</b>
-            </p>
-            <p>
-          
-                    <img style="height: 120px ; width:120px;"
-                        src="{{ public_path('assets/ttd/' . $suratTukarJaga->tanda_tangan) }}" alt="Tanda Tangan">
-          
-            </p>
-            <p><b>{{ $suratTukarJaga->nama_pengaju }}</b></p>
-        </div>
-
-        <div class="ttd_B">
-            <p>Termohon, <b>{{ $suratTukarJaga->target_tukar_jaga}}<b></p>
-            @if ($suratTukarJaga->termohon)
-            <img style="height: 120px ; width:120px;"
-                src="{{ public_path('assets/ttd/' . $suratTukarJaga->termohon) }}" alt="Tanda Tangan">
-        @endif
-        <p><b>{{ $suratTukarJaga->target_tukar_jaga}}<b></p>
-        </div>
+ 
+   
 
         <div class="ttd_kar">
             <p>Direktur</p>
@@ -73,7 +55,7 @@
             <img style="height: 120px ; width:120px;"
                 src="{{ public_path('assets/ttd/' . $suratTukarJaga->tanda_tangan_direktur) }}" alt="Tanda Tangan">
         @endif
-        <p><b>Direktur RSI Asy-Syifaa</b></p>
+        <p><b>dr. Imilia Sapitri, M.Kes</b></p>
         </div>
 
         </div>

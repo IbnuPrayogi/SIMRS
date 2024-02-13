@@ -120,18 +120,9 @@
                             @endif
 
                         <br><br>
+                        <b>dr. Imilia Sapitri, M.Kes</b>
                     </div>
-                    <div class="ttd_pemohon">
-                        <p>Bandar Jaya,<br>
-                            Saya Yang Memohon</p>
-                        <p>
-                            @if ($suratCuti->tanda_tangan)
-                                <img style="height: 120px ; width:120px;" src="{{ asset('assets/ttd/'. $suratCuti->tanda_tangan) }}"
-                                    alt="Tanda Tangan">
-                            @endif
-                        </p>
-                        <p>{{ $suratCuti->nama_pengaju }}</p>
-                    </div>
+       
                 </div>
             </div>
         </div>

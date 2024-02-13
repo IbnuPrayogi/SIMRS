@@ -74,7 +74,6 @@ class SuratCutiController extends Controller
                 'alamat' => $request->alamat,
                 'jabatan' => auth()->user()->jabatan,
                 'keterangan' => $request->keterangan,
-                'tanda_tangan'=>auth()->user()->tanda_tangan,
                 'status' => $status,
             ]);
     
@@ -85,7 +84,7 @@ class SuratCutiController extends Controller
     
             $pdf = PDF::loadView('karyawan.SuratCuti.templatecuti', compact('suratCuti'));
             $file_name = $suratCuti->nama_surat . '.pdf';
-            $file_path = storage_path('../public/assets/suratCuti/') . $file_name;
+            $file_path = public_path('assets/suratCuti/') . $file_name;
             $pdf->save($file_path);
             $suratCuti->file = $file_name;
             $suratCuti->save();
@@ -121,11 +120,13 @@ class SuratCutiController extends Controller
     {
         $suratCuti = SuratCuti::where('id', $id)->first();
         $suratCuti->tanda_tangan_direktur = auth()->user()->tanda_tangan;
+
+
         $suratCuti->save();
 
         $pdf = PDF::loadView('admin.DaftarPermohonanCuti.signature', compact('suratCuti'));
         $file_name = 'ACC_' . $suratCuti->file; // Assuming you want to prepend 'ACC_' to the existing file name
-        $file_path = public_path('../public/assets/suratCuti/') . $file_name;
+        $file_path = public_path('assets/suratCuti/') . $file_name;
 
         $FileToDelete = public_path('assets/suratCuti/') . $suratCuti->file;
 
@@ -180,7 +181,7 @@ class SuratCutiController extends Controller
         if (!$suratCuti) {
             abort(404);
         }
-        $file_path = storage_path('../public/assets/suratCuti/') . $suratCuti->file;
+        $file_path = public_path('assets/suratCuti/') . $suratCuti->file;
 
         // Tentukan nama file yang akan di-download
         $file = $suratCuti->file;

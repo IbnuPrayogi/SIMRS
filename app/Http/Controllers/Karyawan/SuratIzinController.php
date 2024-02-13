@@ -84,7 +84,6 @@ class SuratIzinController extends Controller
                 'keterangan' => $request->keterangan,
                 'bukti' => $filename2,
                 'status' => $status,
-                'tanda_tangan'=>auth()->user()->tanda_tangan
                 // 'tanda_tangan' => 'ttd.jpg',
                 // 'file' => $filename1,
             ]);
@@ -93,7 +92,7 @@ class SuratIzinController extends Controller
             $suratIzin->save();
             $pdf = PDF::loadView('karyawan.SuratIzin.templateizin', compact('suratIzin'));
             $file_name = $suratIzin->nama_surat  . '.pdf';
-            $file_path = storage_path('../public/assets/suratIzin/') . $file_name;
+            $file_path = public_path('assets/suratIzin/') . $file_name;
             $pdf->save($file_path);
             $suratIzin->file = $file_name;
             $suratIzin->save();

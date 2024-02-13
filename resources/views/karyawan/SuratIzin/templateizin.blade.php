@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Template Surat</title>
     <link rel="stylesheet" href="{{ public_path('css/templateizin.css') }}">
+    <style>
+        /* Tambahkan style khusus untuk posisi div tanda_tangan */
+        .tanda_tangan {
+          float: right;
+          clear: both; /* Menjaga agar elemen berada di sebelah kanan */
+          width: 50%; /* Sesuaikan lebar sesuai kebutuhan */
+        }
+        </style>
 </head>
 <body>
     <p style="margin-left:65%">Karang Endah,{{ $suratIzin->updated_at->format('d F Y') }}
@@ -30,28 +38,15 @@
     </div>
     <p>Demikian Surat ini Saya sampaikan, atas Izin yang diberikan saya ucapkan terima kasih.</p>
     <p><b>Wassalamu’alaikum Wr. Wb.</b></p>
-    <div class="tanda_tangan">
+    <div styleclass="tanda_tangan">
         <div class="ttd_aju">
-            <p> Mengetahui,<br>
-                Manager Keuangan Umum & Personalia
+            <p> Menyetujui,<br>
+                Direktur RSI Asy-Syifaa
                 <br><br><br><br>
-                <b>Nurul Hakim, SE</b>
+                <b>dr. Imilia Sapitri, M.Kes</b>
             </p>
         </div>
-        <div class="ttd_nama">
-            <p> <br>
-                Hormat Saya,
-                <br>
-            </p>
-            <p>
-                @if ($suratIzin->tanda_tangan)
-                    <img style="height: 120px ; width:120px;"
-                        src="{{ public_path('img/' . $suratIzin->tanda_tangan) }}" alt="Tanda Tangan">
-                @endif
-            </p>
-            <b>{{ $suratIzin->nama_pengaju }}</b>
-            <p></p>
-        </div>
+
     </div>
 </body>
 </html>

@@ -60,22 +60,10 @@
                         @endif
 
                     </div>
-                    <b>Direktur RSI Asy Syifaa</b>
+                    <b>dr. Imilia Sapitri, M.Kes</b>
                 </p>
             </div>
-            <div class="ttd_nama">
-                <p> <br>
-                    Hormat Saya,
-                    <br>
-                </p>
-                <p>
-                        <img style="height: 120px ; width:120px;"
-                        src="{{ asset('assets/ttd/'.$suratIzin->tanda_tangan) }}"
-                        alt="Tanda Tangan">
-                </p>
-                <b>{{ $suratIzin->nama_pengaju }}</b>
-                <p></p>
-            </div>
+
         </div>
     </div>
 </body>

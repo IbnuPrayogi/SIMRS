@@ -48,34 +48,16 @@
         <div class="tgl_blangko">
             <p>ini tanggal penyerahan</p>
         </div>
-        <div class="ttd_A">
-            <p>Yang Memohon, <b>{{ $suratTukarJaga->nama_pengaju }}</b>
-            </p>
-            <p>
-                @if ($suratTukarJaga->tanda_tangan)
-                    <img style="height: 120px ; width:120px;"
-                        src="{{ public_path('img/' . $suratTukarJaga->tanda_tangan) }}" alt="Tanda Tangan">
-                @endif
-            </p>
-            <b>{{ $suratTukarJaga->nama_pengaju }}</b>
 
-            <div class="line"></div>
-        </div>
-        <div class="ttd_B">
-            <p>Termohon, <b>{{ $suratTukarJaga->target_tukar_jaga}}<b></p>
-            <br><br>
-            <div class="line"></div>
-        </div>
-
-        <div class="ttd_kar">
-            <p>Ka. Ruangan</p>
-            <br><br>
-            <div class="line"></div>
-        </div>
-        <div class="ttd_kab">
-            <p>Ka. Bagian</p>
-            <br><br>
-            <div class="line"></div>
+        <div styleclass="tanda_tangan">
+            <div class="ttd_aju">
+                <p> Menyetujui,<br>
+                    Direktur RSI Asy-Syifaa
+                    <br><br><br><br>
+                    <b>dr. Imilia Sapitri, M.Kes</b>
+                </p>
+            </div>
+    
         </div>
         </div>
 </body>

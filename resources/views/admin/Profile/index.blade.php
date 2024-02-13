@@ -169,6 +169,8 @@
                                                             </div>
 
 
+                                                            @if (auth()->user()->jabatan == 'Direktur')
+                                                                
                                                             <div class="original-ttd"><img src="{{ asset('assets/ttd/' . auth()->user()->tanda_tangan) }}"
                                                                 style="width:20%" class="rounded-circle">
                                                                 <div class="form-group">
@@ -185,6 +187,7 @@
 
                                                                 </div>
                                                             </div>
+                                                            @endif
 
                                                         </div>
 
