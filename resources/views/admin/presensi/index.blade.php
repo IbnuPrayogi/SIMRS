@@ -121,10 +121,10 @@ function getColorClass($status) {
             <td class="employee-name">{{ $user->nama_karyawan }}</td>
 
             @php
-                $totalTerlambat = \App\Models\Terlambat::where('user_id', $user->id)
+                $totalTerlambat = \App\Models\Terlambat::where('nama_karyawan', $user->nama_karyawan)
                     ->where('tanggal','like',"%/$selectedMonth/%")
                     ->sum('waktu_terlambat');
-                $totalTerpotong = \App\Models\Potongan::where('user_id', $user->id)
+                $totalTerpotong = \App\Models\Potongan::where('nama_karyawan', $user->nama_karyawan)
                     ->where('tanggal','like',"%/$selectedMonth/%")
                     ->sum('waktu_potongan');
                 $totalIzin = \App\Models\Izin::where('nama_karyawan', $user->nama_karyawan)

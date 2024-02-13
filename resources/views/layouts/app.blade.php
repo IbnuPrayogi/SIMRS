@@ -60,12 +60,19 @@
             <img src="{{ asset('img/logo.png') }}" alt="logo" style="width:40%;margin-left:50px;">
             <div class="menu-box">
                 <ul class="menu">
-                    <li><a href="{{route('admin.index')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="{{route('profile.user')}}"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="{{route('admin.index')}}"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
+                    <li><a href="{{route('profile.user')}}"><i class="fas fa-user"></i> Profil</a></li>
                     <li><a href="{{ route('shift.index') }}"><i class="fas fa-archive"></i> Shift</a></li>
                     <li><a href="{{ route('presensi.index') }}"><i class="fas fa-user-check"></i> Presensi</a></li>
-                    <li><a href="{{ route('jadwal.index') }}"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
-                    <li><a href="{{ route('user.index') }}"><i class="fas fa-users"></i> Pengguna</a></li>
+                    {{-- <li><a href="{{ route('jadwal.index') }}"><i class="fas fa-calendar-alt"></i> Jadwal</a></li> --}}
+                    <li><a href="{{ route('statusjadwal.index') }}"><i class="fas fa-calendar"></i> Status Jadwal</a></li>
+                    <li><a href="{{ route('user.index') }}"><i class="fas fa-user"></i> Pengguna</a></li>
+                    <li><a href="{{ route('bagian.index') }}"><i class="fas fa-users"></i> Bagian</a></li>
+                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt"></i>
+                        {{ __('Logout') }}
+                    </a></li>
+                    
                 </ul>
                 <br><br><br><br>
                 <div class="footer">

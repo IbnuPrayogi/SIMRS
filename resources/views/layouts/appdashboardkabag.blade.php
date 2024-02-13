@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+ 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
     </script>
@@ -59,13 +59,17 @@
             <div class="menu-box">
                 <ul class="menu">
                     <!-- Tambahkan menu-menu Anda di sini -->
-                    <li><a href="/home"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="/home"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
                     <li><a href="{{ route('KBprofile.user') }}"><i class="fas fa-user"></i> Profile</a></li>
                     <li><a href="{{ route('DaftarPermohonan.indexCuti') }}"><i class="fas fa-bed"></i> Cuti</a></li>
                     <li><a href="{{ route('DaftarPermohonan.indexIzin') }}"><i class="fas fa-clock"></i> Izin</a></li>
                     <li><a href="{{ route('DaftarPermohonan.indexTukarJaga') }}"><i class="fas fa-exchange-alt"></i> Tukar Jaga</a></li>
                     <li><a href="#"><i class="fas fa-user-check"></i> Presensi</a></li>
                     <li><a href="{{ route('kbjadwal.index') }}"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
+                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt"></i>
+                        {{ __('Logout') }}
+                    </a></li>
                 </ul>
                 <div class="footer">
                     <p>&copy; 2023</p>
@@ -109,7 +113,7 @@
                                     <div class="menu-box">
                                         <!-- Displayed on small screens (mobile) -->
                                         <ul class="menu d-block d-md-none">
-                                            <li><a href="/home"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                                            <li><a href="/home"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
                                             <li><a href="{{ route('KBprofile.user') }}"><i class="fas fa-user"></i> Profile</a></li>
                                             <li><a href="{{ route('DaftarPermohonan.indexCuti') }}"><i class="fas fa-bed"></i> Cuti</a></li>
                                             <li><a href="{{ route('DaftarPermohonan.indexIzin') }}"><i class="fas fa-clock"></i> Izin</a></li>
