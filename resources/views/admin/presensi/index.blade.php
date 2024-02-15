@@ -172,6 +172,15 @@ function getColorClass($status) {
     <label for="">Rekap Presensi</label><br>
     <button type="submit">Rekap Data Presensi</button>
 </form>
+
+<form method="post" action="{{ route('presensi.fetch') }}" enctype="multipart/form-data">
+    @csrf
+
+    <input type="hidden" name="bulan" value="{{ $selectedMonth }}">
+    <input type="hidden" name="tahun" value="{{ $selectedYear }}">
+    <label for="">Ambil Data Presensi</label><br>
+    <button type="submit">Ambil Data Presensi</button>
+</form>
         </body>
 
         <script>

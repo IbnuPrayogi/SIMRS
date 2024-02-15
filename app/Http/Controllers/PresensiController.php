@@ -19,6 +19,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use App\Http\Requests\StorePresensiRequest;
 use App\Http\Requests\UpdatePresensiRequest;
+use Illuminate\Support\Facades\Http;
 
 class PresensiController extends Controller
 {
@@ -416,6 +417,65 @@ class PresensiController extends Controller
         
  
     }
+
+    
+
+    public function fetch()
+    {
+        $conn = odbc_connect('MS Access Database', '111', '111');
+    
+        if ($conn) {
+            $year = 2023; // Set the desired year
+            $month = 12;  // Set the desired month
+    
+            // Format the year and month for the SQL query
+            $formattedDate = sprintf('%04d-%02d', $year, $month);
+
+    
+            $sql1 = "SELECT * FROM CHECKINOUT WHERE YEAR(CHECKTIME) = 2017";
+            $result1 = odbc_exec($conn, $sql1);
+    
+            if ($result1) {
+                $data = [];
+    
+                while ($row1 = odbc_fetch_array($result1)) {
+                    // Clean each element of the array to ensure it's valid UTF-8
+                    $cleanedRow = array_map(function ($item) {
+                        return mb_convert_encoding($item, 'UTF-8', 'UTF-8');
+                    }, $row1);
+    
+                    $data[] = $cleanedRow;
+                    
+                    
+                }
+                
+                
+    
+                odbc_close($conn);
+    
+                // Encode the array of data with JSON_UNESCAPED_UNICODE
+                $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+    
+                // Melakukan HTTP request ke controller lain untuk mengirim data
+                $response = Http::post('http://127.0.0.1:8000/api/send', ['data' => $json]);
+    
+                // Mengembalikan respons dari controller lain
+                return $response;
+            } else {
+                odbc_close($conn);
+                return response()->json(['error' => 'Error executing query'], 500);
+            }
+        } else {
+            return response()->json(['error' => 'Failed to connect to MS Access Database'], 500);
+        }
+    }
+    
+
+    
+
+    
+    
+    
 
     
 
