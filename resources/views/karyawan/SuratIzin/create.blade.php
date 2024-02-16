@@ -18,9 +18,9 @@
             <Form method="POST" action="{{route('suratizin.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="content-text">
-                    <h3>Tanggal Izin</h3>
+                    <h3 style="margin-bottom: 20px">Tanggal Izin</h3>
                 </div>
-                <div class="content-box">
+                <div class="content-box" style="border-radius: 10px">
                     <input class="input_waktu" type="date" id="Tanggal_izin" name="tanggal_izin"
                     onchange="checkDate('Tanggal_izin')">
                 </div>
@@ -46,16 +46,16 @@
 
     
                 <div class="content-text">
-                    <h3>Alasan</h3>
+                    <h3 style="margin-bottom: 20px">Alasan</h3>
                 </div>
-                <div class="content-ket">
+                <div class="content-ket" style="padding: 5px;">
                     <textarea class="input_ket" type="text" id="keterangan" placeholder="Alasan..." name="keterangan"></textarea>
                 </div>
     
                 <div class="content-text">
-                    <h3>Lampiran Bukti</h3>
+                    <h3 style="margin-bottom: 20px">Lampiran Bukti</h3>
                 </div>
-                <div class="pilih">
+                <div class="pilih" style="border-radius: 10px">
                     <input class="choose" type="file" id="fileInput" name="bukti" accept=".pdf">
                 </div>
     

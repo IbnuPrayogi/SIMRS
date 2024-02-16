@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Izin;
 use App\Models\User;
+use App\Models\Check;
 use App\Models\Shift;
 use App\Models\Bagian;
 use App\Models\Jadwal;
@@ -16,10 +17,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\View;
 use App\Http\Requests\StorePresensiRequest;
 use App\Http\Requests\UpdatePresensiRequest;
-use Illuminate\Support\Facades\Http;
 
 class PresensiController extends Controller
 {
@@ -78,6 +79,16 @@ class PresensiController extends Controller
      */
     public function store(Request $request)
     {
+
+        $response = Http::withOptions(['timeout' => 60])
+                    ->asJson()
+                    ->get('http://localhost:8001/presensi/fetch/12/2023');
+                    
+        return $response;// Ganti URL sesuai dengan URL Laravel lokal Anda
+    
+    // Lakukan sesuatu dengan respons yang diterima
+    
+       
         
         
         $bulan = intval($request->input('bulan'));
@@ -92,53 +103,35 @@ class PresensiController extends Controller
             $limit=cal_days_in_month(CAL_GREGORIAN, 1, now()->format('Y'));
         }
  
-        $jadwals = Jadwal::where('bulan', 1)->where('tahun',2024)->get();
+
+        $jadwals = Jadwal::where('bulan', $bulan)->where('tahun',$tahun)->get();
+       
       
         foreach ($jadwals as $jadwal) {
-            $conn = \odbc_connect('MS Access Database','111','111');
-            if ($conn) {
-                // Query SQL untuk mendapatkan USERID dari USERINFO berdasarkan nama karyawan
-                $sql1 = "SELECT USERID FROM USERINFO WHERE Name='$jadwal->nama_karyawan'";
-            
-                // Menjalankan query
-                $result1 = \odbc_exec($conn, $sql1);
-            
-                // Memeriksa apakah query berhasil dieksekusi
-                if ($result1) {
-                    // Mengambil data dari hasil query
-                    $row1 = \odbc_fetch_array($result1);
-            
-                    // Memeriksa apakah data ditemukan
-                    
-                } else {
-                    // Menangani kesalahan eksekusi query
-                    echo "Terjadi kesalahan dalam menjalankan query.";
-                }
+          
             
 
             for ($day = 1; $day <= $limit; $day++) {
                 $data = Jadwal::where("tanggal_$day", '!=', null)->where('bulan', $bulan)->pluck("tanggal_$day")->toArray();
+                $dayFormatted = str_pad($day, 2, '0', STR_PAD_LEFT);
                 $tanggal = "$day/$bulan/$tahun";
-                $user = User::find($jadwal->user_id);
+                $date="$tahun-$bulan-$dayFormatted";
+
+                $user = User::where('nama_karyawan',$jadwal->nama_karyawan)->first();
 
                 $shiftDay = Shift::where('id',$jadwal->{"tanggal_$day"})->first();
-                if ($row1) {
-                    $userid = $row1['USERID'];
-                    $sql2 = "SELECT USERID, CHECKTIME, CHECKTYPE FROM CHECKINOUT WHERE USERID = $userid AND DateValue(CHECKTIME) = #$tanggal#";
-                    $result2 = \odbc_exec($conn, $sql2);
-                    $combinedTimes = '';
-                    while ($row2 = \odbc_fetch_array($result2)) {
-                        // Ekstrak waktu dari CHECKTIME
-                        $checkTime = date("H:i", strtotime($row2['CHECKTIME']));
-                        $combinedTimes .= $checkTime . ' ';
-                    }
-                    $presensi = rtrim($combinedTimes);
-        
-                    // Membuat tabel HTML atau melakukan operasi lainnya
-                    
-                } else {
-                    echo "Data tidak ditemukan untuk $jadwal->nama_karyawan";
-                }
+
+                $presensiData = Check::where('nama_karyawan', $user->nama_karyawan)
+                    ->whereDate('waktu', $date)
+                    ->groupBy(DB::raw('TIME(waktu)')) // Menggunakan fungsi DATE untuk mengambil tanggal dari timestamp
+                    ->pluck(DB::raw('TIME(waktu)'));
+
+                // Menggabungkan tanggal-tanggal menjadi string yang dipisahkan oleh spasi
+                $combinedDates = implode(' ', $presensiData->toArray());
+
+                // Output string yang berisi tanggal-tanggal presensi
+                $presensi=$combinedDates;
+            
             
 
                 $datapresensi=Presensi::where('tanggal',$tanggal)->where('nama_karyawan',$user->nama_karyawan)->first();
@@ -404,40 +397,38 @@ class PresensiController extends Controller
                     ]);
                 }
             }
-            \odbc_close($conn);
-            } else {
-                echo "Koneksi gagal.";
-            }
         }
         
 
         return route('presensi.index');
 
                
-        
+     
  
     }
 
     
 
-    public function fetch()
+    public function fetch($bulan,$tahun)
     {
+
+        
+    
         $conn = odbc_connect('MS Access Database', '111', '111');
     
         if ($conn) {
-            $year = 2023; // Set the desired year
-            $month = 12;  // Set the desired month
-    
-            // Format the year and month for the SQL query
-            $formattedDate = sprintf('%04d-%02d', $year, $month);
-
-    
-            $sql1 = "SELECT * FROM CHECKINOUT WHERE YEAR(CHECKTIME) = 2017";
+            $year = intval($tahun); // Set the desired year
+            $month = intval($bulan);  // Set the desired month
+            $sql1 = "SELECT CHECKINOUT.CHECKTIME, CHECKINOUT.USERID, 
+                 (SELECT NAME FROM USERINFO WHERE USERID = CHECKINOUT.USERID) AS UserName
+                    FROM CHECKINOUT 
+                    WHERE YEAR(CHECKINOUT.CHECKTIME) = $year AND MONTH(CHECKINOUT.CHECKTIME) = $month";
             $result1 = odbc_exec($conn, $sql1);
+            
     
             if ($result1) {
                 $data = [];
-    
+            
                 while ($row1 = odbc_fetch_array($result1)) {
                     // Clean each element of the array to ensure it's valid UTF-8
                     $cleanedRow = array_map(function ($item) {
@@ -446,21 +437,14 @@ class PresensiController extends Controller
     
                     $data[] = $cleanedRow;
                     
-                    
                 }
-                
-                
-    
                 odbc_close($conn);
     
                 // Encode the array of data with JSON_UNESCAPED_UNICODE
                 $json = json_encode($data, JSON_UNESCAPED_UNICODE);
-    
-                // Melakukan HTTP request ke controller lain untuk mengirim data
-                $response = Http::post('http://127.0.0.1:8000/api/send', ['data' => $json]);
-    
-                // Mengembalikan respons dari controller lain
-                return $response;
+                $axiosResponse = Http::withOptions(['timeout' => 60])->asJson()->post('http://127.0.0.1:8001/api/kirimdata/presensi', ['data1' => $json]);
+              
+                return $axiosResponse;
             } else {
                 odbc_close($conn);
                 return response()->json(['error' => 'Error executing query'], 500);

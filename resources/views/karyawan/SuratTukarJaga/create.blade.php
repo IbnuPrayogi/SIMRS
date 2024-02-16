@@ -17,9 +17,9 @@
             </div>
             <div class="card-body">
                 <div class="content-text">
-                    <h3>Jadwal Asli</h3>
+                    <h3 style="margin-bottom: 20px">Jadwal Asli</h3>
                 </div>
-                <div class="content-box">
+                <div class="content-box" style="border-radius: 10px">
                     <input class="input_waktu" type="date" id="Tanggal_Pengajuan" placeholder="Tanggal Pengajuan..."
                         name="jadwal_asli" onchange="checkDate('Tanggal_Pengajuan')">
                 </div>
@@ -48,10 +48,10 @@
                     <b>Ajukan Izin maksimal H-3</b>
                 </div>
 
-                <div class="content-text">
-                    <h3>Jadwal Yang Ingin Diubah</h3>
+                <div class="content-text" >
+                    <h3 style="margin-bottom: 20px">Jadwal Yang Ingin Diubah</h3>
                 </div>
-                <div class="content-box">
+                <div class="content-box" style="border-radius: 10px">
                     <input class="input_waktu" type="date" id="Tanggal_Target" placeholder="Tanggal Target..." name="jadwal_dirubah"
                     onchange="checkDate('Tanggal_Target')">
                 </div>
@@ -63,10 +63,10 @@
                 </div>
 
                 <div class="content-text">
-                    <h3>Nama Target</h3>
+                    <h3 style="margin-bottom: 20px">Nama Target</h3>
                 </div>
-                <div class="dropdown-menu">
-                    <select class="select" name="target_tukar_jaga">
+                <div class="dropdown-menu" style="margin-left: 5px;border-radius: 20px">
+                    <select class="select" name="target_tukar_jaga" style="padding: 5px;">
                         <option value="">Pilih Nama Target</option>
                         @foreach ($karyawan as $user)
                         @if ($user->nama_karyawan!= auth()->user()->nama_karyawan)
@@ -74,15 +74,15 @@
                         @endif
                         @endforeach
                     </select>
-                    <div class="icon">
+                    <div class="icon" style="margin-right: 15px;">
                         <i class='bx bx-chevron-down'></i>
                     </div>
                 </div>
 
                 <div class="content-text">
-                    <h3>Keterangan</h3>
+                    <h3 style="margin-bottom: 20px">Keterangan</h3>
                 </div>
-                <div class="content-ket">
+                <div class="content-ket" style="padding: 5px;">
                     <textarea class="input_ket" type="text" id="keterangan" placeholder="Keterangan..." name="keterangan"></textarea>
                 </div>
 

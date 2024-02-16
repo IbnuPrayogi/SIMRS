@@ -10,6 +10,7 @@ use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\BagianController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KBJadwalController;
+use App\Http\Controllers\PostDataController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ArsipController;
@@ -62,7 +63,15 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::resource('shift', ShiftController::class);
     Route::resource('presensi', PresensiController::class);
     Route::post('/presensi/rekap', [PresensiController::class, 'rekap'])->name('presensi.rekap');
-    Route::post('/presensi/fetch', [PresensiController::class, 'fetch'])->name('presensi.fetch');
+
+    Route::get('presensi/fetch/{selectedMonth}/{selectedYear}', [PresensiController::class, 'fetch'])
+    ->name('presensi.fetch');
+
+    Route::get('bagiandata/fetch', [PostDataController::class, 'storebagian'])
+    ->name('bagians.fetch');
+    Route::get('userdata/fetch', [PostDataController::class, 'storeuser'])
+    ->name('users.fetch');
+
     Route::resource('jadwal', JadwalController::class);
     Route::get('/jadwal/download/file', [JadwalController::class, 'download'])->name('jadwal.download');
     Route::get('/jadwal/edit/{bulan}', [JadwalController::class, 'editjadwal'])->name('jadwal.editjadwal');

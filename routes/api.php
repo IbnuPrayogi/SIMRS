@@ -3,6 +3,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\SendDataController;
 use App\Http\Controllers\Api\PresensiApiController;
 
 /*
@@ -20,4 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/send', [PresensiApiController::class, 'receive']);
+Route::post('/kirimdata/presensi', [PresensiApiController::class, 'terima']);
+Route::post('/kirimdata/bagian', [SendDataController::class, 'terimabagian']);
+Route::post('/kirimdata/user', [SendDataController::class, 'terimauser']);
+

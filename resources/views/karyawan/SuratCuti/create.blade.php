@@ -18,9 +18,9 @@
             <Form method="POST" action="{{route('suratcuti.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="content-text">
-                    <h3>Tanggal Mulai</h3>
+                    <h3 style="margin-bottom: 20px">Tanggal Mulai</h3>
                 </div>
-                <div class="content-box">
+                <div class="content-box" style="border-radius: 10px">
                     <input class="input_waktu" type="date" id="Tanggal_Mulai" name="tanggal_mulai"
                     onchange="checkDate('Tanggal_Mulai')">
                 </div>
@@ -50,9 +50,9 @@
                 </div>
 
                 <div class="content-text">
-                    <h3>Tanggal Selesai</h3>
+                    <h3 style="margin-bottom: 20px">Tanggal Selesai</h3>
                 </div>
-                <div class="content-box">
+                <div class="content-box" style="border-radius: 10px">
                     <input class="input_waktu" type="date" id="Tanggal_izin" name="tanggal_selesai"
                     onchange="checkDate('Tanggal_izin')">
                 </div>
@@ -64,16 +64,16 @@
                 </div>
     
                 <div class="content-text">
-                    <h3>Alamat</h3>
+                    <h3 style="margin-bottom: 20px">Alamat</h3>
                 </div>
-                <div class="content-box">
+                <div class="content-box" style="padding: 5px;border-radius: 10px">
                     <input class="input_waktu" type="text" id="keterangan" placeholder="alamat" name="alamat">
                 </div>
     
                 <div class="content-text">
-                    <h3>Keterangan</h3>
+                    <h3 style="margin-bottom: 20px">Keterangan</h3>
                 </div>
-                <div class="content-ket">
+                <div class="content-ket" style="padding: 5px;">
                     <textarea class="input_ket" type="text" id="keterangan" placeholder="Alasan..." name="keterangan"></textarea>
                 </div>
     

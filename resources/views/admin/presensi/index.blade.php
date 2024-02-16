@@ -66,122 +66,186 @@ function getColorClass($status) {
             $selectedDepartment = request('selectedDepartment', 'Satpam');
             $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $selectedMonth, $selectedYear);
         @endphp
-           
-
-<h5>Jadwal Karyawan Bulan 
-    <select id="selectMonth" onchange="updateTable()" value="{{ $selectedMonth }}">
-        @for ($i = 1; $i <= 12; $i++)
-            <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
-                {{ date('F', mktime(0, 0, 0, $i, 1)) }}
-            </option>
-        @endfor
-    </select>
-
-
-    <label for="selectYear">Tahun:</label>
-    <select id="selectYear" onchange="updateTable()" value="{{ $selectedYear }}">
-        @php
-            $currentYear = now()->format('Y');
-        @endphp
-
-        @for ($year = $currentYear - 5; $year <= $currentYear + 5; $year++)
-            <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>
-                {{ $year }}
-            </option>
-        @endfor
-    </select>
-
-    <label for="selectDepartment">Bagian:</label>
-    <select id="selectDepartment" onchange="updateTable()">
-        @foreach ($bagians as $department)
-            <option value="{{ $department->nama_bagian }}" {{ $selectedDepartment == $department->nama_bagian ? 'selected' : '' }}>
-                {{ $department->nama_bagian }}
-            </option>
-        @endforeach
-    </select>
-    
-</h4>
-
-<table id="scheduleTable">
-    <tr>
-        <th></th>
-        @for ($day = 1; $day <= $daysInMonth; $day++)
-            <th>{{ $day }}</th>
-        @endfor
-        <th>Terlambat</th> <!-- Kolom terlambat -->
-        <th>Terpotong</th>
-        <th>Izin</th>
-    </tr>
-
-    @foreach ($users as $user)
-    @php
-        $userSchedule = $jadwal->where('nama_karyawan', $user->nama_karyawan)->first();
-    @endphp
-        <tr>
-            <td class="employee-name">{{ $user->nama_karyawan }}</td>
-
-            @php
-                $totalTerlambat = \App\Models\Terlambat::where('nama_karyawan', $user->nama_karyawan)
-                    ->where('tanggal','like',"%/$selectedMonth/%")
-                    ->sum('waktu_terlambat');
-                $totalTerpotong = \App\Models\Potongan::where('nama_karyawan', $user->nama_karyawan)
-                    ->where('tanggal','like',"%/$selectedMonth/%")
-                    ->sum('waktu_potongan');
-                $totalIzin = \App\Models\Izin::where('nama_karyawan', $user->nama_karyawan)
-                    ->where('tanggal','like',"%/$selectedMonth/%")
-                    ->sum('waktu_izin');
-            @endphp
-
-
-
-            @for ($day = 1; $day <= $daysInMonth; $day++)
-                @php
-                    $date = $day . "/" . $selectedMonth . "/" . $selectedYear;
-                    $datapresensi = $presensi->where('id_karyawan', $user->id)->where('tanggal', $date)->first();
-                @endphp
-                <td class="calendar-cell" style="background-color: {{ $datapresensi ? getColorClass($datapresensi->status) : 'white' }}">
-
-
+      
                 
-                    @php
-                        
-                        $userShift = $userSchedule ? $shifts->where('id', $userSchedule->{"tanggal_$day"})->first() : null;
-                        $shiftId = $userShift ? $userShift->kode_shift : '-';
-                    @endphp
-                    {{ $shiftId }}
-                </td>
-            @endfor
 
-            <!-- Kolom terlambat -->
-            <td>{{ $totalTerlambat }} jam</td>
-            <td>{{ $totalTerpotong }} jam</td>
-            <td>{{ $totalIzin }} jam</td>
+        <h5>Jadwal Karyawan Bulan 
+
+
+            <select id="selectMonth" onchange="updateTable()">
+                @for ($i = 1; $i <= 12; $i++)
+                    <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
+                        {{ date('F', mktime(0, 0, 0, $i, 1)) }}
+                    </option>
+                @endfor
+            </select>
+
+
+            <label for="selectYear">Tahun:</label>
+            <select id="selectYear" onchange="updateTable()" value="{{ $selectedYear }}">
+                @php
+                    $currentYear = now()->format('Y');
+                @endphp
+
+                @for ($year = $currentYear - 5; $year <= $currentYear + 5; $year++)
+                    <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>
+                        {{ $year }}
+                    </option>
+                @endfor
+            </select>
+
+            <label for="selectDepartment">Bagian:</label>
+            <select id="selectDepartment" onchange="updateTable()">
+                @foreach ($bagians as $department)
+                    <option value="{{ $department->nama_bagian }}" {{ $selectedDepartment == $department->nama_bagian ? 'selected' : '' }}>
+                        {{ $department->nama_bagian }}
+                    </option>
+                @endforeach
+            </select>
             
-        </tr>
-    @endforeach
-</table>
-<br>
-<a href="javascript:void(0);" onclick="downloadImage()" class="btn btn-primary">Download Image</a>
-<a href="{{ route('jadwal.editjadwal', ['bulan' => $selectedMonth]) }}" class="btn btn-primary">Edit Schedule</a>
+        </h4>
 
-<form method="post" action="{{ route('presensi.store') }}" enctype="multipart/form-data">
-    @csrf
+        <table id="scheduleTable">
+            <tr>
+                <th></th>
+                @for ($day = 1; $day <= $daysInMonth; $day++)
+                    <th>{{ $day }}</th>
+                @endfor
+                <th>Terlambat</th> <!-- Kolom terlambat -->
+                <th>Terpotong</th>
+                <th>Izin</th>
+            </tr>
 
-    <input type="hidden" name="bulan" value="{{ $selectedMonth }}">
-    <input type="hidden" name="tahun" value="{{ $selectedYear }}">
-    <label for="">Rekap Presensi</label><br>
-    <button type="submit">Rekap Data Presensi</button>
-</form>
+            @foreach ($users as $user)
+            @php
+                $userSchedule = $jadwal->where('nama_karyawan', $user->nama_karyawan)->first();
+            @endphp
+                <tr>
+                    <td class="employee-name">{{ $user->nama_karyawan }}</td>
 
-<form method="post" action="{{ route('presensi.fetch') }}" enctype="multipart/form-data">
-    @csrf
+                    @php
+                        $totalTerlambat = \App\Models\Terlambat::where('nama_karyawan', $user->nama_karyawan)
+                            ->where('tanggal','like',"%/$selectedMonth/%")
+                            ->sum('waktu_terlambat');
+                        $totalTerpotong = \App\Models\Potongan::where('nama_karyawan', $user->nama_karyawan)
+                            ->where('tanggal','like',"%/$selectedMonth/%")
+                            ->sum('waktu_potongan');
+                        $totalIzin = \App\Models\Izin::where('nama_karyawan', $user->nama_karyawan)
+                            ->where('tanggal','like',"%/$selectedMonth/%")
+                            ->sum('waktu_izin');
+                    @endphp
 
-    <input type="hidden" name="bulan" value="{{ $selectedMonth }}">
-    <input type="hidden" name="tahun" value="{{ $selectedYear }}">
-    <label for="">Ambil Data Presensi</label><br>
-    <button type="submit">Ambil Data Presensi</button>
-</form>
+
+
+                    @for ($day = 1; $day <= $daysInMonth; $day++)
+                        @php
+                            $date = $day . "/" . $selectedMonth . "/" . $selectedYear;
+                            $datapresensi = $presensi->where('id_karyawan', $user->id)->where('tanggal', $date)->first();
+                        @endphp
+                        <td class="calendar-cell" style="background-color: {{ $datapresensi ? getColorClass($datapresensi->status) : 'white' }}">
+
+
+                        
+                            @php
+                                
+                                $userShift = $userSchedule ? $shifts->where('id', $userSchedule->{"tanggal_$day"})->first() : null;
+                                $shiftId = $userShift ? $userShift->kode_shift : '-';
+                            @endphp
+                            {{ $shiftId }}
+                        </td>
+                    @endfor
+
+                    <!-- Kolom terlambat -->
+                    <td>{{ $totalTerlambat }} jam</td>
+                    <td>{{ $totalTerpotong }} jam</td>
+                    <td>{{ $totalIzin }} jam</td>
+                    
+                </tr>
+            @endforeach
+        </table>
+        <br>
+        <a href="javascript:void(0);" onclick="downloadImage()" class="btn btn-primary">Download Image</a>
+
+        <form id="storePresensiForm" method="post" action="{{ route('presensi.store') }}" enctype="multipart/form-data">
+            @csrf
+
+            <input type="hidden" name="bulan" id="bulanInput">
+            <input type="hidden" name="tahun" id="tahunInput">
+
+        
+            <button class="btn btn-primary" type="button" onclick="storePresensi()">Rekap Data Presensi</button>
+        </form>
+
+        <form id="fetchPresensiForm" method="get" action="{{ url('presensi/ambil') }}" enctype="multipart/form-data">
+
+            <button class="btn btn-primary" type="button" onclick="fetchPresensi()">Ambil Data Presensi</button>
+        </form>
+
+        <a href=""><button id="runFunctionButton">Run Local Function</button></a>
+
+
         </body>
+
+        <script>
+            function fetchPresensi() {
+                var selectedMonth = document.getElementById('selectMonth').value;
+                var selectedYear = document.getElementById('selectYear').value;
+        
+                // Build the new URL without any conditions
+                var newURL = "{{ url('presensi/fetch') }}/" + selectedMonth + "/" + selectedYear;
+        
+                // Navigate to the new URL
+                window.location.href = newURL;
+            }
+
+            function storePresensi() {
+                var selectedMonth = document.getElementById('selectMonth').value;
+                var selectedYear = document.getElementById('selectYear').value;
+
+                // Log the values to check if they are correct
+                console.log("Selected Month:", selectedMonth);
+                console.log("Selected Year:", selectedYear);
+
+                // Set the values of hidden inputs
+                document.getElementById('bulanInput').value = selectedMonth;
+                document.getElementById('tahunInput').value = selectedYear;
+
+                // Submit the form
+                document.getElementById('storePresensiForm').submit();
+            }
+
+            document.getElementById('runFunctionButton').addEventListener('click', function(event) {
+    // Hindari perilaku default tombol
+                event.preventDefault();
+
+                fetch('http://127.0.0.1:8001/presensi/fetch/12/2023', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Tambahkan header lain jika diperlukan
+                    },
+                    // Tambahkan body jika diperlukan
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // Lakukan sesuatu dengan respons yang diterima
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+
+        </script>
+
+        
+        
+        
+        
+
+
+        
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {

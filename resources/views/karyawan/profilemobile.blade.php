@@ -42,7 +42,7 @@
     <div class="card">
         <h1>Profile Karyawan</h1>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="height: 500px;">
         <form action="{{ route('update.profile') }}" enctype="multipart/form-data" method="POST">
             @method('PUT')
             @csrf

@@ -23,7 +23,9 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- Scripts -->
-   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
 </head>
 
@@ -31,7 +33,8 @@
     style="background-image: url('{{ asset('img/bg.jpeg') }}');
              background-size: cover;
              background-position: center;
-             background-repeat: no-repeat;">
+             background-repeat: no-repeat;
+             ">
     <div id="app">
         <div class="upbar">
             <div class="logo_aplikasi">
@@ -48,10 +51,10 @@
             $path = 'assets/profil/'.$fotoUser;
             @endphp
 
-            <div class="elips">
+            <div class="elips" style=" margin-right:10px;">
                 <a href="/profile"><img src="{{ asset(file_exists($path) ? $path : 'assets/profil/pp.jpg') }}"alt="logo_user"></a>
             </div>
-            <div class="dropdown">
+            <div class="dropdown" style="margin-right: 25px">
                 <div class="menu">
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
@@ -74,7 +77,7 @@
             </div>
         </div>
 
-        <div class="navbar-content">
+        <div class="navbar-content" style="margin-bottom: -40px">
             <div class="navbar">
                 <a href="/home" class="{{ Request::is('/home') ? 'active' : '' }}"><i class='bx bx-home'></i></a>
                 <a href="/buatpengajuansurat" class="{{ Request::is('/pengajuan') ? 'active' : '' }}"><i class="fas fa-plus add-file-icon"></i></a>
