@@ -39,6 +39,17 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('presensi/fetch/{selectedMonth}/{selectedYear}', [PresensiController::class, 'fetch'])
+    ->name('presensi.fetch');
+
+    Route::get('bagiandata/fetch', [PostDataController::class, 'storebagian'])
+    ->name('bagians.fetch');
+    Route::get('userdata/fetch', [PostDataController::class, 'storeuser'])
+    ->name('users.fetch');
+
+    Route::get('presensi/take/{bulan}/{tahun}', [PresensiController::class, 'fetchData'])
+    ->name('presensi.ambildata');
+
 
 Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/dashboardadmin', function () {
@@ -64,13 +75,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::resource('presensi', PresensiController::class);
     Route::post('/presensi/rekap', [PresensiController::class, 'rekap'])->name('presensi.rekap');
 
-    Route::get('presensi/fetch/{selectedMonth}/{selectedYear}', [PresensiController::class, 'fetch'])
-    ->name('presensi.fetch');
-
-    Route::get('bagiandata/fetch', [PostDataController::class, 'storebagian'])
-    ->name('bagians.fetch');
-    Route::get('userdata/fetch', [PostDataController::class, 'storeuser'])
-    ->name('users.fetch');
+    
 
     Route::resource('jadwal', JadwalController::class);
     Route::get('/jadwal/download/file', [JadwalController::class, 'download'])->name('jadwal.download');

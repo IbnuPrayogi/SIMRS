@@ -172,7 +172,6 @@ function getColorClass($status) {
             <input type="hidden" name="bulan" id="bulanInput">
             <input type="hidden" name="tahun" id="tahunInput">
 
-        
             <button class="btn btn-primary" type="button" onclick="storePresensi()">Rekap Data Presensi</button>
         </form>
 
@@ -181,7 +180,7 @@ function getColorClass($status) {
             <button class="btn btn-primary" type="button" onclick="fetchPresensi()">Ambil Data Presensi</button>
         </form>
 
-        <a href=""><button id="runFunctionButton">Run Local Function</button></a>
+        <button id="callLocalRouteButton">Call Local Route</button>
 
 
         </body>
@@ -192,7 +191,7 @@ function getColorClass($status) {
                 var selectedYear = document.getElementById('selectYear').value;
         
                 // Build the new URL without any conditions
-                var newURL = "{{ url('presensi/fetch') }}/" + selectedMonth + "/" + selectedYear;
+                var newURL = "{{ url('presensi/take') }}/" + selectedMonth + "/" + selectedYear;
         
                 // Navigate to the new URL
                 window.location.href = newURL;
@@ -214,25 +213,18 @@ function getColorClass($status) {
                 document.getElementById('storePresensiForm').submit();
             }
 
-            document.getElementById('runFunctionButton').addEventListener('click', function(event) {
-    // Hindari perilaku default tombol
-                event.preventDefault();
-
-                fetch('http://127.0.0.1:8001/presensi/fetch/12/2023', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // Tambahkan header lain jika diperlukan
-                    },
-                    // Tambahkan body jika diperlukan
+            document.getElementById('callLocalRouteButton').addEventListener('click', function() {
+                fetch('http://localhost:8000/presensi/fetch/12/2023', {
+                method: 'GET',
+                // Tambahkan header atau opsi lain jika diperlukan
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    // Lakukan sesuatu dengan respons yang diterima
+                console.log(data);
+                // Lakukan sesuatu dengan respons yang diterima
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                console.error('Error:', error);
                 });
             });
 
@@ -240,13 +232,6 @@ function getColorClass($status) {
         </script>
 
         
-        
-        
-        
-
-
-        
-
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 // Set nilai awal untuk dropdown

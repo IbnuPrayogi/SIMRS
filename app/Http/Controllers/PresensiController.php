@@ -80,13 +80,7 @@ class PresensiController extends Controller
     public function store(Request $request)
     {
 
-        $response = Http::withOptions(['timeout' => 60])
-                    ->asJson()
-                    ->get('http://localhost:8001/presensi/fetch/12/2023');
-                    
-        return $response;// Ganti URL sesuai dengan URL Laravel lokal Anda
-    
-    // Lakukan sesuatu dengan respons yang diterima
+        
     
        
         
@@ -95,6 +89,10 @@ class PresensiController extends Controller
         
      
         $tahun = intval($request->input('tahun'));
+
+        $url = 'http://127.0.0.1:8001/presensi/fetch/'.$bulan.'/'.$tahun;
+        
+        $response = Http::withOptions(['timeout' => 120])->get($url);
 
         if(intval(now()->format('m'))==$bulan && intval(now()->format('Y'))==$tahun){
             $limit= intval(now()->format('d'));
@@ -400,7 +398,7 @@ class PresensiController extends Controller
         }
         
 
-        return route('presensi.index');
+        return redirect()->route('presensi.index');
 
                
      
@@ -411,9 +409,7 @@ class PresensiController extends Controller
 
     public function fetch($bulan,$tahun)
     {
-
-        
-    
+ 
         $conn = odbc_connect('MS Access Database', '111', '111');
     
         if ($conn) {
@@ -442,7 +438,7 @@ class PresensiController extends Controller
     
                 // Encode the array of data with JSON_UNESCAPED_UNICODE
                 $json = json_encode($data, JSON_UNESCAPED_UNICODE);
-                $axiosResponse = Http::withOptions(['timeout' => 60])->asJson()->post('http://127.0.0.1:8001/api/kirimdata/presensi', ['data1' => $json]);
+                $axiosResponse = Http::withOptions(['timeout' => 120])->asJson()->post('http://127.0.0.1:8003/api/kirimdata/presensi', ['data1' => $json]);
               
                 return $axiosResponse;
             } else {
@@ -453,14 +449,32 @@ class PresensiController extends Controller
             return response()->json(['error' => 'Failed to connect to MS Access Database'], 500);
         }
     }
+
+    public function fetchData($bulan, $tahun)
+    {
+        
+        try {
+            
+            // Ganti URL dengan URL dari variabel $url
+            $url = 'http://127.0.0.1:8001/presensi/fetch/'.$bulan.'/'.$tahun;
+        
+            // Menggunakan Http::get untuk mendapatkan data
+            $response = Http::withOptions(['timeout' => 120])->get($url);
+        
+            // Lakukan sesuatu dengan respons yang diterima
+            dd($response);
+        } catch (\Exception $e) {
+         
+            dd(['error' => 'Terjadi kesalahan saat mengambil data.']);
+        }
+     
+    
+    }
     
 
     
 
     
-    
-    
-
     
 
     /**
