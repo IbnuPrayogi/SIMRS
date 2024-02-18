@@ -25,13 +25,13 @@
       </div>
       <div class="rectangle"></div>
       <div class="rectangle-2"></div>
-      <div class="rectangle-3"></div>
+      <div class="rectangle-3" style="height: 29px"></div>
       <img class="arrow" src="img/arrow-3.svg" />
       <a href="{{ route('lihat.pengajuan') }}"><div class="text-wrapper-6">Selengkapnya</div></a>
       <img class="img" src="img/arrow-5.svg" />
       <a href="{{  route('karyawanjadwal.index')  }}"><div class="text-wrapper-7">Selengkapnya</div></a>
       <img class="arrow-2" src="img/arrow-4.svg" />
-      <a href="{{ route('presensi.karyawan') }}\"></a><div class="text-wrapper-8">Selengkapnya</div>
+      <a href="{{ route('presensi.karyawan') }}"><div class="text-wrapper-8">Selengkapnya</div></a>
     </div>
     <div class="title">
       <div class="overlap-3"><div class="text-wrapper-9">Rs Islam Asy Syifaa</div></div>

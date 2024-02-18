@@ -7,6 +7,7 @@ use App\Models\Izin;
 use App\Models\User;
 use App\Models\Shift;
 use App\Models\Jadwal;
+use Twilio\Rest\Client;
 use App\Models\Presensi;
 use App\Models\Disposisi;
 use App\Models\SuratIzin;
@@ -232,6 +233,8 @@ class SuratIzinController extends Controller
             'status' => 'izin',
             'tanggal' => $convertedDateFormat1
         ]);
+
+       
 
         // Redirect ke halaman suratIzin.show dengan menambahkan ID baru
         return redirect()->route('DaftarPermohonan.indexIzin')

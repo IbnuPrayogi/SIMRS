@@ -37,13 +37,13 @@
                     <b>Jumlah Cuti Bulan ini Telah Mencapai Batas Maksimal</b>
                 </div>
 
-                <div class="popup-tgl" id="myPopup-tgl-month">
+                <div class="popup-tgl" id="myPopup-tgl-month" style="text-align:center;margin-right:90px">
                     <!-- Isi popup di sini -->
                     <i class='bx bx-error'></i>
                     <b>Tanggal Mulai dan Tanggal Selesai Harus Dalam Bulan yang sama</b>
                 </div>
 
-                <div class="popup-tgl" id="myPopup-tgl-limit">
+                <div class="popup-tgl" id="myPopup-tgl-limit" style="margin-left:10px">
                     <!-- Isi popup di sini -->
                     <i class='bx bx-error'></i>
                     <b>Ajukan Cuti maksimal 1 bulan sebelum </b>

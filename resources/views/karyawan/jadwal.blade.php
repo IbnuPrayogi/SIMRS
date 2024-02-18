@@ -4,9 +4,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 <link  rel="stylesheet" href="{{ asset('css/presensi.css') }}">
 
-<div class="container">
+<div class="container" style="margin-top:20px">
     <div class="card-header">
-        <h1><b>Presensi</b></h1>
+        <h1><b>Jadwal</b></h1>
     </div>
     <div class="card-body">
         @php
@@ -45,7 +45,7 @@
 
 
 
-        <div class="table-container" style="max-height: 35rem; overflow: auto;">
+        <div class="table-container" style="max-height: 30rem; overflow: auto;width:380px">
             <table>
                 <thead>
                     <tr>

@@ -36,11 +36,9 @@
                                                     <label for="status">Teruskan Ke</label>
                                                     <div class="col-md-8">
                                                         <select class="form-control" id="lokasiArsip" name="status" style="background-color: #E0E0E0;">
-                                                            <option value="HRD">HRD</option>
                                                             <option value="Kepala Bagian">Kepala Bagian</option>
-                                                            <option value="Manajer">Manajer</option>
+                                                            <option value="Kepala Ruangan">Kepala Ruangan</option>
                                                             <option value="Direktur">Direktur</option>
-                                                            <option value="Direktur PT">Direktur PT</option>
                                                         </select>
                                                     </div>
 

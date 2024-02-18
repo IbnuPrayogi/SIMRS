@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
-    <div class="card-content">
+    <div class="card-content" style="margin-left: 10px;">
         <div style="display: flex; flex-direction: column; align-items: center;">
             <h2>Izin</h2><br><br>
             <i class="fas fa-bed" style="font-size: 6em;color:#0D72F2;"></i>
@@ -44,7 +44,7 @@
             </div>
         </div>
     </div>
-    <div class="card-content">
+    <div class="card-content" style="margin-top: 10px;">
         <div style="display: flex; flex-direction: column; align-items: center;">
             <h2>Tukar jaga</h2><br><br>
             <i class="fas fa-repeat" style="font-size: 6em;color:#0D72F2;"></i>
@@ -54,10 +54,10 @@
             </div>
         </div>
     </div>
-    <div class="card-content" style="align-items: center;justify-content: center;">
+    <div class="card-content" style="align-items: center;justify-content: center;margin-left: 10px;margin-top: 10px;">
         <div style="display: flex; flex-direction: column;">
-            <h2>Request</h2>
-            <i class="fas fa-bell" style="font-size: 6em;color:#0D72F2;"></i>
+            <h2>Request</h2><br><br>
+            <i class="fas fa-bell" style="font-size: 6em;color:#0D72F2;"></i><br><br><br><br>
         </div>
       
     </div>

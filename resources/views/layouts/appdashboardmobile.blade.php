@@ -43,9 +43,6 @@
             <div class="atur_jarak">
                 <p>RS Islam Asy-syifa</p>
             </div>
-            <div class="icon-belt">
-                <a href="/permintaantukarjaga"><i class='bx bxs-bell'></i></a>
-            </div>
             @php
             $fotoUser = auth()->user()->foto;
             $path = 'assets/profil/'.$fotoUser;
@@ -77,7 +74,7 @@
             </div>
         </div>
 
-        <div class="navbar-content" style="margin-bottom: -40px">
+        <div class="navbar-content" style="margin-bottom: -40px;margin-left:23px">
             <div class="navbar">
                 <a href="/home" class="{{ Request::is('/home') ? 'active' : '' }}"><i class='bx bx-home'></i></a>
                 <a href="/buatpengajuansurat" class="{{ Request::is('/pengajuan') ? 'active' : '' }}"><i class="fas fa-plus add-file-icon"></i></a>

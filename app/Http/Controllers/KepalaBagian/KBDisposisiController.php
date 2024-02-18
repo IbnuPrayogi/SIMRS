@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\KepalaBagian;
 
+use Twilio\Rest\Client;
 use App\Models\Disposisi;
 use App\Models\SuratCuti;
 use App\Models\SuratIzin;
 use App\Models\SuratMasuk;
 use App\Models\SuratKeluar;
-use App\Models\SuratTukarJaga;
 use Illuminate\Http\Request;
+use App\Models\SuratTukarJaga;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDisposisiRequest;
 use App\Http\Requests\UpdateDisposisiRequest;
@@ -75,7 +76,6 @@ class KBDisposisiController extends Controller
         ]);
         $surat->status=$request->input('status');
         $surat->save();
-  
 
         Disposisi::create([
             'id_surat'=> $surat->id,
@@ -98,9 +98,6 @@ class KBDisposisiController extends Controller
     
         return view('kepalabagian.disposisi.index',compact('surats'));
     }
-
- 
-
     /**
      * Show the form for editing the specified resource.
      */

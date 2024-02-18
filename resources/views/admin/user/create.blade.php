@@ -76,11 +76,10 @@
                                     <div class="form-group">
                                         <label for="lang1">Nama Bagian</label>
                                         <select  id="lang1" class="form-control" name="nama_bagian" style="background-color: #CCD9EC">
-                                            <option value="Dokter">Dokter</option>
-                                            <option value="Perawat">Perawat</option>
-                                            <option value="IT">IT</option>
-                                            <option value="Keamanan">Keamanan</option>
-                                            <option value="Teknisi">Teknisi</option>
+                                            @foreach ($bagians as $bagian)
+                                             <option value="{{ $bagian->nama_bagian }}">{{ $bagian->nama_bagian }}</option>  
+                                            @endforeach
+                                         
                                             <!-- Opsi lainnya -->
                                         </select>
                                     </div>
@@ -90,7 +89,7 @@
                                         <label for="lang2">Jabatan</label>
                                         <select  id="lang2" name="jabatan" class="form-control" style="background-color: #CCD9EC">
                                             <option value="Direktur">Direktur</option>
-                                            <option value="Manajer">Manajer</option>
+                                            <option value="Kepala Ruangan">Kepala Ruangan</option>
                                             <option value="Kepala Bagian">Kepala Bagian</option>
                                             <option value="HRD">HRD</option>
                                             <option value="Staff">Staff</option>

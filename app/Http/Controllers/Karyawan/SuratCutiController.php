@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\StoreSuratCutiRequest;
 use App\Http\Requests\UpdateSuratCutiRequest;
+use Twilio\Rest\Client;
 
 
 
@@ -170,6 +171,7 @@ class SuratCutiController extends Controller
         ]);
             # code...
         }
+
 
         // Redirect ke halaman suratIzin.show dengan menambahkan ID baru
         return redirect()->route('DaftarPermohonan.indexCuti')
