@@ -220,7 +220,55 @@
         @endforeach
     </table>
 </div>
-
+<div style="border: 1px solid #000;padding: 5px;width:600px;margin-left:625px;margin-top:20px;">
+    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+   
+        <div style="display: flex; align-items: center; margin-right: 20px;">
+            <div style="width: 20px; height: 20px; background-color: red; margin-right: 5px;"></div>
+            <span>Alfa</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-right: 5px;">
+            <div style="width: 20px; height: 20px; background-color: yellow; margin-right: 5px;"></div>
+            <span>Terlambat</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-right: 5px;">
+            <div style="width: 20px; height: 20px; background-color: green; margin-right: 5px;"></div>
+            <span>Tepat Waktu</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-right: 100px;">
+            <div style="width: 20px; height: 20px; background-color: blue; margin-right: 5px;"></div>
+            <span>Izin</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-right: 50px;">
+            <div style="width: 20px; height: 20px; background-color: purple; margin-right: 5px;"></div>
+            <span>Cuti</span>
+        </div>
+    </div>
+    
+    <!-- Legend for Time Periods -->
+    <div style="display: flex; justify-content: flex-end; margin-top: 5px;">
+        <div style="display: flex; align-items: center; margin-right: 1px;">
+            <div style="width: 20px; height: 20px;  margin-right: 5px;"></div>
+            <span>P = Pagi</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-right: 1px;">
+            <div style="width: 20px; height: 20px; margin-right: 5px;"></div>
+            <span>S = Siang</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-right: 1px;">
+            <div style="width: 20px; height: 20px;  margin-right: 5px;"></div>
+            <span>M = Malam</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-right: 1px;">
+            <div style="width: 20px; height: 20px;  margin-right: 5px;"></div>
+            <span>PM = Pagi Malam</span>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <div style="width: 20px; height: 20px; margin-right: 5px;"></div>
+            <span>PS = Pagi Sore</span>
+        </div>
+    </div>
+</div>
 
 <a href="javascript:void(0);" onclick="downloadImage()" class="btn btn-primary">Download Image</a>
 <a href="{{ route('kbjadwal.editjadwal', ['bulan' => $selectedMonth,'tahun'=>$selectedYear]) }}" class="btn btn-primary">Edit Schedule</a>

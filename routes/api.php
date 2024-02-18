@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/kirimdata/presensi', [PresensiApiController::class, 'terima']);
+Route::post('/kirimdata/presensi', [PresensiApiController::class, 'terima'])->withoutMiddleware('auth');
 Route::post('/kirimdata/bagian', [SendDataController::class, 'terimabagian']);
-Route::post('/kirimdata/user', [SendDataController::class, 'terimauser']);
+Route::get('/fetch/user', [PresensiApiController::class, 'getAllUsers']);
 

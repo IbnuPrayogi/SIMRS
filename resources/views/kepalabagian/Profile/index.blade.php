@@ -149,11 +149,6 @@
                                                                 </select>
                                                             </div>
 
-                                                        </div>
-
-                                                        <div class="form-container"
-                                                            style="display: flex; justify-content: space-between;">
-
                                                             <div class="form-group">
                                                                 <label for="lang1">Roles</label>
                                                                 <select id="lang1" name="id_roles"
@@ -165,6 +160,12 @@
                                                                     <!-- Opsi lainnya -->
                                                                 </select>
                                                             </div>
+                                                        </div>
+
+                                                        <div class="form-container"
+                                                            style="display: flex; justify-content: space-between;">
+
+                                                            
 
                                                             @if (auth()->user()->jabatan == 'Direktur')
                                                                 

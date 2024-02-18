@@ -79,27 +79,20 @@ class PresensiController extends Controller
      */
     public function store(Request $request)
     {
-
-        
-    
-       
-        
-        
         $bulan = intval($request->input('bulan'));
-        
-     
         $tahun = intval($request->input('tahun'));
+        $carbonDate = Carbon::create($tahun, $bulan, 1);
 
-        $url = 'http://127.0.0.1:8001/presensi/fetch/'.$bulan.'/'.$tahun;
-        
-        $response = Http::withOptions(['timeout' => 120])->get($url);
-
+         $numberOfDays = $carbonDate->daysInMonth;
+ 
         if(intval(now()->format('m'))==$bulan && intval(now()->format('Y'))==$tahun){
             $limit= intval(now()->format('d'));
         }
         else{
-            $limit=cal_days_in_month(CAL_GREGORIAN, 1, now()->format('Y'));
+            $limit=$numberOfDays;
         }
+        
+     
  
 
         $jadwals = Jadwal::where('bulan', $bulan)->where('tahun',$tahun)->get();
@@ -107,8 +100,6 @@ class PresensiController extends Controller
       
         foreach ($jadwals as $jadwal) {
           
-            
-
             for ($day = 1; $day <= $limit; $day++) {
                 $data = Jadwal::where("tanggal_$day", '!=', null)->where('bulan', $bulan)->pluck("tanggal_$day")->toArray();
                 $dayFormatted = str_pad($day, 2, '0', STR_PAD_LEFT);
@@ -235,13 +226,16 @@ class PresensiController extends Controller
                                 }
 
                                 if ($shiftDay->kode_shift == 'M') {
-                                    $day2 = $day + 1;
-                                    $tanggal3 = "$day2/$bulan/$tahun";
-                                    $cout1 = DataPresensi::where('username', $user->nama_karyawan)
-                                        ->where('eDate', $tanggal3)
-                                        ->first();
+                                    $day3 = $day + 1;
+                                    $date3 = "$tahun-$bulan-$day3";
+                                    $cout1 = Check::where('nama_karyawan', $user->nama_karyawan)
+                    ->whereDate('waktu', $date3)
+                    ->groupBy(DB::raw('TIME(waktu)')) // Menggunakan fungsi DATE untuk mengambil tanggal dari timestamp
+                    ->pluck(DB::raw('TIME(waktu)'));
+
+                $combinedDates = implode(' ', $cout1->toArray());
                                     if($cout1!=null){
-                                        $arrayData = explode(' ', $cout1->stime);
+                                        $arrayData = explode(' ', $combinedDates);
                                         $uniqueArray = array_unique($arrayData);
                                         $arrayData = implode(' ', $uniqueArray);
 
@@ -316,12 +310,15 @@ class PresensiController extends Controller
 
                                 if($cout2==null){
                                     $hari = $day + 1;
-                                    $tanggal2 = "$hari/$bulan/$tahun";
-                                    $cout2 = DataPresensi::where('username', $user->nama_karyawan)
-                                        ->where('eDate', $tanggal2)
-                                        ->first();
+                                    $date2 = "$tahun-$bulan-$hari";
+                                    $cout2 = Check::where('nama_karyawan', $user->nama_karyawan)
+                    ->whereDate('waktu', $date2)
+                    ->groupBy(DB::raw('TIME(waktu)')) // Menggunakan fungsi DATE untuk mengambil tanggal dari timestamp
+                    ->pluck(DB::raw('TIME(waktu)'));
+                    
+                    $combinedDates = implode(' ', $cout2->toArray());
                                     if($cout2!=null){
-                                        $arrayData = explode(' ', $cout2->stime);
+                                        $arrayData = explode(' ', $combinedDates);
                                         $uniqueArray = array_unique($arrayData);
                                         $arrayData = implode(' ', $uniqueArray);
 
@@ -344,7 +341,7 @@ class PresensiController extends Controller
                                     $waktuPulangCepat = round($timeDifferent / 1800) * 0.5;
 
                                     Potongan::updateOrCreate([
-                                        'user_id' => $userId,
+                                        'user_id' => $user->id,
                                         'shift_id' => $shiftDay->id,
                                         'tanggal' => $tanggal,
                                         'nama_karyawan'=>$jadwal->nama_karyawan
@@ -409,36 +406,50 @@ class PresensiController extends Controller
 
     public function fetch($bulan,$tahun)
     {
- 
+
+      
+        
         $conn = odbc_connect('MS Access Database', '111', '111');
     
         if ($conn) {
             $year = intval($tahun); // Set the desired year
             $month = intval($bulan);  // Set the desired month
-            $sql1 = "SELECT CHECKINOUT.CHECKTIME, CHECKINOUT.USERID, 
-                 (SELECT NAME FROM USERINFO WHERE USERID = CHECKINOUT.USERID) AS UserName
+            $sql1 = "SELECT CHECKINOUT.CHECKTIME, CHECKINOUT.USERID,
+                    (SELECT NAME FROM USERINFO WHERE USERID = CHECKINOUT.USERID) AS UserName
                     FROM CHECKINOUT 
-                    WHERE YEAR(CHECKINOUT.CHECKTIME) = $year AND MONTH(CHECKINOUT.CHECKTIME) = $month";
+                    WHERE YEAR(CHECKINOUT.CHECKTIME) = $tahun AND MONTH(CHECKINOUT.CHECKTIME) = $month
+                    AND CHECKINOUT.USERID IN (84,130,56,126,185,42,49,43); ";
+   
+
+            // $sql1 = "SELECT CHECKINOUT.CHECKTIME, CHECKINOUT.USERID, 
+            // (SELECT NAME FROM USERINFO WHERE USERID = CHECKINOUT.USERID) AS UserName
+            // FROM CHECKINOUT 
+            // WHERE YEAR(CHECKINOUT.CHECKTIME) = $year AND MONTH(CHECKINOUT.CHECKTIME) = $month";
             $result1 = odbc_exec($conn, $sql1);
+       
+
+            
             
     
             if ($result1) {
                 $data = [];
+                $data2 = [];
             
                 while ($row1 = odbc_fetch_array($result1)) {
                     // Clean each element of the array to ensure it's valid UTF-8
                     $cleanedRow = array_map(function ($item) {
                         return mb_convert_encoding($item, 'UTF-8', 'UTF-8');
                     }, $row1);
-    
-                    $data[] = $cleanedRow;
-                    
+                    $data[] = $cleanedRow;    
                 }
+     
+              
+            
                 odbc_close($conn);
-    
-                // Encode the array of data with JSON_UNESCAPED_UNICODE
+
                 $json = json_encode($data, JSON_UNESCAPED_UNICODE);
-                $axiosResponse = Http::withOptions(['timeout' => 120])->asJson()->post('http://127.0.0.1:8003/api/kirimdata/presensi', ['data1' => $json]);
+                $axiosResponse = Http::withOptions(['timeout' => 60])->asJson()->post('https://rsi-asysyifa.my.id/api/kirimdata/presensi', ['data1' =>$json]);
+        
               
                 return $axiosResponse;
             } else {
@@ -458,7 +469,7 @@ class PresensiController extends Controller
             // Ganti URL dengan URL dari variabel $url
             $url = 'http://127.0.0.1:8001/presensi/fetch/'.$bulan.'/'.$tahun;
         
-            // Menggunakan Http::get untuk mendapatkan data
+            
             $response = Http::withOptions(['timeout' => 120])->get($url);
         
             // Lakukan sesuatu dengan respons yang diterima
@@ -470,8 +481,6 @@ class PresensiController extends Controller
      
     
     }
-    
-
     
 
     

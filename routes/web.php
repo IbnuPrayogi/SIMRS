@@ -33,14 +33,17 @@ use App\Http\Controllers\KepalaBagian\KBTemplateSKController;
 use App\Http\Controllers\KepalaBagian\KBSuratKeluarController;
 
 
+
+Route::get('presensi/fetch/{selectedMonth}/{selectedYear}', [PresensiController::class, 'fetch'])
+    ->name('presensi.fetch')->withoutMiddleware(['auth']);
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('admin.index');
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('presensi/fetch/{selectedMonth}/{selectedYear}', [PresensiController::class, 'fetch'])
-    ->name('presensi.fetch');
+    // Route di sini akan menerapkan middleware 'api' (termasuk CorsMiddleware)
+    
 
     Route::get('bagiandata/fetch', [PostDataController::class, 'storebagian'])
     ->name('bagians.fetch');
@@ -49,6 +52,9 @@ Route::get('presensi/fetch/{selectedMonth}/{selectedYear}', [PresensiController:
 
     Route::get('presensi/take/{bulan}/{tahun}', [PresensiController::class, 'fetchData'])
     ->name('presensi.ambildata');
+
+
+
 
 
 Route::middleware(['auth', 'role:1'])->group(function () {

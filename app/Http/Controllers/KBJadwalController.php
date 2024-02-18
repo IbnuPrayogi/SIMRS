@@ -47,48 +47,48 @@ class KBJadwalController extends Controller
 
 // ...
 
-public function store(Request $request)
-{
-    $jadwalData = $request->input('jadwal');
-    $bulan = $request->input('bulan');
-    $tahun = $request->input('tahun');
-
-    dd(intval(now()->format('m')));
-
-    foreach ($jadwalData as $userId => $shifts) {
-        // Inisialisasi $totalMinutes di sini untuk setiap user
-        $totalMinutes = 0;
-        $user=User::find($userId);
-
-        foreach ($shifts as $day => $shiftId) {
-            // Pastikan $day memiliki nilai yang valid sebelum digunakan
-                $shift = Shift::find($shiftId);
-                
-
-                if ($shift) {
-                    list($hours, $minutes, $second) = explode(':', $shift->lama_waktu);
-                    $totalMinutes += $hours * 60 + $minutes;
-                }
-
-                // Update or add Jadwal
-                $jadwal = Jadwal::updateOrCreate(
-                    [
-                        'user_id' => $userId,
-                        'nama_karyawan'=>$user->nama_karyawan,
-                        'bulan' => intval($bulan),
-                        'nama_bagian'=>auth()->user()->nama_bagian,
-                        'tahun'=>$tahun
-                    ],
-                    [
-                        "tanggal_$day" => $shiftId,
-                    ],
-                );
-                $jadwal->jumlah_jam_kerja =  $totalMinutes;
-                $jadwal->save();        
-
+    public function store(Request $request)
+    {
+        $jadwalData = $request->input('jadwal');
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
+    
+    
+        foreach ($jadwalData as $userId => $shifts) {
+            // Inisialisasi $totalMinutes di sini untuk setiap user
+            $totalMinutes = 0;
+            $user=User::find($userId);
+    
+            foreach ($shifts as $day => $shiftId) {
+                // Pastikan $day memiliki nilai yang valid sebelum digunakan
+                    $shift = Shift::find($shiftId);
+                    
+    
+                    if ($shift) {
+                        list($hours, $minutes, $second) = explode(':', $shift->lama_waktu);
+                        $totalMinutes += $hours * 60 + $minutes;
+                    }
+    
+                    // Update or add Jadwal
+                    $jadwal = Jadwal::updateOrCreate(
+                        [
+                            'user_id' => $userId,
+                            'nama_karyawan'=>$user->nama_karyawan,
+                            'bulan' => intval($bulan),
+                            'nama_bagian'=>auth()->user()->nama_bagian,
+                            'tahun'=>$tahun
+                        ],
+                        [
+                            "tanggal_$day" => $shiftId,
+                        ]
+                    );
+                    $jadwal->jumlah_jam_kerja =  $totalMinutes;
+                    $jadwal->save();        
+    
+            }
         }
 
-    }
+    
 
     $statusjadwal=StatusJadwal::where('bulan',intval($bulan))->where('tahun',intval($tahun))->where('nama_bagian',auth()->user()->nama_bagian)->first();
     if(!$statusjadwal){

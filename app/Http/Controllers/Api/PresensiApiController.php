@@ -19,7 +19,9 @@ class PresensiApiController extends Controller
 {
     public function terima(Request $request){
  
+      
         $datas = $request->input('data1');
+
         $presensidata = json_decode($datas, true);
         $prettyJson = json_encode($presensidata, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 

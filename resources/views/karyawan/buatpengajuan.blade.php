@@ -4,34 +4,67 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 <link rel="stylesheet" href="css/buatpengajuan.css">
 
-<div class="container" style="margin-top: 2rem">
-    <div class="card-header">
-        <h1><b>Halo, Nama User</b></h1>
+
+    
+<style>
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    margin-top: 40px;
+    
+  }
+
+  .card-content {
+    flex: 1;
+    height: 250px;
+    width: 170px
+  }
+</style>
+
+<div class="card-container">
+    <div class="card-content">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <h2 style="text-align: center;">Cuti</h2><br><br>
+            <img src="/img/heart.png" alt="calendar" style="width: 60%; margin-left: 10px;">
+            <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+                <a href="{{ route('suratcuti.create') }}"><i class="fas fa-plus"></i></a>
+                <i class="fas fa-list-check" style="margin-left: 60px; font-size: 24px;"></i>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <div class="card-content">
-            <div style="display:flex;flex-direction:column">
-                <h2>Tukar Jaga</h2>
-                <h3 style="margin-left: 15px;color:#0253BA;">Kuota : 50</h3>
+    <div class="card-content">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <h2>Izin</h2><br><br>
+            <img src="/img/plush.png" alt="calendar" style="width: 60%; margin-left: 10px;">
+            <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+                <a href="{{ route('suratizin.create') }}"><i class="fas fa-plus"></i></a>
+                <i class="fas fa-list-check" style="margin-left: 60px; font-size: 24px;"></i>
             </div>
-            <a href="{{ route('surattukarjaga.create') }}"><i class="fas fa-plus"></i> </i></a>
         </div>
-        <div class="card-content">
-            <div style="display:flex;flex-direction:column">
-                <h2>Permohonan Cuti</h2>
-                <h3 style="margin-left: 15px;color:#0253BA;">Kuota : 50</h3>
+    </div>
+    <div class="card-content">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <h2>Tukar jaga</h2><br><br>
+            <img src="/img/tukar.png" alt="calendar" style="width: 60%; margin-left: 10px;">
+            <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+                <a href="{{ route('surattukarjaga.create') }}"><i class="fas fa-plus"></i></a>
+                <i class="fas fa-list-check" style="margin-left: 60px; font-size: 24px;"></i>
             </div>
-            <a href="{{ route('suratcuti.create') }}"><i class="fas fa-plus"></i> </a>
         </div>
-        <div class="card-content">            
-        <div style="display:flex;flex-direction:column">
-            <h2>Permohonan Izin</h2>
-            <h3 style="margin-left: 15px;color:#0253BA;">Kuota : 50</h3>
+    </div>
+    <div class="card-content">
+        <div style="display: flex; flex-direction: column;">
+            <h2>Request</h2>
         </div>
-            <a href="{{ route('suratizin.create') }}"><i class="fas fa-plus"></i> </a>
-        </div>
+        <a href="{{ route('suratizin.create') }}"><i class="fas fa-plus"></i></a>
     </div>
 </div>
+
+
+  
+    
+
 
 <script>
     window.addEventListener('DOMContentLoaded', function() {

@@ -163,24 +163,75 @@ function getColorClass($status) {
                 </tr>
             @endforeach
         </table>
-        <br>
-        <a href="javascript:void(0);" onclick="downloadImage()" class="btn btn-primary">Download Image</a>
+     <!-- Legend for Status -->
+    
+     <div style="border: 1px solid #000;padding: 5px;width:600px;margin-left:62px;margin-top:20px;">
+        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+       
+            <div style="display: flex; align-items: center; margin-right: 20px;">
+                <div style="width: 20px; height: 20px; background-color: red; margin-right: 5px;"></div>
+                <span>Alfa</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-right: 5px;">
+                <div style="width: 20px; height: 20px; background-color: yellow; margin-right: 5px;"></div>
+                <span>Terlambat</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-right: 5px;">
+                <div style="width: 20px; height: 20px; background-color: green; margin-right: 5px;"></div>
+                <span>Tepat Waktu</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-right: 100px;">
+                <div style="width: 20px; height: 20px; background-color: blue; margin-right: 5px;"></div>
+                <span>Izin</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-right: 50px;">
+                <div style="width: 20px; height: 20px; background-color: purple; margin-right: 5px;"></div>
+                <span>Cuti</span>
+            </div>
+        </div>
+        
+        <!-- Legend for Time Periods -->
+        <div style="display: flex; justify-content: flex-end; margin-top: 5px;">
+            <div style="display: flex; align-items: center; margin-right: 1px;">
+                <div style="width: 20px; height: 20px;  margin-right: 5px;"></div>
+                <span>P = Pagi</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-right: 1px;">
+                <div style="width: 20px; height: 20px; margin-right: 5px;"></div>
+                <span>S = Siang</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-right: 1px;">
+                <div style="width: 20px; height: 20px;  margin-right: 5px;"></div>
+                <span>M = Malam</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-right: 1px;">
+                <div style="width: 20px; height: 20px;  margin-right: 5px;"></div>
+                <span>PM = Pagi Malam</span>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <div style="width: 20px; height: 20px; margin-right: 5px;"></div>
+                <span>PS = Pagi Sore</span>
+            </div>
+        </div>
+    </div>
 
-        <form id="storePresensiForm" method="post" action="{{ route('presensi.store') }}" enctype="multipart/form-data">
-            @csrf
 
-            <input type="hidden" name="bulan" id="bulanInput">
-            <input type="hidden" name="tahun" id="tahunInput">
+            <a href="javascript:void(0);" onclick="downloadImage()" class="btn btn-primary" style="margin-top: 10px">Download Image</a>
 
-            <button class="btn btn-primary" type="button" onclick="storePresensi()">Rekap Data Presensi</button>
-        </form>
+            <form id="storePresensiForm" method="post" action="{{ route('presensi.store') }}" enctype="multipart/form-data" style="margin-top: 5px">
+                @csrf
+                <input type="hidden" name="bulan" id="bulanInput">
+                <input type="hidden" name="tahun" id="tahunInput">
+                <button class="btn btn-primary" type="button" onclick="storePresensi()">Rekap Data Presensi</button>
+            </form>
 
-        <form id="fetchPresensiForm" method="get" action="{{ url('presensi/ambil') }}" enctype="multipart/form-data">
+            <form id="fetchPresensiForm" method="get" action="{{ url('presensi/ambil') }}" enctype="multipart/form-data">
 
-            <button class="btn btn-primary" type="button" onclick="fetchPresensi()">Ambil Data Presensi</button>
-        </form>
+                <button class="btn btn-primary" type="button" onclick="fetchPresensi()">Ambil Data Presensi</button>
+            </form>
 
-        <button id="callLocalRouteButton">Call Local Route</button>
+          
+
 
 
         </body>
@@ -191,10 +242,9 @@ function getColorClass($status) {
                 var selectedYear = document.getElementById('selectYear').value;
         
                 // Build the new URL without any conditions
-                var newURL = "{{ url('presensi/take') }}/" + selectedMonth + "/" + selectedYear;
+                var newURL = "http://127.0.0.1:8000/presensi/fetch/" + selectedMonth + "/" + selectedYear;
         
-                // Navigate to the new URL
-                window.location.href = newURL;
+                window.open(newURL, '_blank');
             }
 
             function storePresensi() {
