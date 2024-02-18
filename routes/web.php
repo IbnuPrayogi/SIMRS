@@ -15,6 +15,7 @@ use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ArsipController;
 use App\Http\Controllers\StatusJadwalController;
+use App\Http\Controllers\KaryawanJadwalController;
 use App\Http\Controllers\Admin\DisposisiController;
 use App\Http\Controllers\Admin\SuratMasukController;
 use App\Http\Controllers\Admin\TemplateSKController;
@@ -198,6 +199,7 @@ Route::middleware(['auth', 'role:2'])->group(function () {
 
 
 Route::middleware(['auth', 'role:3'])->group(function () {
+    Route::resource('karyawanjadwal', KaryawanJadwalController::class);
     Route::resource('suratizin', SuratIzinController::class);
     Route::resource('suratcuti', SuratCutiController::class);
     Route::resource('surattukarjaga', SuratTukarJagaController::class);
@@ -215,6 +217,7 @@ Route::middleware(['auth', 'role:3'])->group(function () {
 
     
     Route::get('/presensi/karyawan/detail', [PresensiController::class, 'indexkaryawan'])->name('presensi.karyawan');
+    Route::get('/presensi/karyawan/detail/{id}/{shift}', [PresensiController::class, 'detailpresensi'])->name('detail.presensi');
     
 
     Route::resource('profile', SuratIzinController::class);
@@ -226,7 +229,7 @@ Route::middleware(['auth', 'role:3'])->group(function () {
 
     Route::get('/buatpengajuansurat', function () {
         return view('karyawan.buatpengajuan');
-    });
+    })->name('lihat.pengajuan');
     Route::get('/status', function () {
         return view('karyawan.lihatstatusmobile');
     });

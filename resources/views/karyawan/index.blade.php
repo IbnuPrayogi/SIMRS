@@ -27,16 +27,16 @@
       <div class="rectangle-2"></div>
       <div class="rectangle-3"></div>
       <img class="arrow" src="img/arrow-3.svg" />
-      <div class="text-wrapper-6">Selengkapnya</div>
+      <a href="{{ route('lihat.pengajuan') }}"><div class="text-wrapper-6">Selengkapnya</div></a>
       <img class="img" src="img/arrow-5.svg" />
-      <div class="text-wrapper-7">Selengkapnya</div>
+      <a href="{{  route('karyawanjadwal.index')  }}"><div class="text-wrapper-7">Selengkapnya</div></a>
       <img class="arrow-2" src="img/arrow-4.svg" />
-      <div class="text-wrapper-8">Selengkapnya</div>
+      <a href="{{ route('presensi.karyawan') }}\"></a><div class="text-wrapper-8">Selengkapnya</div>
     </div>
     <div class="title">
       <div class="overlap-3"><div class="text-wrapper-9">Rs Islam Asy Syifaa</div></div>
     </div>
-    <div class="halo-karyawan">Halo,<br />Karyawan</div>
+    <div class="halo-karyawan">Halo,<br />{{ auth()->user()->nama_karyawan }}</div>
   </div>
 
 <script>

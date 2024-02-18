@@ -60,7 +60,7 @@
                 </div>
                 <div class="dropdown-content">
                     <div class="notif_text">
-                        <h1>Permohonan <b>Tukar Jaga dengan Ningguang</b> telah disetujui</h1>
+                        <h1>Sistem Informasi Manajemen Kehadiran</h1>
                     </div>
                     <div class="line"></div>
                     <div class="icon-exit">
@@ -81,7 +81,7 @@
             <div class="navbar">
                 <a href="/home" class="{{ Request::is('/home') ? 'active' : '' }}"><i class='bx bx-home'></i></a>
                 <a href="/buatpengajuansurat" class="{{ Request::is('/pengajuan') ? 'active' : '' }}"><i class="fas fa-plus add-file-icon"></i></a>
-                <a href="/status" class="{{ Request::is('/status') ? 'active' : '' }}"><i class="fa-solid fa-list-check"></i></a>
+                <a href="/presensi/karyawan/detail" class="{{ Request::is('/status') ? 'active' : '' }}"><i class="fa-solid fa-list-check"></i></a>
                 <a href="/profile" class="{{ Request::is('/profile') ? 'active' : '' }}"><i class='bx bxs-user' ></i></a>
             </div>
         </div>

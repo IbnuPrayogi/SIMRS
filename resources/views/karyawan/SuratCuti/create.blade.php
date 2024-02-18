@@ -46,7 +46,7 @@
                 <div class="popup-tgl" id="myPopup-tgl-limit">
                     <!-- Isi popup di sini -->
                     <i class='bx bx-error'></i>
-                    <b>Ajukan Cuti maksimal H-3</b>
+                    <b>Ajukan Cuti maksimal 1 bulan sebelum </b>
                 </div>
 
                 <div class="content-text">
@@ -154,7 +154,7 @@ function notifSukses() {
             showPopupSel();
             document.getElementById("Tanggal_Mulai").value = "";
             document.getElementById("Tanggal_izin").value = "";
-        } else if ( dateDifference < 3) {
+        } else if ( dateDifference < 30) {
             showPopupLimit();
             document.getElementById("Tanggal_Mulai").value = "";
             // Contoh: document.getElementById(inputId).value = "";

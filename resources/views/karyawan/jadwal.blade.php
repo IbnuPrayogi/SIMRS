@@ -15,6 +15,9 @@
             $selectedDepartment = request('selectedDepartment', 'Satpam');
             $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $selectedMonth, $selectedYear);
         @endphp
+        
+        
+        
 
         <h4 style="margin-top: 20px;margin-left: 17px;">Bulan 
             <select id="selectMonth" onchange="updateTable()" value="{{ $selectedMonth }}">
@@ -38,6 +41,9 @@
                 @endfor
             </select>
         </h4>
+    
+
+
 
         <div class="table-container" style="max-height: 35rem; overflow: auto;">
             <table>
@@ -45,32 +51,23 @@
                     <tr>
                         <th>Tanggal</th>
                         <th>Shift</th>
-                        <th>Status</th>
-                        <th>Detail</th>
+                   
                     </tr>
                 </thead>
                 <tbody>
                     @for ($day = 1; $day <= $daysInMonth; $day++)
-                        @php
-                            $date = $day . "/" . $selectedMonth . "/" . $selectedYear;
-                            $datapresensi=null;
-                            if($presensi!=null){
-                                $datapresensi = $presensi->where('nama_karyawan', $jadwal->nama_karyawan)->where('tanggal', $date)->first();
-                            }
-                            $userShift = $jadwal ? $shift->where('id', $jadwal->{"tanggal_$day"})->first() : null;
-                            $shiftId = $userShift ? $userShift->kode_shift : '-';
-                            $presensiId = $datapresensi ? $datapresensi->status :'-';
-                            $idpresensi= $datapresensi ? $datapresensi->id:'-';
-                        @endphp
+                    @php
+                         if($jadwal!=null){
+                            $kode= \App\Models\Shift::where('id',$jadwal->{'tanggal_'.$day})->first();
+                            $display=$kode->nama_shift;
+                         }
+                         else{
+                            $display='-';
+                         }
+                    @endphp
                         <tr>
                             <td>{{ $day }}</td>
-                            <td>{{ $shiftId }}</td>
-                            <td>{{ $presensiId }}</td>
-                            <td>
-                                <a href="{{ route('detail.presensi',['id'=>$idpresensi,'shift'=>$shiftId]) }}"><button class="detail-button">
-                                    <i class="fas fa-eye"></i> 
-                                </button></a>
-                            </td>
+                            <td>{{ $display}}</td>
                         </tr>
                     @endfor
                 </tbody>
@@ -89,6 +86,20 @@
     // Panggil fungsi updateTable untuk memuat data tanpa merefresh halaman
     updateTable();
 });
+
+function downloadImage() {
+    console.log('Download button clicked'); // Tambahkan pesan log
+    html2canvas(document.querySelector("#scheduleTable"))
+        .then(canvas => {
+            var link = document.createElement('a');
+            link.href = canvas.toDataURL("image/png");
+            link.download = 'jadwal_karyawan.png';
+            link.click();
+        })
+        .catch(error => {
+            console.error('Error in html2canvas:', error);
+        });
+}
 
 function updateTable() {
     var selectedMonth = document.getElementById('selectMonth').value;

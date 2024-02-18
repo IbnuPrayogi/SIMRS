@@ -61,8 +61,6 @@ class PresensiController extends Controller
             // Data kosong, Anda dapat menangani ini di sini
             $presensi= null;
         }
-
-        
     
         $bagians=Bagian::all();
 
@@ -459,6 +457,12 @@ class PresensiController extends Controller
         } else {
             return response()->json(['error' => 'Failed to connect to MS Access Database'], 500);
         }
+    }
+
+    public function detailpresensi($id,$shift){
+        $presensi=Presensi::where('id',$id)->first();
+        $shifts=Shift::where('kode_shift',$shift)->where('bagian',auth()->user()->nama_bagian)->first();
+        return view('karyawan.detailpresensi',compact('presensi','shifts'));
     }
 
     public function fetchData($bulan, $tahun)
