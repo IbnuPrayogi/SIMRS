@@ -416,7 +416,7 @@ class PresensiController extends Controller
                     (SELECT NAME FROM USERINFO WHERE USERID = CHECKINOUT.USERID) AS UserName
                     FROM CHECKINOUT 
                     WHERE YEAR(CHECKINOUT.CHECKTIME) = $tahun AND MONTH(CHECKINOUT.CHECKTIME) = $month
-                    AND CHECKINOUT.USERID IN (84,130,56,126,185,42,49,43); ";
+                    AND CHECKINOUT.USERID IN (84,130,56,126,185,42,49,43)";
    
 
             // $sql1 = "SELECT CHECKINOUT.CHECKTIME, CHECKINOUT.USERID, 

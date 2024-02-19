@@ -43,18 +43,20 @@ class UserController extends Controller
             'nama_bagian' => 'required',
         ]);
 
-        $validatedData = $request->validate([
-
-            'foto' => 'required|mimes:jpeg,png,jpg,gif|max:5120 ',
-          
-        ]);
+        
+        if ($request->hasFile('foto')) {
+            $validatedData = $request->validate([
+                'foto' => 'mimes:jpeg,png,jpg,gif|max:5120 ',
+            ]);
+            $file1 = $validatedData[('foto')];
+            $filename1 =  $file1->getClientOriginalName();
+            // File upload location
+            $location1 = public_path('assets/profil/');
+            $file1->move($location1, $filename1);
+        }
+        
      
-        $file1 = $validatedData[('foto')];
-
-        $filename1 =  $file1->getClientOriginalName();
-        // File upload location
-        $location1 = public_path('assets/profil/');
-      
+    
 
         // Hash password secara otomatis melalui mutator pada model User
         // Jadi, tidak perlu melakukan Hash::make secara manual di sini
@@ -66,16 +68,19 @@ class UserController extends Controller
             'jabatan' => $request->input('jabatan'),
             'nik' => $request->input('nik'),
             'password' => $request->input('password'),
-            'foto' => $filename1,
             'alamat' => $request->input('alamat'),
             'nomor_hp' => $request->input('nomor_hp'),
             'nama_bagian' => $request->input('nama_bagian'),
             'email'=> $request->input('nik').'@email.com'
 
         ]);
-        $file1->move($location1, $filename1);
+        if ($request->hasFile('foto')) {
+            $user->foto=$filename1;
+            $user->save();
+        }
+        
         Session::flash('success', 'Data User Berhasil Ditambahkan');
-
+        
         // Redirect atau response sesuai kebutuhan aplikasi
         return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan.');
     }
@@ -96,8 +101,9 @@ class UserController extends Controller
     {
 
         $user=User::where("nik",$nik)->first();
+        $bagians=Bagian::all();
 
-        return view("admin.user.update", compact("user"));
+        return view("admin.user.update", compact("user",'bagians'));
     }
 
     /**

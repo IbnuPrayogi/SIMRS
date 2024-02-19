@@ -53,15 +53,15 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label class="form-label">Nama Pengguna</label>
-                                <input type="text" class="form-control mb-1" placeholder="Nama Pengguna" name="nama_karyawan" style="background-color: #CCD9EC">
+                                <input type="text" class="form-control mb-1" placeholder="Nama Pengguna" name="nama_karyawan" style="background-color: #CCD9EC" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">NIK</label>
-                                <input type="text" class="form-control mb-1" placeholder="NIK" name="nik" style="background-color: #CCD9EC">
+                                <input type="text" class="form-control mb-1" placeholder="NIK" name="nik" style="background-color: #CCD9EC" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control" placeholder="Password" name="password" style="background-color: #CCD9EC">
+                                <input type="password" class="form-control" placeholder="Password" name="password" style="background-color: #CCD9EC" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Alamat</label>
@@ -75,7 +75,7 @@
                              
                                     <div class="form-group">
                                         <label for="lang1">Nama Bagian</label>
-                                        <select  id="lang1" class="form-control" name="nama_bagian" style="background-color: #CCD9EC">
+                                        <select  id="lang1" class="form-control" name="nama_bagian" style="background-color: #CCD9EC" required>
                                             @foreach ($bagians as $bagian)
                                              <option value="{{ $bagian->nama_bagian }}">{{ $bagian->nama_bagian }}</option>  
                                             @endforeach
@@ -87,7 +87,7 @@
                       
                                     <div class="form-group">
                                         <label for="lang2">Jabatan</label>
-                                        <select  id="lang2" name="jabatan" class="form-control" style="background-color: #CCD9EC">
+                                        <select  id="lang2" name="jabatan" class="form-control" style="background-color: #CCD9EC" required>
                                             <option value="Direktur">Direktur</option>
                                             <option value="Kepala Ruangan">Kepala Ruangan</option>
                                             <option value="Kepala Bagian">Kepala Bagian</option>
@@ -103,7 +103,7 @@
                          
                                     <div class="form-group">
                                         <label for="lang1">Roles</label>
-                                        <select  id="lang1" name="role" class="form-control" style="background-color: #CCD9EC">
+                                        <select  id="lang1" name="role" class="form-control" style="background-color: #CCD9EC" required>
                                             <option value=2>Kepala Bagian</option>
                                             <option value=1>Admin / HRD</option>
                                             <option value=3>Karyawan / Staff</option>

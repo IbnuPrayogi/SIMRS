@@ -107,7 +107,7 @@ class ShiftController extends Controller
             
 
         
-           
+            Session::flash('success', 'Data Shift Berhasil Ditambahkan');
         
             return redirect()->route('shift.index')->with('success', 'Arsip created successfully');
         } else {
@@ -186,7 +186,8 @@ class ShiftController extends Controller
         $shift->update($request->all());
         $shift->lama_waktu = $lamaWaktu;
         $shift->save();
-
+        
+        Session::flash('success', 'Data Shift Berhasil Diubah');
         return redirect()->route('shift.index')->with('success', 'Data shift berhasil diupdate');
     }
 

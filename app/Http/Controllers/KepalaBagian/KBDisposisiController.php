@@ -85,6 +85,17 @@ class KBDisposisiController extends Controller
             // Tambahkan kolom-kolom lainnya sesuai kebutuhan
         ]);
 
+  
+        if($jenis == "surat cuti"){
+            return redirect()->route('DaftarPermohonan.indexCuti');
+        }
+        else if($jenis == "surat izin"){
+            return redirect()->route('DaftarPermohonan.indexIzin');
+        }
+        else if($jenis == "surat tukar jaga"){
+            return redirect()->route('DaftarPermohonan.indexTukarJaga');
+        }
+
         // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }

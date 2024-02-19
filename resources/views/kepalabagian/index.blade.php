@@ -35,7 +35,7 @@
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="{{ route('arsip.index') }}" class="small-box-footer">Jumlah Cuti <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('DaftarPermohonan.indexCuti') }}" class="small-box-footer">Jumlah Cuti <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="{{ route('suratkeluar.index') }}" class="small-box-footer">Jumlah Izin <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('DaftarPermohonan.indexCuti') }}" class="small-box-footer">Jumlah Izin <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -61,7 +61,7 @@
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="{{ route('suratmasuk.index') }}" class="small-box-footer">Jumlah Tukar Jaga <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('DaftarPermohonan.indexTukarJaga') }}" class="small-box-footer">Jumlah Tukar Jaga <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>

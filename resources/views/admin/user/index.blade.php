@@ -11,6 +11,15 @@
     </head>
 
     <body>
+        @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @elseif (session('successdelete'))
+        <div class="alert alert-success">
+            {{ session('successdelete') }}
+        </div>
+    @endif
 
         <div class="container py-5" style="background-color: blue; border-radius: 25px;">
             <div class="container py-6">

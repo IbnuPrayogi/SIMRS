@@ -67,7 +67,6 @@
                     <li><a href="{{ route('DaftarPermohonan.indexCuti') }}"><i class="fas fa-bed"></i> Cuti</a></li>
                     <li><a href="{{ route('DaftarPermohonan.indexIzin') }}"><i class="fas fa-clock"></i> Izin</a></li>
                     <li><a href="{{ route('DaftarPermohonan.indexTukarJaga') }}"><i class="fas fa-exchange-alt"></i> Tukar Jaga</a></li>
-                    <li><a href="#"><i class="fas fa-user-check"></i> Presensi</a></li>
                     <li><a href="{{ route('kbjadwal.index') }}"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt"></i>
@@ -121,7 +120,6 @@
                                             <li><a href="{{ route('DaftarPermohonan.indexCuti') }}"><i class="fas fa-bed"></i> Cuti</a></li>
                                             <li><a href="{{ route('DaftarPermohonan.indexIzin') }}"><i class="fas fa-clock"></i> Izin</a></li>
                                             <li><a href="{{ route('DaftarPermohonan.indexTukarJaga') }}"><i class="fas fa-exchange-alt"></i> Tukar Jaga</a></li>
-                                            <li><a href="#"><i class="fas fa-user-check"></i> Presensi</a></li>
                                             <li><a href="{{ route('kbjadwal.index') }}"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
                                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <i class="fas fa-sign-out-alt"></i>
